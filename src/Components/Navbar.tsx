@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import Logo from "./assets/small logo.png";
+import Logo from "../assets/small logo.png";
 import { Button } from "react-bootstrap";
 
 function MyNavbar() {
@@ -13,6 +13,7 @@ function MyNavbar() {
       className="bg-body-tertiary"
       data-bs-theme="dark"
       variant="dark" // Add variant="dark" to make the navbar dark-themed
+      style={{ width: "100%" }}
     >
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -39,7 +40,10 @@ function MyNavbar() {
           <Nav.Item>
             <Button variant="light">Create</Button>
           </Nav.Item>
-          <Nav.Item className="ms-auto" style={{ marginRight: "10px", marginBottom: "10px" }}>
+          <Nav.Item
+            className="ms-auto"
+            style={{ marginRight: "10px", marginBottom: "10px" }}
+          >
             <Button variant="light">Sign up</Button>
           </Nav.Item>
           <Nav.Item style={{ marginRight: "10px", marginBottom: "10px" }}>

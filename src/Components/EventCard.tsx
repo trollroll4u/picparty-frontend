@@ -1,10 +1,10 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import img1 from "./assets/party posters/Summer-Party-Poster-Template.jpg";
+import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
 
 function EventCard() {
   return (
-    <Card>
+    <Card className="mx-4 my-2">
       <Card.Img
         variant="top"
         src={img1}
