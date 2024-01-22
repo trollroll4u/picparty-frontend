@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import MyNavBar from "./Components/Navbar.tsx";
 import CardScreen from "./Components/CardsScreen.tsx";
 import Carusale from "./Components/carouselImages.tsx";
@@ -19,7 +18,6 @@ function App() {
           <Carusale></Carusale>
         </Row>
         <CardScreen></CardScreen>
-
       </Container>
     </>
   );
