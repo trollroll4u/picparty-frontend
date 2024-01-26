@@ -17,7 +17,7 @@ function MyNavbar() {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="container-fluid">
           <Nav.Item>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand href="/">
               <img
                 src={Logo}
                 width="50"
@@ -28,10 +28,10 @@ function MyNavbar() {
             </Navbar.Brand>
           </Nav.Item>
           <Nav.Item style={{ fontWeight: "bold" }}>
-            <Nav.Link href="#Home"> events </Nav.Link>
+            <Nav.Link href="/"> events </Nav.Link>
           </Nav.Item>
           <Nav.Item style={{ fontWeight: "bold" }}>
-            <Nav.Link href="#pricing" color="white">
+            <Nav.Link href="search" color="white">
               search{" "}
             </Nav.Link>
           </Nav.Item>
