@@ -1,9 +1,9 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
 import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
-import { Button } from "react-bootstrap";
+
 
 export interface EventData {
+  id?: number;
   image?: string;
   title: string;
   date: Date;
@@ -17,25 +17,35 @@ interface EventProps {
 
 function EventCard({ event }: EventProps) {
   return (
-    <Card className="mx-4 my-2">
-      <Card.Img
-        variant="top"
-        src={event.image}
+    <div className="card mx-4 my-2" id={"card-" + event.id}>
+      <img
+        id={"card-img-" + event.id}
+        className="card-img-top"
+        src={event.image || img1}
         style={{ height: "200px", width: "100%" }}
       />
-      <Card.Body>
-        <Card.Title>{event.title}</Card.Title>
-        <Card.Text style={{ fontWeight: "bold" }}>Date: {event.date.toLocaleDateString()}</Card.Text>
-        <Card.Text>location: {event.location}</Card.Text>
-        <Card.Text>owner: {event.owner}</Card.Text>
-        <Button
-          className="btn btn-lg ml-auto"
-          style={{ backgroundColor: "black", fontWeight: "bold" }}
+      <div className="card-body" id={"card-body-" + event.id}>
+        <p id={"card-title-" + event.id} className="card-title fs-2 fw-bold">
+          {event.title}
+        </p>
+        <p id={"card-date-" + event.id} className="card-text fw-bold fs-4">
+          {event.date.toLocaleDateString()}
+        </p>
+        <p id={"card-owner-" + event.id} className="card-text fw-bold fs-4">
+          {event.owner}
+        </p>
+        <p id={"card-location-" + event.id} className="card-text fw-bold fs-4">
+          {event.location}
+        </p>
+        <a
+          id={"card-button-" + event.id}
+          href="/"
+          className="btn btn-dark fw-bold fs-4"
         >
           Event pic
-        </Button>
-      </Card.Body>
-    </Card>
+        </a>
+      </div>
+    </div>
   );
 }
 

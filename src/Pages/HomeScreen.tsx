@@ -1,13 +1,10 @@
 import * as React from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import MyNavBar from "../Components/Navbar.tsx";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import Carusale from "../Components/carouselImages.tsx";
 import { EventData } from "../Components/EventCard.tsx";
 
 export interface IAppProps {}
-
+const images: string[] = ["https://picsum.photos/200","https://picsum.photos/300","https://picsum.photos/400","https://picsum.photos/200"]
 const events: EventData[] = [
   {
     image: "https://picsum.photos/200",
@@ -37,17 +34,35 @@ const events: EventData[] = [
     owner: "ohad",
     location: "tel aviv",
   },
+  {
+    image: "https://picsum.photos/500",
+    title: "event4",
+    date: new Date(),
+    owner: "ohad",
+    location: "tel aviv",
+  },{
+    image: "https://picsum.photos/500",
+    title: "event4",
+    date: new Date(),
+    owner: "ohad",
+    location: "tel aviv",
+  },{
+    image: "https://picsum.photos/500",
+    title: "event4",
+    date: new Date(),
+    owner: "ohad",
+    location: "tel aviv",
+  },
 ];
 
 function HomeScreen(props: IAppProps) {
   return (
     <>
-      <Container style={{ backgroundColor: "black", maxWidth: "100%" }}>
-        <Row className="justify-content-md-center">
-          <Carusale></Carusale>
-        </Row>
-        <EventsScreen events={events}></EventsScreen>
-      </Container>
+    <div className="container-fluid" style={{ backgroundColor: "black"}}>
+      <Carusale images={images}></Carusale>
+      <br></br>
+      <EventsScreen events={events}></EventsScreen>
+    </div>
     </>
   );
 }

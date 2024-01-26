@@ -1,9 +1,6 @@
 import * as React from "react";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-
-import Row from "react-bootstrap/Row";
 import EventsScreen from "../Components/EventsScreen.tsx";
+import { EventData } from "../Components/EventCard.tsx";
 
 export interface IAppProps {}
 const events: EventData[] = [
@@ -47,26 +44,18 @@ const events: EventData[] = [
 function SearchScreen(props: IAppProps) {
   return (
     <>
-      <Container
-        style={{
-          backgroundColor: "black",
-          maxWidth: "100%",
-          height: "100vh",
-        }}
-      >
+      <div className="container-fluid" style={{ backgroundColor: "black" }}>
         <br></br>
-        <Row>
-          <Form style={{ width: "50vw", margin: "auto" }}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Control size="lg" type="text" placeholder="event name" />
-            </Form.Group>
-          </Form>
-        </Row>
+        <br></br>
+        <input
+          className="form-control form-control-lg"
+          style={{ width: "50vw", margin: "auto" }}
+          type="text"
+          placeholder="Enter event name"
+        />
+        <br></br>
         <EventsScreen events={events}></EventsScreen>
-        <Row>
-          <h1>search screen</h1>
-        </Row>
-      </Container>
+      </div>
     </>
   );
 }
