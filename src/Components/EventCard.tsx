@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
+import { Button } from "react-bootstrap";
 
 export interface EventData {
   image?: string;
@@ -24,9 +25,15 @@ function EventCard({ event }: EventProps) {
       />
       <Card.Body>
         <Card.Title>{event.title}</Card.Title>
-        <Card.Text>Date: {event.date.toLocaleDateString()}</Card.Text>
+        <Card.Text style={{ fontWeight: "bold" }}>Date: {event.date.toLocaleDateString()}</Card.Text>
         <Card.Text>location: {event.location}</Card.Text>
         <Card.Text>owner: {event.owner}</Card.Text>
+        <Button
+          className="btn btn-lg ml-auto"
+          style={{ backgroundColor: "black", fontWeight: "bold" }}
+        >
+          Event pic
+        </Button>
       </Card.Body>
     </Card>
   );
