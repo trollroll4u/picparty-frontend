@@ -4,7 +4,11 @@ import Carusale from "../Components/carouselImages.tsx";
 import { EventData } from "../Components/EventCard.tsx";
 
 export interface IAppProps {}
-const images: string[] = ["https://picsum.photos/200","https://picsum.photos/300","https://picsum.photos/400","https://picsum.photos/200"]
+const images: string[] = [
+  "https://picsum.photos/200",
+  "https://picsum.photos/300",
+  "https://picsum.photos/900",
+];
 const events: EventData[] = [
   {
     image: "https://picsum.photos/200",
@@ -40,13 +44,15 @@ const events: EventData[] = [
     date: new Date(),
     owner: "ohad",
     location: "tel aviv",
-  },{
+  },
+  {
     image: "https://picsum.photos/500",
     title: "event4",
     date: new Date(),
     owner: "ohad",
     location: "tel aviv",
-  },{
+  },
+  {
     image: "https://picsum.photos/500",
     title: "event4",
     date: new Date(),
@@ -58,11 +64,15 @@ const events: EventData[] = [
 function HomeScreen(props: IAppProps) {
   return (
     <>
-    <div className="container-fluid" style={{ backgroundColor: "black"}}>
-      <Carusale images={images}></Carusale>
-      <br></br>
-      <EventsScreen events={events}></EventsScreen>
-    </div>
+      <div className="container" style={{ backgroundColor: "black", maxWidth:"100%" }}>
+        <div className="row">
+          <Carusale images={images}></Carusale>
+        </div>
+        <br></br>
+        <div className="row">
+          <EventsScreen events={events}></EventsScreen>
+        </div>
+      </div>
     </>
   );
 }
