@@ -1,5 +1,6 @@
-import React from "react";
-import EventCard, { EventData } from "./EventCard";
+import React, { useState } from "react";
+import EventCard from "./EventCard";
+ import { EventData, PictureData } from "../DataStructure.ts";
 
 interface EventsScreenProps {
   events: EventData[];

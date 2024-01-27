@@ -1,14 +1,15 @@
 import React from "react";
+import { PictureData } from "../DataStructure.ts";
 
 interface CaruselImagesProps {
-  images: string[];
+  images: PictureData[];
 }
 
-function createSlides(images: string[]) {
+function createSlides(images: PictureData[]) {
   let slides = images.map((image, index) => {
     return (
       <div className={"carousel-item" + (index === 0 ? " active" : "")}>
-        <img src={image} className="d-block w-100" alt="..." style={{ height:"60vh"}} />
+        <img src={image.path} className="d-block w-100" alt="..." style={{ height:"60vh"}} />
       </div>
     );
   });

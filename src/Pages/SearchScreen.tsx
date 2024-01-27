@@ -1,50 +1,14 @@
 import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
-import { EventData } from "../Components/EventCard.tsx";
+import { EventData } from "../DataStructure.ts";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
+
+import { eventsExamples,picturesExamples } from "../examples.ts";
 
 export interface IAppProps {}
 
-const eventsExample: EventData[] = [
-  {
-    image: "https://picsum.photos/200",
-    title: "yosi party",
-    date: new Date("2019-01-16"),
-    owner: "ohad",
-    location: "tel aviv",
-  },
-  {
-    image: "https://picsum.photos/300",
-    title: "yuval party",
-    date: new Date(2019, 5, 22),
-    owner: "ohad",
-    location: "tel aviv",
-  },
-  {
-    image: "https://picsum.photos/400",
-    title: "dor partyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy ohad",
-    date: new Date(),
-    owner: "ohad",
-    location: "tel aviv",
-  },
-  {
-    image: "https://picsum.photos/500",
-    title: "event4",
-    date: new Date(),
-    owner: "ohad",
-    location: "tel aviv",
-  },
-  {
-    image: "https://picsum.photos/500",
-    title: "event4",
-    date: new Date(),
-    owner: "ohad",
-    location: "tel aviv",
-  },
-];
-
 function SearchScreen(props: IAppProps) {
-  const [events, setEvents] = useState<EventData[]>(eventsExample);
+  const [events, setEvents] = useState<EventData[]>(eventsExamples);
   const [searchResult, setSearchResult] = useState<EventData[]>(events);
   const [searchValue, setSearchValue] = useState("");
 
@@ -62,7 +26,6 @@ function SearchScreen(props: IAppProps) {
     });
     setSearchResult(updateEvents);
   }, [searchValue, events]);
-
 
   return (
     <>
