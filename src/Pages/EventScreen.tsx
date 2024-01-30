@@ -9,10 +9,21 @@ export interface IAppProps {
   event_id: number;
 }
 
-function EventScreen(props: IAppProps) {
+function EventScreen(event_id: IAppProps) {
   const [event, setEvent] = useState<EventData>();
   const [user, setUser] = useState<UserData>();
   React.useEffect(() => {
+    // setLoading(true);
+    // const { request , abort }  =  getAllEvents()
+    // request.then((res: { data: React.SetStateAction<EventData[]>; }) => {
+    //     // setEvents(res.data);
+    //     setLoading(false);
+    //   })
+    //   request.catch((err: any) => {
+    //     if (err instanceof CanceledError) return;
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
     axios.get("http://localhost:3000/events/1").then((res) => {
       // setevent(res.data);
       setEvent(eventsExamples[0]);

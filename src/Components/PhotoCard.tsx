@@ -16,7 +16,7 @@ function PhotoCard({ photo }: EventProps) {
         src={photo.path || img1}
         style={{ height: "10rem", width: "100%" }}
       />
-      <div
+      {/* <div
         className="card-body"
         key={"card-body-" + photo.id}
         style={{ display: "inline" }}
@@ -24,13 +24,13 @@ function PhotoCard({ photo }: EventProps) {
         <p className="d-md-inline">
           <i className="bi bi-heart"></i>
           &nbsp;
-          {photo.likes.length}
+          {photo. likes.length}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <i className="card-text bi bi-chat" />
           &nbsp;
           {photo.comments.length}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

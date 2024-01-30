@@ -2,7 +2,7 @@ import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import { EventData } from "../DataStructure.ts";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-
+import { getAllEvents } from "../Services/event-service.ts";
 import { eventsExamples,picturesExamples } from "../examples.ts";
 
 export interface IAppProps {}
@@ -15,7 +15,23 @@ function SearchScreen(props: IAppProps) {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
-  React.useEffect(() => {}, [searchValue]);
+
+  // get all events from the server
+  React.useEffect(() => {
+    setEvents(eventsExamples);
+    // setLoading(true);
+    // const { request , abort }  =  getAllEvents()
+    // request.then((res: { data: React.SetStateAction<EventData[]>; }) => {
+    //     // setEvents(res.data);
+    //     setLoading(false);
+    //   })
+    //   request.catch((err: any) => {
+    //     if (err instanceof CanceledError) return;
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
+
+  },[]);
 
   // change the events array depends on the search value
   React.useEffect(() => {
@@ -43,7 +59,7 @@ function SearchScreen(props: IAppProps) {
           onChange={handleSearchChange}
         />
         <br></br>
-        <EventsScreen events={searchResult}></EventsScreen>
+        <EventsScreen events={searchResult} user={undefined}></EventsScreen>
       </div>
     </>
   );
