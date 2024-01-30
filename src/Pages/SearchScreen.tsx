@@ -15,6 +15,7 @@ function SearchScreen(props: IAppProps) {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+  React.useEffect(() => {}, [searchValue]);
 
   // change the events array depends on the search value
   React.useEffect(() => {

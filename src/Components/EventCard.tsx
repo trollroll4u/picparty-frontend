@@ -12,7 +12,7 @@ function EventCard({ event }: EventProps) {
       <img
         key={"card-img-" + event.id}
         className="card-img-top"
-        src={event.event_pic || img1}
+        src={event.event_pic_path || img1}
         style={{ height: "200px", width: "100%" }}
       />
       <div className="card-body" key={"card-body-" + event.id}>
@@ -31,7 +31,7 @@ function EventCard({ event }: EventProps) {
           {event.date.toLocaleDateString()}
         </p>
         <p key={"card-owner-" + event.id} className="card-text fw-bold fs-5">
-          {event.owner}
+          {event.owner.name}
         </p>
         <p key={"card-location-" + event.id} className="card-text fw-bold fs-5">
           {event.location}

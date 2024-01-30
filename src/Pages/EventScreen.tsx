@@ -1,13 +1,27 @@
 import * as React from "react";
-import { EventData, PictureData } from "../DataStructure.ts";
+import { EventData, PictureData, UserData } from "../DataStructure.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
-import { eventsExamples, picturesExamples } from "../examples.ts";
+import { eventsExamples, picturesExamples, userExamples } from "../examples.ts";
 import { useState } from "react";
+import axios from "axios";
 
-export interface IAppProps {}
+export interface IAppProps {
+  event_id: number;
+}
 
 function EventScreen(props: IAppProps) {
-  const [a, seta] = useState<EventData>();
+  const [event, setEvent] = useState<EventData>();
+  const [user, setUser] = useState<UserData>();
+  React.useEffect(() => {
+    axios.get("http://localhost:3000/events/1").then((res) => {
+      // setevent(res.data);
+      setEvent(eventsExamples[0]);
+    });
+    axios.get("http://localhost:3000/users/get/" + event?.owner_id).then((res) => {
+      // setEvent(res.data);
+      setUser(userExamples[0])
+    });
+  }, []);
   return (
     <>
       <div
@@ -18,20 +32,20 @@ function EventScreen(props: IAppProps) {
         <div className="row">
           <div className="col">
             <img
-              src={eventsExamples[3].event_pic}
-              style={{ width: "40rem", height: "20rem" }}
+              src={event?.event_pic_path}
+              style={{ width: "50rem", height: "20rem" }}
             />
           </div>
-          
+
           <div className="col">
             <p className="fs-1 fw-bold" style={{ color: "white" }}>
-              {eventsExamples[0].title}
+              {event?.title}
             </p>
             <p className="fs-2 fw-bold" style={{ color: "white" }}>
-              Date: {eventsExamples[0].date.toLocaleDateString()}
+              Date: {event?.date.toLocaleDateString()}
             </p>
             <p className="fs-2 fw-bold" style={{ color: "white" }}>
-              Owner: {eventsExamples[0].owner}
+              Owner: {user?.name}
             </p>
             <button type="button" className="btn btn-light btn-lg">
               <i className="bi bi-image"></i>

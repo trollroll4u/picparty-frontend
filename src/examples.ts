@@ -1,108 +1,91 @@
-import { EventData, PictureData } from "./DataStructure.ts";
+import { CommentData, EventData, LikeData, PictureData, UserData } from "./DataStructure.ts";
 import img1 from "./src/assets/img1.jpg";
+
 
 export const picturesExamples: PictureData[] = [
     {
       path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
-      comments: [
-        {
-          id: 1,
-          message: "this is a comment",
-          user: "ohad",
-          picture_id: 1,
-        }
-      ],
-      description: "this is a description",
+      description: "this is a descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnna f",
       id: 1,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
-  
     },
     {
       path: "https://picsum.photos/300",
-      comments: [],
       description: "this is a description",
       id: 2,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
-  
     },
     {
       path: "https://picsum.photos/900",
-      comments: [],
       description: "this is a description",
       id: 3,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
-  
     },
     {
       path: "https://picsum.photos/900",
-      comments: [],
       description: "this is a description",
       id: 4,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
   
     },
     {
       path: "https://picsum.photos/900",
-      comments: [],
       description: "this is a description",
       id: 5,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
   
     },
     {
       path: "https://picsum.photos/900",
-      comments: [],
       description: "this is a description",
       id: 6,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
-  
     },
     {
       path: "https://picsum.photos/900",
-      comments: [],
       description: "this is a description",
       id: 7,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
-  
     },
     {
       path: "https://picsum.photos/900",
-      comments: [],
       description: "this is a description",
       id: 8,
       event_id: 1,
-      event_name: "yosi party",
-      likes: 4,
       user_id: 1,
-      user_name: "ohad",
+    }
+  ]
+
+  export const commentsExamples : CommentData[] = [
+    {
+      id: 1,
+      message: "this is a comment",
+      user_id: 1,
+    },
+    {
+      id: 2,
+      message: "this is a comment2",
+      user_id: 2,
+    },
+    {
+      id: 3,
+      message: "this is a comment3",
+      user_id: 3,
+    }
+  ]
+
+  export const likesExamples : LikeData[] = [
+    {
+      like: true,
+      picture_id: 1,
+      user_id: 1,
     }
   ]
 
@@ -110,63 +93,108 @@ export const picturesExamples: PictureData[] = [
   export const eventsExamples: EventData[] = [
     {
       pictures: picturesExamples,
-      event_pic: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
+      comments:[],
+      likes: likesExamples,
+      owner_id: 1,
+      event_pic_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
       title: "yosi party",
       date: new Date("2019-01-16"),
-      owner: "ohad",
       location: "tel aviv",
       description: "this is a description",
       id: 1,
-  
     },
     {
-      description: "this is a description",
       id: 2,
+      comments:[],
+      likes: [],
+      description: "this is a description",
       pictures: [],
-      event_pic: "https://picsum.photos/300",
+      event_pic_path: "https://picsum.photos/300",
       title: "yuval party",
       date: new Date(2019, 5, 22),
-      owner: "ohad",
+      owner_id: 2,
       location: "tel aviv",
     },
     {
       description: "this is a description",
       id: 3,
+      comments:[],
+      likes: [],
       pictures: [],
-      event_pic: "https://picsum.photos/400",
+      event_pic_path: "https://picsum.photos/400",
       title: "dor party",
       date: new Date(),
-      owner: "ohad",
+      owner_id: 3,
       location: "tel aviv",
     },
     {
       description: "this is a description",
       id: 4,
+      comments:[],
+      likes: [],
       pictures: [],
-      event_pic: "https://picsum.photos/500",
+      event_pic_path: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
-      owner: "ohad",
+      owner_id: 3,
       location: "tel aviv",
     },
     {
       description: "this is a description",
-      id: 4,
+      id: 5,
+      comments:[],
+      likes: [],
       pictures: [],
-      event_pic: "https://picsum.photos/500",
+      event_pic_path: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
-      owner: "ohad",
+      owner_id: 1,
       location: "tel aviv",
     },
     {
       description: "this is a description",
-      id: 4,
+      id: 6,
       pictures: [],
-      event_pic: "https://picsum.photos/500",
+      comments:[],
+      likes: [],
+      event_pic_path: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
-      owner: "ohad",
+      owner_id: 2,
       location: "tel aviv",
     },
   ];
+
+  export const userExamples: UserData[] = [
+    {
+      id: 1,
+      name: "ohad",
+      password: "1234",
+      email: "ohad@gmail.com",
+      profile_pic_path: "https://picsum.photos/200",
+      events: eventsExamples, 
+      pictures: picturesExamples,
+      comments: commentsExamples,
+    },
+    {
+      id: 2,
+      name: "yuval",
+      password: "1234",
+      email: "aaaa@gmail.com",
+      profile_pic_path: "https://picsum.photos/200",
+      events:[],
+      pictures: picturesExamples,
+      comments: commentsExamples,
+      
+    },
+    {
+      id: 3,
+      name: "dor",
+      password: "1234",
+      email: "bbbbb@gmail.com",
+      profile_pic_path: "https://picsum.photos/200",
+      events:[],
+      pictures: picturesExamples,
+      comments: commentsExamples,
+    }
+]

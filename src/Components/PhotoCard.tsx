@@ -24,7 +24,7 @@ function PhotoCard({ photo }: EventProps) {
         <p className="d-md-inline">
           <i className="bi bi-heart"></i>
           &nbsp;
-          {photo.likes}
+          {photo.likes.length}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <i className="card-text bi bi-chat" />
           &nbsp;
