@@ -59,7 +59,7 @@ function SearchScreen(props: IAppProps) {
           onChange={handleSearchChange}
         />
         <br></br>
-        <EventsScreen events={searchResult} user={undefined}></EventsScreen>
+        <EventsScreen events={searchResult} ></EventsScreen>
       </div>
     </>
   );

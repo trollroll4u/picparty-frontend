@@ -23,22 +23,25 @@ export interface EventData {
     id?: number;
     user_id?: number;
     message?: string;
+    event_id?: number;
     // picture?: PictureData;
   }
 
   export interface UserData {
-    id?: number;
-    name?: string;
-    password?: string;
-    email?: string;
-    profile_pic_path?: string; //Maybe should be PictureData 
-    events?: EventData[];
-    pictures?: PictureData[];
-    comments?: CommentData[];
+    id: number;
+    name: string;
+    password: string;
+    email: string;
+    profile_pic_path: string; //Maybe should be PictureData 
+    events: EventData[];
+    pictures: PictureData[];
+    comments: CommentData[];
+    likes: LikeData[];
   }
   
   export interface LikeData {
+    id: number;
     like: boolean;
-    picture_id: number;
+    event_id: number;
     user_id: number;
   }

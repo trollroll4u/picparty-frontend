@@ -1,37 +1,153 @@
 import * as React from "react";
-import { EventData, PictureData, UserData } from "../DataStructure.ts";
+import {
+  CommentData,
+  EventData,
+  LikeData,
+  PictureData,
+  UserData,
+} from "../DataStructure.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { eventsExamples, picturesExamples, userExamples } from "../examples.ts";
-import { useState } from "react";
-import axios from "axios";
+import { ChangeEvent, useState } from "react";
+import { getEvent, CanceledError } from "../Services/event-service.ts";
+import { useParams } from "react-router-dom";
+import { getUser } from "../Services/user-service.ts";
+import CommentsScreen from "../Components/commentsScreen.tsx";
+import { createLike } from "../Services/like-service.ts";
+import { createComment } from "../Services/comment-service.ts";
 
-export interface IAppProps {
-  event_id: number;
+export interface IAppProps {}
+
+function fillLikeIcon(event: EventData, user: UserData) {
+  if (event?.likes.find((like) => like.user_id === user?.id)) {
+    return <i className="bi bi-heart-fill" style={{ color: "red" }}></i>;
+  } else {
+    return <i className="bi bi-heart"></i>;
+  }
 }
 
-function EventScreen(event_id: IAppProps) {
-  const [event, setEvent] = useState<EventData>();
-  const [user, setUser] = useState<UserData>();
+// function OnlikeEventButton( event: EventData , user: UserData) {
+//   if (event?.likes.find((like) => like.user_id === user?.id)) {
+//     return () => {
+//       console.log("unlike");
+//       const temp = event
+//        event?.likes.filter((like) => like.user_id !== user?.id);
+
+//     };
+//   } else {
+//     return () => {
+//       console.log("like");
+//       setEvent({ ...event, likes: [...event?.likes, { user_id: user?.id }] });
+//     };
+//   }
+// }
+
+function EventScreen(props: IAppProps) {
+  const { eventId } = useParams();
+  const [commentValue, setCommentValue] = useState("");
+  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCommentValue(e.target.value);
+  };
+  const [event, setEvent] = useState<EventData>({
+    id: 0,
+    title: "",
+    date: new Date(),
+    owner_id: 0,
+    event_pic_path: "",
+    likes: [],
+    comments: [],
+    pictures: [],
+    location: "",
+    description: "",
+  });
+  const [user, setUser] = useState<UserData>({
+    id: 0,
+    name: "",
+    email: "",
+    password: "",
+    profile_pic_path: "",
+    events: [],
+    comments: [],
+    pictures: [],
+    likes: [],
+  });
+
+  const onLikeEventButton = (event: EventData, user: UserData) => {
+    if (event?.likes.find((like) => like.user_id === user?.id)) {
+      console.log("unlike");
+      const temp = {
+        ...event,
+        likes: event?.likes.filter((like) => like.user_id !== user?.id),
+      };
+      setEvent(temp);
+    } else {
+      console.log("like");
+      const newLike: LikeData = {
+        id: 0, //TODO: change to real id
+        like: true,
+        user_id: user?.id,
+        event_id: event.id,
+      };
+      // create like in db
+      createLike(newLike);
+      const temp = { ...event, likes: [...event?.likes, newLike] };
+      setEvent(temp);
+    }
+  };
+
+  const onCommentEventButton = (
+    event: EventData,
+    user: UserData,
+    comment: string
+  ) => {
+    setCommentValue("");
+    const newComment: CommentData = {
+      id: 4, //TODO: change to real id
+      message: comment,
+      user_id: user?.id,
+      event_id: event.id,
+    };
+    const temp = { ...event, comments: [...event?.comments, newComment] };
+    console.log(temp);
+    setEvent(temp);
+    // create comment in db
+    createComment(newComment);
+  };
+
   React.useEffect(() => {
+    setEvent(eventsExamples[0]);
+    setUser(userExamples[0]);
     // setLoading(true);
-    // const { request , abort }  =  getAllEvents()
-    // request.then((res: { data: React.SetStateAction<EventData[]>; }) => {
-    //     // setEvents(res.data);
-    //     setLoading(false);
-    //   })
-    //   request.catch((err: any) => {
-    //     if (err instanceof CanceledError) return;
-    //     console.log(err);
-    //     setLoading(false);
-    //   });
-    axios.get("http://localhost:3000/events/1").then((res) => {
-      // setevent(res.data);
-      setEvent(eventsExamples[0]);
-    });
-    axios.get("http://localhost:3000/users/get/" + event?.owner_id).then((res) => {
-      // setEvent(res.data);
-      setUser(userExamples[0])
-    });
+    // const { request, abort } = getEvent(Number(eventId));
+    // request.then((res: { data: React.SetStateAction<EventData>; }) => {
+    //   setEvent(res.data);
+    //   //     setLoading(false);
+    //   // setUser(userExamples[0]);
+    //   const { request , abort }  =  getUser(Number(event?.owner_id))
+    //   request.then((res: { data: React.SetStateAction<UserData | undefined>; }) => {
+    //       setUser(res.data);
+    //     })
+    //     request.catch((err: any) => {
+    //       if (err instanceof CanceledError) return;
+    //       console.log(err);
+    //     });
+    // });
+    // request.catch((err: any) => {
+    //   if (err instanceof CanceledError) return;
+    //   console.log(err);
+    //   // setLoading(false);
+    // });
+    // axios.get("http://localhost:3000/events/1").then((res) => {
+    //   // setevent(res.data);
+    //   setEvent(eventsExamples[0]);
+    // });
+    // axios.get("http://localhost:3000/users/get/" + event?.owner_id).then((res) => {
+    //   // setEvent(res.data);
+    //   setUser(userExamples[0])
+    // });
+    return () => {
+      // abort();
+    };
   }, []);
   return (
     <>
@@ -44,7 +160,7 @@ function EventScreen(event_id: IAppProps) {
           <div className="col">
             <img
               src={event?.event_pic_path}
-              style={{ width: "50rem", height: "20rem" }}
+              style={{ width: "50rem", height: "24rem" }}
             />
           </div>
 
@@ -52,12 +168,31 @@ function EventScreen(event_id: IAppProps) {
             <p className="fs-1 fw-bold" style={{ color: "white" }}>
               {event?.title}
             </p>
-            <p className="fs-2 fw-bold" style={{ color: "white" }}>
+            <p className="fs-3 fw-bold" style={{ color: "white" }}>
               Date: {event?.date.toLocaleDateString()}
             </p>
-            <p className="fs-2 fw-bold" style={{ color: "white" }}>
+            <p className="fs-3 fw-bold" style={{ color: "white" }}>
               Owner: {user?.name}
             </p>
+            <p className="fs-3 fw-bold" style={{ color: "white" }}>
+              <i className="bi bi-heart"></i> {event?.likes.length}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <i className="bi bi-chat"></i> {event?.comments.length}
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <i className="bi bi-image"></i> {event?.pictures?.length}
+            </p>
+            <button
+              type="button"
+              className="btn btn-light btn-lg"
+              style={{ marginRight: "2rem" }}
+              onClick={() => onLikeEventButton(event, user)} //TODO:  change to send current user
+            >
+              {
+                fillLikeIcon(event, user) //TODO:  change to send current user
+              }
+              &nbsp;&nbsp; Like
+            </button>
+
             <button type="button" className="btn btn-light btn-lg">
               <i className="bi bi-image"></i>
               &nbsp;&nbsp; Add Some Photos
@@ -67,7 +202,35 @@ function EventScreen(event_id: IAppProps) {
         <br></br>
         <br></br>
         <div className="row">
-          <PhotosScreen photos={picturesExamples}></PhotosScreen>
+          <PhotosScreen photos={event?.pictures}></PhotosScreen>
+        </div>
+        <div className="row">
+          <CommentsScreen comments={event?.comments}></CommentsScreen>
+        </div>
+        <div className="row">
+          <form className="row g-3">
+            <div className="col">
+              <input
+                type="text"
+                style={{ width: "50vw", margin: "auto" }}
+                className="form-control form-control-lg"
+                placeholder="Add tour comment..."
+                value={commentValue}
+                onChange={handleCommentChange}
+              />
+            </div>
+            <div className="col">
+              <button
+                type="button"
+                className="btn btn-light btn-lg mb-3"
+                onClick={
+                  () => onCommentEventButton(event, user, commentValue) //TODO:  change to send current user
+                }
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>

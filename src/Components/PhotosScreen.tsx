@@ -4,7 +4,7 @@ import { EventData, PictureData } from "../DataStructure.ts";
 import PhotoCard from "./PhotoCard.tsx";
 
 interface EventsScreenProps {
-  photos: PictureData[];
+  photos: PictureData[] | undefined;
 }
 
 function PhotosScreen({ photos }: EventsScreenProps) {
@@ -12,7 +12,7 @@ function PhotosScreen({ photos }: EventsScreenProps) {
     <>
       <div className="container-fluid text-center" key="photosContainer">
         <div className="row row-cols-6 row-cols-lg-4" key="photosRow">
-          {photos.map((photo, index) => {
+          {photos && photos.map((photo, index) => {
             return (
               <div className="col" key={"col-" + index}>
                 <PhotoCard photo={photo} />

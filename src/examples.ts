@@ -66,25 +66,26 @@ export const picturesExamples: PictureData[] = [
   export const commentsExamples : CommentData[] = [
     {
       id: 1,
-      message: "this is a comment",
+      message: " cool party",
       user_id: 1,
     },
     {
       id: 2,
-      message: "this is a comment2",
+      message: "kimg of the party",
       user_id: 2,
     },
     {
       id: 3,
-      message: "this is a comment3",
+      message: "shilsulim",
       user_id: 3,
     }
   ]
 
   export const likesExamples : LikeData[] = [
     {
+      id: 1,
       like: true,
-      picture_id: 1,
+      event_id: 1,
       user_id: 1,
     }
   ]
@@ -93,7 +94,7 @@ export const picturesExamples: PictureData[] = [
   export const eventsExamples: EventData[] = [
     {
       pictures: picturesExamples,
-      comments:[],
+      comments: commentsExamples,
       likes: likesExamples,
       owner_id: 1,
       event_pic_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
@@ -175,6 +176,7 @@ export const picturesExamples: PictureData[] = [
       events: eventsExamples, 
       pictures: picturesExamples,
       comments: commentsExamples,
+      likes: likesExamples,
     },
     {
       id: 2,
@@ -185,6 +187,7 @@ export const picturesExamples: PictureData[] = [
       events:[],
       pictures: picturesExamples,
       comments: commentsExamples,
+      likes: likesExamples,
       
     },
     {
@@ -196,5 +199,6 @@ export const picturesExamples: PictureData[] = [
       events:[],
       pictures: picturesExamples,
       comments: commentsExamples,
+      likes: [],
     }
 ]

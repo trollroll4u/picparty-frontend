@@ -12,7 +12,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "", element: <HomeScreen /> },
       { path: "/search", element: <SearchScreen /> },
-      // { path: "/event/:id", element: <EventScreen user /> },
+      { path: "/event/:eventId", element: <EventScreen  /> },
       // { path: "/picture", element: <PhotoScreen />,  },
     ],
   },

@@ -16,11 +16,12 @@ function EventsScreen({ events }: EventsScreenProps) {
           {events && events.map((event, index) => {
             return (
               <div className="col" id={"col-" + index}>
-                <EventCard event={event} />
+                <EventCard event={event}  />
               </div>
             );
           })}
         </div>
+        
       </div>
     </>
   );

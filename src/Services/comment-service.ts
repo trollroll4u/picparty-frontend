@@ -14,15 +14,15 @@ export const getComment = (id: number) => {
     return {request, abort: () => abortController.abort()};
 }
 
-export const createComment = (event: CommentData) => {
+export const createComment = (comment: CommentData) => {
     const abortController = new AbortController();
-    const request =  apiClient.post<CommentData>(`comments/create`, event, {signal: abortController.signal,})
+    const request =  apiClient.post<CommentData>(`comments/create`, comment, {signal: abortController.signal,})
     return {request, abort: () => abortController.abort()};
 }
 
-export const updateComment = (event: CommentData) => {
+export const updateComment = (comment: CommentData) => {
     const abortController = new AbortController();
-    const request = apiClient.put<CommentData>(`comments/update/${event.id}`, event, {signal: abortController.signal,})
+    const request = apiClient.put<CommentData>(`comments/update/${comment.id}`, comment, {signal: abortController.signal,})
     return {request, abort: () => abortController.abort()};
 }
 
