@@ -115,10 +115,10 @@ function EventScreen(props: IAppProps) {
   };
 
   React.useEffect(() => {
-    setEvent(eventsExamples[0]);
+    setEvent(eventsExamples[Number(eventId)-1]);
     setUser(userExamples[0]);
     // setLoading(true);
-    // const { request, abort } = getEvent(Number(eventId));
+    // const { request, abort } = getEvent(Number(eventId) -1);
     // request.then((res: { data: React.SetStateAction<EventData>; }) => {
     //   setEvent(res.data);
     //   //     setLoading(false);
