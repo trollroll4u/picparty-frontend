@@ -63,6 +63,20 @@ function EventCard({ event }: EventProps) {
         <p key={"card-location-" + event?.id} className="card-text fw-bold fs-5">
           {event?.location}
         </p>
+        <p className="d-md-inline card-text fw-bold fs-5">
+          <i className="bi bi-heart"></i>
+          &nbsp;
+          {event. likes.length}
+          &nbsp;&nbsp;
+          <i className="card-text bi bi-chat" />
+          &nbsp;
+          {event.comments.length}
+          &nbsp;&nbsp;
+          <i className="card-text bi bi-image" />
+          &nbsp;
+          {event.pictures?.length}
+        </p>
+        <br></br>
         <a
           key={"card-button-" + event?.id}
           href={"/event/" + event?.id}
