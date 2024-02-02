@@ -1,10 +1,10 @@
 import React from "react";
 import EventCard from "./EventCard";
-import { EventData, PictureData } from "../DataStructure.ts";
+import { CommentDatanew  } from "../DataStructure.ts";
 import PhotoCard from "./PhotoCard.tsx";
 
 interface EventsScreenProps {
-  photos: PictureData[] | undefined;
+  photos: CommentDatanew[] | undefined;
 }
 
 function PhotosScreen({ photos }: EventsScreenProps) {

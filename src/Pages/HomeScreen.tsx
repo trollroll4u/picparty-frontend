@@ -1,7 +1,7 @@
 import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import Carusale from "../Components/carouselImages.tsx";
-import { EventData, PictureData, UserData } from "../DataStructure.ts";
+import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
 import { eventsExamples, picturesExamples } from "../examples.ts";
 import { useState } from "react";
 import { getAllEvents, CanceledError } from "../Services/event-service.ts";
@@ -11,7 +11,7 @@ export interface IAppProps {}
 
 function HomeScreen(props: IAppProps) {
   const [events, setEvents] = useState<EventData[]>([]);
-  const [pictures, setPictures] = useState<PictureData[]>([]);
+  const [pictures, setPictures] = useState<CommentDatanew[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<UserData | undefined>();
   const [error, setError] = useState<string>("");

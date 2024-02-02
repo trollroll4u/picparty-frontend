@@ -40,7 +40,7 @@ function MyNavbar() {
               <a
                 className="nav-link active"
                 aria-current="page"
-                href="search"
+                href="/search"
                 style={{ fontWeight: "bold" }}
               >
                 search

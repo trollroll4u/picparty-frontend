@@ -6,27 +6,20 @@ export interface EventData {
     owner_id: number;
     location: string;
     description?: string;
-    pictures?: PictureData[];
-    comments: CommentData[];
-    likes: LikeData[];
+    pictures?: CommentDatanew[];
+    comments: CommentDatanew[];
+    likes: CommentDatanew[];
   }
   
-  export interface PictureData {
+  export interface CommentDatanew {
     id: number;
     event_id: number; 
     user_id: number;
-    path: string;
-    description?: string;
+    picture_path?: string;
+    comment?: string;
+    like?: boolean;
   }
   
-  export interface CommentData {
-    id?: number;
-    user_id?: number;
-    message?: string;
-    event_id?: number;
-    // picture?: PictureData;
-  }
-
   export interface UserData {
     id: number;
     name: string;
@@ -34,14 +27,30 @@ export interface EventData {
     email: string;
     profile_pic_path: string; //Maybe should be PictureData 
     events: EventData[];
-    pictures: PictureData[];
-    comments: CommentData[];
-    likes: LikeData[];
+    pictures: CommentDatanew[];
+    comments: CommentDatanew[];
+    likes: CommentDatanew[];
   }
   
-  export interface LikeData {
-    id: number;
-    like: boolean;
-    event_id: number;
-    user_id: number;
-  }
+  // export interface LikeData {
+  //   id: number;
+  //   like: boolean;
+  //   event_id: number;
+  //   user_id: number;
+  // }
+
+  
+  // export interface PictureData {
+  //   id: number;
+  //   event_id: number; 
+  //   user_id: number;
+  //   path: string;
+  // }
+  
+  // export interface CommentData {
+  //   id?: number;
+  //   user_id?: number;
+  //   message?: string;
+  //   event_id?: number;
+  //   // picture?: PictureData;
+  // }

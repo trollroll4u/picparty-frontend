@@ -3,7 +3,7 @@ import EventsScreen from "../Components/EventsScreen.tsx";
 import { EventData } from "../DataStructure.ts";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { getAllEvents } from "../Services/event-service.ts";
-import { eventsExamples,picturesExamples } from "../examples.ts";
+import { eventsExamples, picturesExamples } from "../examples.ts";
 
 export interface IAppProps {}
 

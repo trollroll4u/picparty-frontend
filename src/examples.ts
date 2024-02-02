@@ -1,87 +1,82 @@
-import { CommentData, EventData, LikeData, PictureData, UserData } from "./DataStructure.ts";
+import { CommentDatanew, EventData, UserData } from "./DataStructure.ts";
 import img1 from "./src/assets/img1.jpg";
 
 
-export const picturesExamples: PictureData[] = [
+export const picturesExamples: CommentDatanew[] = [
     {
-      path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
-      description: "this is a descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnna f",
+      picture_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
       id: 1,
       event_id: 1,
       user_id: 1,
     },
     {
-      path: "https://picsum.photos/300",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/300",
       id: 2,
       event_id: 1,
       user_id: 1,
     },
     {
-      path: "https://picsum.photos/900",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/900",
       id: 3,
       event_id: 1,
       user_id: 1,
     },
     {
-      path: "https://picsum.photos/900",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/900",
       id: 4,
       event_id: 1,
       user_id: 1,
   
     },
     {
-      path: "https://picsum.photos/900",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/900",
       id: 5,
       event_id: 1,
       user_id: 1,
   
     },
     {
-      path: "https://picsum.photos/900",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/900",
       id: 6,
       event_id: 1,
       user_id: 1,
     },
     {
-      path: "https://picsum.photos/900",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/900",
       id: 7,
       event_id: 1,
       user_id: 1,
     },
     {
-      path: "https://picsum.photos/900",
-      description: "this is a description",
+      picture_path: "https://picsum.photos/900",
       id: 8,
       event_id: 1,
       user_id: 1,
     }
   ]
 
-  export const commentsExamples : CommentData[] = [
+  export const commentsExamples : CommentDatanew[] = [
     {
       id: 1,
-      message: " cool party",
+      comment: " cool party",
       user_id: 1,
+      event_id: 1,
     },
     {
       id: 2,
-      message: "kimg of the party",
+      comment: "kimg of the party",
       user_id: 2,
+      event_id: 1,
     },
     {
       id: 3,
-      message: "shilsulim",
+      comment: "shilsulim",
       user_id: 3,
+      event_id: 1,
     }
   ]
 
-  export const likesExamples : LikeData[] = [
+  export const likesExamples : CommentDatanew[] = [
     {
       id: 1,
       like: true,

@@ -1,53 +1,21 @@
 import * as React from "react";
-import {
-  CommentData,
-  EventData,
-  LikeData,
-  PictureData,
-  UserData,
-} from "../DataStructure.ts";
+import { CommentDatanew, EventData, UserData } from "../DataStructure.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { eventsExamples, picturesExamples, userExamples } from "../examples.ts";
 import { ChangeEvent, useState } from "react";
 import { getEvent, CanceledError } from "../Services/event-service.ts";
 import { useParams } from "react-router-dom";
 import { getUser } from "../Services/user-service.ts";
-import CommentsScreen from "../Components/commentsScreen.tsx";
+import CommentsScreen from "../Components/CommentsScreen.tsx"
 import { createLike } from "../Services/like-service.ts";
 import { createComment } from "../Services/comment-service.ts";
 
 export interface IAppProps {}
 
-function fillLikeIcon(event: EventData, user: UserData) {
-  if (event?.likes.find((like) => like.user_id === user?.id)) {
-    return <i className="bi bi-heart-fill" style={{ color: "red" }}></i>;
-  } else {
-    return <i className="bi bi-heart"></i>;
-  }
-}
-
-// function OnlikeEventButton( event: EventData , user: UserData) {
-//   if (event?.likes.find((like) => like.user_id === user?.id)) {
-//     return () => {
-//       console.log("unlike");
-//       const temp = event
-//        event?.likes.filter((like) => like.user_id !== user?.id);
-
-//     };
-//   } else {
-//     return () => {
-//       console.log("like");
-//       setEvent({ ...event, likes: [...event?.likes, { user_id: user?.id }] });
-//     };
-//   }
-// }
-
 function EventScreen(props: IAppProps) {
+  // States
   const { eventId } = useParams();
   const [commentValue, setCommentValue] = useState("");
-  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCommentValue(e.target.value);
-  };
   const [event, setEvent] = useState<EventData>({
     id: 0,
     title: "",
@@ -72,6 +40,11 @@ function EventScreen(props: IAppProps) {
     likes: [],
   });
 
+  // Functions
+  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCommentValue(e.target.value);
+  };
+
   const onLikeEventButton = (event: EventData, user: UserData) => {
     if (event?.likes.find((like) => like.user_id === user?.id)) {
       console.log("unlike");
@@ -82,7 +55,7 @@ function EventScreen(props: IAppProps) {
       setEvent(temp);
     } else {
       console.log("like");
-      const newLike: LikeData = {
+      const newLike: CommentDatanew = {
         id: 0, //TODO: change to real id
         like: true,
         user_id: user?.id,
@@ -100,22 +73,35 @@ function EventScreen(props: IAppProps) {
     user: UserData,
     comment: string
   ) => {
-    setCommentValue("");
-    const newComment: CommentData = {
-      id: 4, //TODO: change to real id
-      message: comment,
-      user_id: user?.id,
-      event_id: event.id,
-    };
-    const temp = { ...event, comments: [...event?.comments, newComment] };
-    console.log(temp);
-    setEvent(temp);
-    // create comment in db
-    createComment(newComment);
+    if (comment === "") {
+      return;
+    } else {
+      setCommentValue("");
+      const newComment: CommentDatanew = {
+        id: 4, //TODO: change to real id
+        comment: comment,
+        user_id: user?.id,
+        event_id: event.id,
+      };
+      const temp = { ...event, comments: [...event?.comments, newComment] };
+      console.log(temp);
+      setEvent(temp);
+      // create comment in db
+      createComment(newComment);
+    }
   };
 
+  const fillLikeIcon = (event: EventData, user: UserData) => {
+    if (event?.likes.find((like) => like.user_id === user?.id)) {
+      return <i className="bi bi-heart-fill" style={{ color: "red" }}></i>;
+    } else {
+      return <i className="bi bi-heart"></i>;
+    }
+  };
+
+  // UseEffects
   React.useEffect(() => {
-    setEvent(eventsExamples[Number(eventId)-1]);
+    setEvent(eventsExamples[Number(eventId) - 1]);
     setUser(userExamples[0]);
     // setLoading(true);
     // const { request, abort } = getEvent(Number(eventId) -1);
@@ -156,7 +142,7 @@ function EventScreen(props: IAppProps) {
         style={{ backgroundColor: "black", maxWidth: "100%" }}
       >
         <br></br>
-        <div className="row">
+        <div className="row text-center">
           <div className="col">
             <img
               src={event?.event_pic_path}
@@ -184,7 +170,7 @@ function EventScreen(props: IAppProps) {
             <button
               type="button"
               className="btn btn-light btn-lg"
-              style={{ marginRight: "2rem" }}
+              style={{ margin: "2rem" }}
               onClick={() => onLikeEventButton(event, user)} //TODO:  change to send current user
             >
               {
