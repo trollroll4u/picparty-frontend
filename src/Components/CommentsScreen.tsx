@@ -9,13 +9,13 @@ interface CommentsProps {
 function CommentsScreen({ comments }: CommentsProps) {
   return (
     <>
-      <div className="container-fluid " id="eventsContainer">
-        <div className="row row-cols-1" id="eventsRow">
+      <div className="container-fluid " key="commentsContainer">
+        <div className="row row-cols-1" key="Row">
           {comments &&
             comments.map((comment, index) => {
               if (comment.comment !== "") {
                 return (
-                  <div className="col" id={"col-" + index}>
+                  <div className="col" key={"col-" + index}>
                     <CommentCard comment={comment} />
                   </div>
                 );

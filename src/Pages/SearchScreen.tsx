@@ -50,7 +50,7 @@ function SearchScreen(props: IAppProps) {
         <br></br>
         <br></br>
         <input
-          id="search-input"
+          key="search-input"
           className="form-control form-control-lg"
           style={{ width: "50vw", margin: "auto" }}
           type="text"

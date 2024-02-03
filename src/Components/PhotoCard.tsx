@@ -7,6 +7,15 @@ interface PhotoProps {
 }
 
 function PhotoCard({ photo }: PhotoProps) {
+  const [selectedPhoto, setSelectedPhoto] = React.useState("");
+
+  const openModal = (photo: any) => {
+    setSelectedPhoto(photo);
+  };
+
+  const closeModal = () => {
+    setSelectedPhoto("");
+  };
   return (
     <>
       <div className="card mx-1 my-2" key={"card-" + photo.id}>
@@ -14,29 +23,50 @@ function PhotoCard({ photo }: PhotoProps) {
           key={"card-img-" + photo.id}
           className="card-img-top"
           src={photo.picture_path || img1}
-          style={{ height: "10rem", width: "100%" }}
+          style={{ height: "10rem", width: "100%", cursor: "pointer" }}
           onClick={() => {
-            console.log("clicked");
+            openModal(photo.picture_path);
           }}
-          data-bs-toggle="modal"
-          data-bs-target="#ImageModal"
         />
       </div>
- 
-      {/* model code  */}
-      <div
-        className="modal fade"
-        id="ImageModal"
-        tabIndex={Number("-1")}
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <img src={photo.picture_path}></img>
+      {selectedPhoto !== "" && (
+        <div
+          className="modal fade show"
+          tabIndex={Number("-1")}
+          role="dialog"
+          style={{ display: "block" }}
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <img src={selectedPhoto} />
+              <div
+                className="modal-footer"
+                style={{ backgroundColor: "black" }}
+              >
+                <button
+                  type="button"
+                  className="btn btn-light"
+                  onClick={closeModal}
+                >
+                  {
+                    //TODO:  download the image from the server when available
+                  }
+                  Download
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-light"
+                  onClick={closeModal}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

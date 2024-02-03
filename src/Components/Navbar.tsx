@@ -1,6 +1,48 @@
+import { useState } from "react";
 import Logo from "../assets/small logo.png";
 
 function MyNavbar() {
+  const [loggedIn, setLoggedIn] = useState(true);
+
+  const loginNavbar = () => {
+    if (loggedIn) {
+      return (
+        <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+          <li className="nav-item" style={{ marginRight: "10px" }}>
+            <a href="/profile">
+              <button type="button" className="btn btn-light fw-bold">
+                <i className="bi bi-person-circle"></i>
+                &nbsp; Profile
+              </button>
+            </a>
+          </li>
+          <li className="nav-item" style={{ marginRight: "10px" }}>
+            <a href="/search">
+              <button type="button" className="btn btn-light fw-bold">
+                Log out
+              </button>
+            </a>
+          </li>
+        </ul>
+      );
+    } else {
+      return (
+        <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+          <li className="nav-item" style={{ marginRight: "10px" }}>
+            <button type="button" className="btn btn-light fw-bold">
+              Sign up
+            </button>
+          </li>
+          <li className="nav-item" style={{ marginRight: "10px" }}>
+            <button type="button" className="btn btn-light fw-bold">
+              Sign in
+            </button>
+          </li>
+        </ul>
+      );
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -52,18 +94,7 @@ function MyNavbar() {
               </button>
             </li>
           </ul>
-          <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li className="nav-item" style={{ marginRight: "10px" }}>
-              <button type="button" className="btn btn-light fw-bold">
-                Sign up
-              </button>
-            </li>
-            <li className="nav-item" style={{ marginRight: "10px" }}>
-              <button type="button" className="btn btn-light fw-bold">
-                Sign in
-              </button>
-            </li>
-          </ul>
+          {loginNavbar()}
         </div>
       </div>
     </nav>

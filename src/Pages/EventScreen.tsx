@@ -6,8 +6,7 @@ import { ChangeEvent, useState } from "react";
 import { getEvent, CanceledError } from "../Services/event-service.ts";
 import { useParams } from "react-router-dom";
 import { getUser } from "../Services/user-service.ts";
-import CommentsScreen from "../Components/CommentsScreen.tsx"
-import { createLike } from "../Services/like-service.ts";
+import CommentsScreen from "../Components/CommentsScreen.tsx";
 import { createComment } from "../Services/comment-service.ts";
 
 export interface IAppProps {}
@@ -17,10 +16,10 @@ function EventScreen(props: IAppProps) {
   const { eventId } = useParams();
   const [commentValue, setCommentValue] = useState("");
   const [event, setEvent] = useState<EventData>({
-    id: 0,
+    id: "0",
     title: "",
     date: new Date(),
-    owner_id: 0,
+    owner_id: "0",
     event_pic_path: "",
     likes: [],
     comments: [],
@@ -29,7 +28,7 @@ function EventScreen(props: IAppProps) {
     description: "",
   });
   const [user, setUser] = useState<UserData>({
-    id: 0,
+    id: "0",
     name: "",
     email: "",
     password: "",
@@ -56,13 +55,13 @@ function EventScreen(props: IAppProps) {
     } else {
       console.log("like");
       const newLike: CommentDatanew = {
-        id: 0, //TODO: change to real id
+        id: "0", //TODO: change to real id
         like: true,
         user_id: user?.id,
         event_id: event.id,
       };
       // create like in db
-      createLike(newLike);
+      createComment(newLike);
       const temp = { ...event, likes: [...event?.likes, newLike] };
       setEvent(temp);
     }
@@ -78,7 +77,7 @@ function EventScreen(props: IAppProps) {
     } else {
       setCommentValue("");
       const newComment: CommentDatanew = {
-        id: 4, //TODO: change to real id
+        id: "4", //TODO: change to real id
         comment: comment,
         user_id: user?.id,
         event_id: event.id,
@@ -167,6 +166,10 @@ function EventScreen(props: IAppProps) {
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <i className="bi bi-image"></i> {event?.pictures?.length}
             </p>
+            <button type="button" className="btn btn-light btn-lg">
+              <i className="bi bi-image"></i>
+              &nbsp;&nbsp; Add Some Photos
+            </button>
             <button
               type="button"
               className="btn btn-light btn-lg"
@@ -178,11 +181,6 @@ function EventScreen(props: IAppProps) {
               }
               &nbsp;&nbsp; Like
             </button>
-
-            <button type="button" className="btn btn-light btn-lg">
-              <i className="bi bi-image"></i>
-              &nbsp;&nbsp; Add Some Photos
-            </button>
           </div>
         </div>
         <br></br>
@@ -190,7 +188,7 @@ function EventScreen(props: IAppProps) {
         <div className="row">
           <PhotosScreen photos={event?.pictures}></PhotosScreen>
         </div>
-        <div className="row">
+        <div className="row " style={{ width:"50%"}}>
           <CommentsScreen comments={event?.comments}></CommentsScreen>
         </div>
         <div className="row">
@@ -199,8 +197,8 @@ function EventScreen(props: IAppProps) {
               <input
                 type="text"
                 style={{ width: "50vw", margin: "auto" }}
-                className="form-control form-control-lg"
-                placeholder="Add tour comment..."
+                className="form-control form-control-md"
+                placeholder="Add your comment..."
                 value={commentValue}
                 onChange={handleCommentChange}
               />
@@ -208,7 +206,7 @@ function EventScreen(props: IAppProps) {
             <div className="col">
               <button
                 type="button"
-                className="btn btn-light btn-lg mb-3"
+                className="btn btn-light btn-md mb-3"
                 onClick={
                   () => onCommentEventButton(event, user, commentValue) //TODO:  change to send current user
                 }

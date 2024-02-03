@@ -36,8 +36,8 @@ function CommentCard({ comment }: EventProps) {
         key={"card-body-" + comment.id}
         style={{ display: "inline" }}
       >
-        <p className="d-md-inline fs-5">
-          <span className="fw-bold fs-4"> {user?.name}</span> {comment.comment}
+        <p className="d-md-inline fs-6">
+          <span className="fw-bold fs-6"> {user?.name}</span> {comment.comment}
         </p>
       </div>
     </div>

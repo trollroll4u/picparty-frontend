@@ -77,12 +77,13 @@ function EventCard({ event }: EventProps) {
           {event.pictures?.length}
         </p>
         <br></br>
+        <br></br>
         <a
           key={"card-button-" + event?.id}
           href={"/event/" + event?.id}
-          className="btn btn-dark fw-bold fs-4"
+          className="btn btn-dark fw-bold fs-6"
         >
-          Event pic
+          Event Images
         </a>
       </div>
     </div>

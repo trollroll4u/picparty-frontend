@@ -1,9 +1,9 @@
 export interface EventData {
-    id: number;
+    id: string;
     event_pic_path?: string; //Maybe should be PictureData
     title: string;
     date: Date;
-    owner_id: number;
+    owner_id: string;
     location: string;
     description?: string;
     pictures?: CommentDatanew[];
@@ -12,16 +12,16 @@ export interface EventData {
   }
   
   export interface CommentDatanew {
-    id: number;
-    event_id: number; 
-    user_id: number;
+    id: string;
+    event_id: string; 
+    user_id: string;
     picture_path?: string;
     comment?: string;
     like?: boolean;
   }
-  
+
   export interface UserData {
-    id: number;
+    id: string;
     name: string;
     password: string;
     email: string;
@@ -35,15 +35,15 @@ export interface EventData {
   // export interface LikeData {
   //   id: number;
   //   like: boolean;
-  //   event_id: number;
-  //   user_id: number;
+  //   event_id: string;
+  //   user_id: string;
   // }
 
   
   // export interface PictureData {
   //   id: number;
-  //   event_id: number; 
-  //   user_id: number;
+  //   event_id: string; 
+  //   user_id: string;
   //   path: string;
   // }
   
