@@ -3,7 +3,7 @@ import EventCard from "./EventCard";
  import { EventData, UserData } from "../DataStructure.ts";
 
 interface EventsScreenProps {
-  events: EventData[] | undefined;
+  events: EventData[] ;
 }
 
 function EventsScreen({ events }: EventsScreenProps) {
@@ -11,11 +11,11 @@ function EventsScreen({ events }: EventsScreenProps) {
 
   return (
     <>
-      <div className="container-fluid text-center" id="eventsContainer">
-        <div className="row row-cols-2 row-cols-lg-4 g-lg-3" id="eventsRow">
+      <div className="container-fluid text-center" key="eventsContainer" >
+        <div className="row row-cols-2 row-cols-lg-4 g-lg-3" key="eventsRow">
           {events && events.map((event, index) => {
             return (
-              <div className="col" id={"col-" + index}>
+              <div className="col" key={"col-" + index}>
                 <EventCard event={event}  />
               </div>
             );

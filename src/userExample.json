@@ -1,0 +1,32 @@
+[
+    {
+        "name": "ronen",
+        "password": "1234",
+        "email": "aaaa@gmail.com",
+        "profile_pic_path": "https://picsum.photos/400",
+        "events":[],
+        "pictures": [],
+        "comments": [],
+        "likes": []
+      },
+    {
+        "name": "ohad",
+        "password": "1234",
+        "email": "cccc@gmail.com",
+        "profile_pic_path": "https://picsum.photos/300",
+        "events":[],
+        "pictures": [],
+        "comments": [],
+        "likes": []
+      },
+    {
+      "name": "dor",
+      "password": "1234",
+      "email": "bbbbb@gmail.com",
+      "profile_pic_path": "https://picsum.photos/200",
+      "events":[],
+      "pictures": [],
+      "comments": [],
+      "likes": []
+    }
+]

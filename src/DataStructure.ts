@@ -1,9 +1,9 @@
 export interface EventData {
-    id: string;
+    _id: string;
     event_pic_path?: string; //Maybe should be PictureData
     title: string;
     date: Date;
-    owner_id: string;
+    user_id: string;
     location: string;
     description?: string;
     pictures?: CommentDatanew[];
@@ -12,7 +12,7 @@ export interface EventData {
   }
   
   export interface CommentDatanew {
-    id: string;
+    _id?: string;
     event_id: string; 
     user_id: string;
     picture_path?: string;
@@ -21,7 +21,7 @@ export interface EventData {
   }
 
   export interface UserData {
-    id: string;
+    _id: string;
     name: string;
     password: string;
     email: string;

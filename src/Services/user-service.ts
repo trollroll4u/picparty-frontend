@@ -1,35 +1,65 @@
 import apiClient, { CanceledError } from "./api-client";
 import { UserData } from "../DataStructure";   
 
-export { CanceledError }
-export const getAllUsers= () => {
-    const abortController = new AbortController();
-    const request = apiClient.get<UserData[]>("users/get", {signal: abortController.signal,})
-    return {request, abort: () => abortController.abort()};
+// export { CanceledError }
+
+export const getAllUsers = () => {
+    return new Promise<UserData[]>((resolve, reject) => {
+        apiClient.get<UserData[]>("users/get").then((res) => {
+                const users : UserData[] = res.data;
+                resolve(users);
+        }).catch((err) => {
+            console.log("error in getting all users: ", err);
+            reject(err);
+        })
+    })
 }
 
-export const getUser = (id: number) => {
-    const abortController = new AbortController();
-    const request =  apiClient.get<UserData>(`users/get/${id}`, {signal: abortController.signal,})
-    return {request, abort: () => abortController.abort()};
+
+export const getUser = (id: string) => {
+    return new Promise<UserData>(async (resolve, reject) => {
+        console.log("id: ", id);
+        await apiClient.get<UserData>(`users/get/${id}`).then((res) => {
+                resolve(res.data);
+        }).catch((err) => {
+            console.log("error in getting user: ", err);
+            reject(err);
+        })
+    })
 }
 
 export const createUser = (user: UserData) => {
-    const abortController = new AbortController();
-    const request =  apiClient.post<UserData>(`users/create`, user, {signal: abortController.signal,})
-    return {request, abort: () => abortController.abort()};
+    return new Promise<UserData>((resolve, reject) => {
+        apiClient.post<UserData>(`users/create`, user).then((res) => {
+                resolve(res.data);
+        }).catch((err) => {
+            console.log("error in create user: ", err);
+            reject(err);
+        })
+    })
 }
 
 export const updateUser = (user: UserData) => {
-    const abortController = new AbortController();
-    const request = apiClient.put<UserData>(`users/update/${user.id}`, user, {signal: abortController.signal,})
-    return {request, abort: () => abortController.abort()};
+    return new Promise<UserData>((resolve, reject) => {
+        apiClient.put<UserData>(`users/update/${user._id}`, user).then((res) => {
+                resolve(res.data);
+        }).catch((err) => {
+            console.log("error in update user: ", err);
+            reject(err);
+        })
+    })
 }
 
-export const deleteUser = (id: number) => {
-    const abortController = new AbortController();
-    const request = apiClient.delete<UserData>(`users/delete/${id}`, {signal: abortController.signal,})
-    return {request, abort: () => abortController.abort()};
+export const deleteUser = (id: string) => {
+    return new Promise<UserData>((resolve, reject) => {
+        apiClient.delete<UserData>(`users/delete/${id}`).then((res) => {
+                resolve(res.data);
+        }).catch((err) => {
+            console.log("error in delete user: ", err);
+            reject(err);
+        })
+    })
 }
+
 
 export default { getAllUsers, getUser, createUser, updateUser, deleteUser}

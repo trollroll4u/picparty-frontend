@@ -5,86 +5,63 @@ import img1 from "./src/assets/img1.jpg";
 export const picturesExamples: CommentDatanew[] = [
     {
       picture_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
-      _id: "1",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
     },
     {
       picture_path: "https://picsum.photos/300",
-      _id: "2",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
     },
     {
       picture_path: "https://picsum.photos/900",
-      _id: "3",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
     },
     {
       picture_path: "https://picsum.photos/900",
-      _id: "4",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
-    },
-    {
-      picture_path: "https://picsum.photos/900",
-      _id: "5",
-      event_id: "1",
-      user_id: "1",
-      comment:"",
-      like: false
   
     },
     {
       picture_path: "https://picsum.photos/900",
-      _id: "6",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
+  
     },
     {
       picture_path: "https://picsum.photos/900",
-      _id: "7",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
     },
     {
       picture_path: "https://picsum.photos/900",
-      _id: "8",
       event_id: "1",
       user_id: "1",
-      comment:"",
-      like: false
+    },
+    {
+      picture_path: "https://picsum.photos/900",
+      event_id: "1",
+      user_id: "1",
     }
   ]
 
   export const commentsExamples : CommentDatanew[] = [
     {
-      _id: "1",
+      id: "1",
       comment: " cool cool cool cool cool cool cool cool cool cool cool cool cool cool cool cool ",
       user_id: "1",
       event_id: "1",
     },
     {
-      _id: "2",
+      id: "2",
       comment: "kimg of the party",
       user_id: "2",
       event_id: "1",
     },
     {
-      _id: "3",
+      id: "3",
       comment: "shilsulim",
       user_id: "3",
       event_id: "1",
@@ -93,7 +70,7 @@ export const picturesExamples: CommentDatanew[] = [
 
   export const likesExamples : CommentDatanew[] = [
     {
-      _id: "1",
+      id: "1",
       like: true,
       event_id: "1",
       user_id: "1",
@@ -112,23 +89,23 @@ export const picturesExamples: CommentDatanew[] = [
       date: new Date("2019-01-16"),
       location: "tel aviv",
       description: "this is a description",
-      _id: "1",
+      id: "1",
     },
     {
-      _id: "2",
+      id: "2",
       comments:[],
       likes: [],
       description: "this is a description",
       pictures: [],
       event_pic_path: "https://picsum.photos/300",
       title: "yuval party",
-      date: new Date(2019, 5, 22),
+      date: "2000-12-31T22:00:00.000+00:00",
       owner_id: "2",
       location: "tel aviv",
     },
     {
       description: "this is a description",
-      _id: "3",
+      id: "3",
       comments:[],
       likes: [],
       pictures: [],
@@ -140,7 +117,7 @@ export const picturesExamples: CommentDatanew[] = [
     },
     {
       description: "this is a description",
-      _id: "4",
+      id: "4",
       comments:[],
       likes: [],
       pictures: [],
@@ -152,7 +129,7 @@ export const picturesExamples: CommentDatanew[] = [
     },
     {
       description: "this is a description",
-      _id: "5",
+      id: "5",
       comments:[],
       likes: [],
       pictures: [],
@@ -164,7 +141,7 @@ export const picturesExamples: CommentDatanew[] = [
     },
     {
       description: "this is a description",
-      _id: "6",
+      id: "6",
       pictures: [],
       comments:[],
       likes: [],
@@ -178,7 +155,7 @@ export const picturesExamples: CommentDatanew[] = [
 
   export const userExamples: UserData[] = [
     {
-      _id: "1",
+      id: "1",
       name: "ohad",
       password: "1234",
       email: "ohad@gmail.com",
@@ -189,7 +166,7 @@ export const picturesExamples: CommentDatanew[] = [
       likes: likesExamples,
     },
     {
-      _id: "2",
+      id: "2",
       name: "yuval",
       password: "1234",
       email: "aaaa@gmail.com",
@@ -201,7 +178,7 @@ export const picturesExamples: CommentDatanew[] = [
       
     },
     {
-      _id: "3",
+      id: "3",
       name: "dor",
       password: "1234",
       email: "bbbbb@gmail.com",

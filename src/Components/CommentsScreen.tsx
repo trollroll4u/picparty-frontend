@@ -9,7 +9,7 @@ interface CommentsProps {
 function CommentsScreen({ comments }: CommentsProps) {
   return (
     <>
-      <div className="container-fluid " key="commentsContainer">
+      <div className="container-fluid " key="commentsContainer" >
         <div className="row row-cols-1" key="Row">
           {comments &&
             comments.map((comment, index) => {

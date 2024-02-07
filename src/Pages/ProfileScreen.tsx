@@ -2,46 +2,75 @@ import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import Carusale from "../Components/carouselImages.tsx";
 import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
-import { eventsExamples, picturesExamples } from "../examples.ts";
+import { eventsExamples, picturesExamples, userExamples } from "../examples.ts";
 import { useState } from "react";
-import { getAllEvents, CanceledError } from "../Services/event-service.ts";
+import { getEventByUser } from "../Services/event-service.ts";
 import { getAllpictures } from "../Services/picture-service.ts";
+import {
+  getAllComments,
+  getMessageCommentsByUser,
+  getPictureComments,
+  getPictureCommentsByUser,
+} from "../Services/comment-service.ts";
+import PhotosScreen from "../Components/PhotosScreen.tsx";
 
 export interface IAppProps {}
 
-function HomeScreen(props: IAppProps) {
-  const [events, setEvents] = useState<EventData[]>([]);
-  const [pictures, setPictures] = useState<CommentDatanew[]>([]);
+function ProfileScreen(props: IAppProps) {
+  const [events, setEvents] = useState<EventData[]>();
+  const [pictures, setPictures] = useState<CommentDatanew[]>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserData | undefined>();
+  const [user, setUser] = useState<UserData>(userExamples[0]);
   const [error, setError] = useState<string>("");
 
   React.useEffect(() => {
-    setEvents(eventsExamples);
-    setPictures(picturesExamples);
+    // setEvents(eventsExamples);
+    // setPictures(picturesExamples);
     //**
-    // setLoading(true);
-    // const { request , abort }  =  getAllEvents()
-    // request.then((res: { data: React.SetStateAction<EventData[]>; }) => {
-    //     // setEvents(res.data);
-    //     setLoading(false);
-    //   })
-    //   request.catch((err: any) => {
-    //     if (err instanceof CanceledError) return;
-    //     console.log(err);
-    //     setLoading(false);
-    //   });
-    // pictureService.getAllPictures().then(({ request, abort }) => {
-    //   setPictures(request.data);
-    //   setLoading(false);
-    // }).catch((err) => {
-    //   if (err instanceof CanceledError) return;
-    //   console.log(err);
-    //   setLoading(false);
-    // });
+
+    // get the userfrom redux
+
+    const fetchEventsByUser = async (id: string) => {
+      try {
+        const events = await getEventByUser("65c28f044145861695700968");
+        setEvents(events);
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching events: " + error);
+        setLoading(false);
+      }
+    };
+    const fetchPicturesByUser = async (id: string) => {
+      try {
+        const pictures = await getPictureCommentsByUser(
+          "65c28f044145861695700968"
+        );
+        setPictures(pictures);
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching pictures: " + error);
+        setLoading(false);
+      }
+    };
+
+    const fetchCommentsByUser = async (id: string) => {
+      try {
+        const comments = await getMessageCommentsByUser(
+          "65c28f044145861695700968"
+        );
+        setPictures(comments);
+        setLoading(false);
+      } catch (error) {
+        console.log("Error fetching comments: " + error);
+        setLoading(false);
+      }
+    };
+    setLoading(true);
+    fetchEventsByUser("00000");
+    fetchPicturesByUser("00000");
+    fetchCommentsByUser("00000");
 
     return () => {
-      // abort();
       console.log("clean up");
     };
   }, []);
@@ -49,11 +78,12 @@ function HomeScreen(props: IAppProps) {
   return (
     <>
       <div
-        className="container"
-        style={{ backgroundColor: "black", maxWidth: "100%" }}
+        className="container-fluid text-center"
+        style={{ backgroundColor: "black", maxWidth: "100%", height: "100vh" }}
       >
         {loading && <div className="spinner-border text-primary"> </div>}
         <div className="row">
+          <img src=""></img>
           <h1 style={{ color: "white" }}> my profile page</h1>
           <p style={{ color: "white" }}>
             add rounded image, and copy from the sign up page so it will display
@@ -61,9 +91,31 @@ function HomeScreen(props: IAppProps) {
             in getin
           </p>
         </div>
+        <div className="row justify-content-center">
+          <div className="col-md-6 ">
+            <img
+              src={user.profile_pic_path}
+              alt="Profile Avatar"
+              className="rounded-circle mb-3"
+              style={{ width: "15rem", height: "15rem" }}
+            ></img>
+          </div>
+        </div>
+        <div className="row">
+          <h1 style={{ color: "white" }}> sign up form</h1>
+        </div>
+
+        <div className="row" style={{ backgroundColor: "black" }}>
+          <h1 style={{ color: "white" }}> My Pictures</h1>
+          <PhotosScreen photos={pictures}></PhotosScreen>
+        </div>
+        <div className="row" style={{ backgroundColor: "black" }}>
+          <h1 style={{ color: "white" }}> My events</h1>
+          <EventsScreen events={events}></EventsScreen>
+        </div>
       </div>
     </>
   );
 }
 
-export default HomeScreen;
+export default ProfileScreen;

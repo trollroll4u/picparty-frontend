@@ -18,9 +18,9 @@ function PhotoCard({ photo }: PhotoProps) {
   };
   return (
     <>
-      <div className="card mx-1 my-2" key={"card-" + photo.id}>
+      <div className="card mx-1 my-2" key={"card-" + photo._id}>
         <img
-          key={"card-img-" + photo.id}
+          key={"card-img-" + photo._id}
           className="card-img-top"
           src={photo.picture_path || img1}
           style={{ height: "10rem", width: "100%", cursor: "pointer" }}
