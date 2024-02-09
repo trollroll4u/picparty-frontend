@@ -106,7 +106,7 @@ export const picturesExamples: CommentDatanew[] = [
       pictures: picturesExamples,
       comments: commentsExamples,
       likes: likesExamples,
-      owner_id: "1",
+      user_id: "1",
       event_pic_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
       title: "yosi party",
       date: new Date("2019-01-16"),

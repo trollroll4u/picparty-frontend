@@ -9,26 +9,27 @@ interface EventProps {
 }
 
 function EventCard({ event }: EventProps) {
-  const [user, setUser] = useState<UserData>();
+  const [owner, setOwner] = useState<UserData>();
 
   // get the user of the event
   useEffect(() => {
-    console.log(event?.user_id);
-    const fetchUser = async () => {
+    console.log("ohaddd" + event?.user_id);
+    const fetchUser = async (owner_id: string) => {
       try {
-        const user = await getUser(event.user_id);
-        setUser(user);
+        await getUser(owner_id).then((res) => {
+          setOwner(res);
+        });
       } catch (error) {
         console.log("Error fetching user: " + error);
       }
     };
-    fetchUser();
+    fetchUser(event.user_id);
     return () => {
       // abort();
       console.log("clean up");
     };
   }, []);
-  
+
   return (
     <div className="card mx-4 my-2" key={"card-" + event?._id}>
       <img
@@ -53,7 +54,7 @@ function EventCard({ event }: EventProps) {
           {event?.date.toLocaleDateString()}
         </p>
         <p key={"card-owner-" + event?._id} className="card-text fw-bold fs-6">
-          {user?.name}
+          {owner?.name || "ddd"}
         </p>
         <p
           key={"card-location-" + event?._id}

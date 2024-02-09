@@ -10,7 +10,7 @@ function createSlides(images: CommentDatanew[]) {
     return (
       <div
         className={"carousel-item" + (index === 0 ? " active" : "")}
-        key={"carousel-item" + (index === 0 ? " active" : "")}
+        key={"carousel-item" + index}
       >
         <img
           key={"carousel-image" + (index === 0 ? " active" : "")}

@@ -21,6 +21,7 @@ export interface EventData {
   }
 
   export interface UserData {
+    [x: string]: any;
     _id: string;
     name: string;
     password: string;

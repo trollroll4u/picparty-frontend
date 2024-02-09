@@ -1,10 +1,9 @@
 import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import { EventData } from "../DataStructure.ts";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { CanceledError, getAllEvents } from "../Services/event-service.ts";
-import { eventsExamples, picturesExamples } from "../examples.ts";
-import { Row } from "react-bootstrap";
+import { ChangeEvent, useState } from "react";
+import { getAllEvents } from "../Services/event-service.ts";
+
 
 export interface IAppProps {}
 

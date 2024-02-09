@@ -6,6 +6,8 @@ import { eventsExamples, picturesExamples } from "../examples.ts";
 import { useState } from "react";
 import { getAllEvents, CanceledError } from "../Services/event-service.ts";
 import { getPictureComments } from "../Services/comment-service.ts";
+import { RootState } from "@reduxjs/toolkit/query";
+import { useSelector } from "react-redux";
 
 export interface IAppProps {}
 
@@ -13,16 +15,14 @@ function HomeScreen(props: IAppProps) {
   const [events, setEvents] = useState<EventData[]>([]);
   const [pictures, setPictures] = useState<CommentDatanew[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserData>();
+  const user = useSelector((state: UserData) => state.user);
   const [error, setError] = useState<string>("");
-
-
 
   React.useEffect(() => {
     // setEvents(eventsExamples);
     // setPictures(picturesExamples);
     //**
-    
+
     const fetchEvents = async () => {
       try {
         const events = await getAllEvents();
@@ -42,46 +42,13 @@ function HomeScreen(props: IAppProps) {
         console.log("Error fetching pictures: " + error);
         setLoading(false);
       }
-    }
+    };
     setLoading(true);
     fetchEvents();
-    fetchPictures()
-    
-
-    // const { request: eventRequest, abort: eventAbort } = getAllEvents();
-    // eventRequest.then((res: { data: EventData[] }) => {
-    //   setEvents(res.data);
-    //   setLoading(false);
-    // });
-    // eventRequest.catch((err: any) => {
-    //   if (err.name === "AbortError") {
-    //     console.log("CanceledError");
-    //   } else if (err instanceof CanceledError) {
-    //     return;
-    //   } else {
-    //     // console.log(err);
-    //     setLoading(false);
-    //   }
-    // });
-
-
-    // const { request: picRequest, abort: picAbort } = getPictureComments();
-    // picRequest
-    //   .then((res: { data: CommentDatanew[] }) => {
-    //     setPictures(res.data);
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     if (err instanceof CanceledError) {
-    //       return;
-    //     } else {
-    //       console.log(err);
-    //       setLoading(false);
-    //     }
-    //   });
+    fetchPictures();
 
     return () => {
-      console.log("clean up");
+      // console.log("clean up");
     };
   }, []);
 

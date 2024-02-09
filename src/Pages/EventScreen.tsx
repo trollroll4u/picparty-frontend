@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { getUser } from "../Services/user-service.ts";
 import CommentsScreen from "../Components/CommentsScreen.tsx";
 import { createComment } from "../Services/comment-service.ts";
+import { useSelector } from "react-redux";
 
 export interface IAppProps {}
 
@@ -17,7 +18,8 @@ function EventScreen(props: IAppProps) {
   const [commentValue, setCommentValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [event, setEvent] = useState<EventData>();
-  const [user, setUser] = useState<UserData>();
+  const user = useSelector((state: UserData) => state.user);
+  const [owner, setOwner] = useState<UserData>();
 
   // Functions
   const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,23 +86,23 @@ function EventScreen(props: IAppProps) {
   React.useEffect(() => {
     // setEvent(eventsExamples[Number(eventId) - 1]);
     // setUser(userExamples[0]);
-    const fetchUser = async (event: EventData) => {
+    const fetchOwnerUser = async (owner_id: string) => {
       try {
-        const user = await getUser(event?.user_id);
-        setUser(user);
+        await getUser(owner_id).then((res) => {
+          setOwner(res);
+        });
       } catch (error) {
-        console.log("Error fetching user: " + error);
+        console.log("Error fetching owner: " + error);
       }
     };
 
     const fetchEvent = async (event_id: string) => {
       try {
-        const events = await getEvent(event_id).then((res) => {
+        await getEvent(event_id).then((res) => {
           setEvent(res);
-          fetchUser(res);
-
+          fetchOwnerUser(res.user_id);
         });
-        // await setEvent(events);
+        // setEvent(event);
         setLoading(false);
       } catch (error) {
         console.log("Error fetching event: " + error);
@@ -109,15 +111,14 @@ function EventScreen(props: IAppProps) {
     };
     setLoading(true);
     fetchEvent(eventId.eventId as string);
-    
-    return () => {
-    };
+
+    return () => {};
   }, []);
   return (
     <>
       <div
         className="container"
-        style={{ backgroundColor: "black", maxWidth: "100%" , height: "100vh"}}
+        style={{ backgroundColor: "black", maxWidth: "100%", height: "100vh" }}
       >
         <br></br>
         {event && user && (
@@ -138,7 +139,7 @@ function EventScreen(props: IAppProps) {
                   Date: {event?.date.toLocaleDateString()}
                 </p>
                 <p className="fs-3 fw-bold" style={{ color: "white" }}>
-                  Owner: {user?.name || ""}
+                  Owner: {owner?.name}
                 </p>
                 <p className="fs-3 fw-bold" style={{ color: "white" }}>
                   <i className="bi bi-heart"></i> {event?.likes.length}
@@ -162,6 +163,16 @@ function EventScreen(props: IAppProps) {
                   }
                   &nbsp;&nbsp; Like
                 </button>
+                {user._id === event.user_id && (
+                  <div className="row">
+                    <div className="col">
+                      <button type="button" className="btn btn-light btn-lg">
+                        <i className="bi bi-pencil-fill"></i>
+                        &nbsp;&nbsp; Edit event details
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <br></br>
@@ -169,7 +180,10 @@ function EventScreen(props: IAppProps) {
             <div className="row">
               <PhotosScreen photos={event?.pictures}></PhotosScreen>
             </div>
-            <div className="row " style={{ width: "50%", backgroundColor:"black" }}>
+            <div
+              className="row "
+              style={{ width: "50%", backgroundColor: "black" }}
+            >
               <CommentsScreen comments={event?.comments}></CommentsScreen>
             </div>
             <div className="row">

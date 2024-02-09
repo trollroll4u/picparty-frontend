@@ -13,6 +13,7 @@ import {
   getPictureCommentsByUser,
 } from "../Services/comment-service.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
+import { useSelector } from "react-redux";
 
 export interface IAppProps {}
 
@@ -20,7 +21,7 @@ function ProfileScreen(props: IAppProps) {
   const [events, setEvents] = useState<EventData[]>();
   const [pictures, setPictures] = useState<CommentDatanew[]>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<UserData>(userExamples[0]);
+  const user = useSelector((state: UserData) => state.user);
   const [error, setError] = useState<string>("");
 
   React.useEffect(() => {
@@ -65,10 +66,10 @@ function ProfileScreen(props: IAppProps) {
         setLoading(false);
       }
     };
-    setLoading(true);
-    fetchEventsByUser("00000");
-    fetchPicturesByUser("00000");
-    fetchCommentsByUser("00000");
+    // setLoading(true);
+    // fetchEventsByUser("00000");
+    // fetchPicturesByUser("00000");
+    // fetchCommentsByUser("00000");
 
     return () => {
       console.log("clean up");
@@ -84,7 +85,7 @@ function ProfileScreen(props: IAppProps) {
         {loading && <div className="spinner-border text-primary"> </div>}
         <div className="row">
           <img src=""></img>
-          <h1 style={{ color: "white" }}> my profile page</h1>
+          <h1 style={{ color: "white" }}> Hello {user.name}!</h1>
           <p style={{ color: "white" }}>
             add rounded image, and copy from the sign up page so it will display
             the details and give the user the oppertunity ti chabge them, like
@@ -103,15 +104,19 @@ function ProfileScreen(props: IAppProps) {
         </div>
         <div className="row">
           <h1 style={{ color: "white" }}> sign up form</h1>
+          <p style={{ color: "white" }}>
+            copy from the sign up page so it will display
+            the details and give the user the oppertunity ti change them, like
+            in getin</p>
         </div>
 
         <div className="row" style={{ backgroundColor: "black" }}>
-          <h1 style={{ color: "white" }}> My Pictures</h1>
-          <PhotosScreen photos={pictures}></PhotosScreen>
+          <h1 style={{ color: "white" }}> My Uploads</h1>
+          <PhotosScreen photos={user.pictures}></PhotosScreen>
         </div>
         <div className="row" style={{ backgroundColor: "black" }}>
           <h1 style={{ color: "white" }}> My events</h1>
-          <EventsScreen events={events}></EventsScreen>
+          <EventsScreen events={user.events}></EventsScreen>
         </div>
       </div>
     </>

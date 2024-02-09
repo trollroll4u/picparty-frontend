@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Logo from "../assets/small logo.png";
+import { useSelector } from "react-redux";
+import { UserData } from "../DataStructure";
 
 function MyNavbar() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const user = useSelector((state: UserData) => state.user);
 
   const loginNavbar = () => {
-    if (loggedIn) {
+    if (user._id !== "" ) {
       return (
         <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
           <li className="nav-item" style={{ marginRight: "10px" }}>
