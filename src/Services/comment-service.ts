@@ -27,10 +27,28 @@ export const getComment = (id: string) => {
     })
 }
 
+export const createPictureComment = (comment: CommentDatanew,file: File) => {
+    return new Promise<CommentDatanew>((resolve, reject) => {
+        const formData = new FormData();
+            formData.append("file", comment.pic_file as Blob);
+        apiClient.post<CommentDatanew>(`comments/create`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then((res) => {
+                resolve(res.data);
+        }).catch((err) => {
+            console.log("error in create comment: ", err);
+            reject(err);
+        })
+    })
+}
+
 export const createComment = (comment: CommentDatanew) => {
     return new Promise<CommentDatanew>((resolve, reject) => {
         apiClient.post<CommentDatanew>(`comments/create`, comment).then((res) => {
-                resolve(res.data);
+            console.log("create comment: ", res.data);
+            resolve(res.data);
         }).catch((err) => {
             console.log("error in create comment: ", err);
             reject(err);
@@ -51,6 +69,7 @@ export const updateComment = (comment: CommentDatanew) => {
 export const deleteComment = (id: string) => {
     return new Promise<CommentDatanew>((resolve, reject) => {
         apiClient.delete<CommentDatanew>(`comments/delete/${id}`).then((res) => {
+            console.log("delete comment: ", res.data);
                 resolve(res.data);
         }).catch((err) => {
             console.log("error in delete comment: ", err);
@@ -60,16 +79,14 @@ export const deleteComment = (id: string) => {
 }
 
 export const getPictureComments = () => {
-    // return new Promise<CommentDatanew[]>((resolve, reject) => {
-    //     apiClient.get<CommentDatanew[]>("comments/get_pictures").then((res) => {
-    //             const comments : CommentDatanew[] = res.data;
-    //             resolve(comments);
-    //     }).catch((err) => {
-    //         console.log("error in getting all comments: ", err);
-    //         reject(err);
-    //     })
-    // })
-    return getAllComments().then((comments) => comments?.filter((comment) => comment.picture_path !== undefined && comment.picture_path !== ""))
+    return new Promise<CommentDatanew[]>((resolve, reject) => {
+        apiClient.get<CommentDatanew[]>("comments/get_pictures").then((res) => {
+                resolve(res.data);
+        }).catch((err) => {
+            console.log("error in getting all comments: ", err);
+            reject(err);
+        })
+    })
 }
 
 export const getMessageComments = () => {
@@ -109,7 +126,7 @@ export const getPictureCommentsByUser = (id:string ) => {
     //         reject(err);
     //     })
     // })
-    return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.picture_path !== undefined && comment.picture_path !== ""))
+    return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.picture_file !== undefined && comment.picture_file !== ""))
 }
 
 export const getMessageCommentsByUser = (id:string) => {

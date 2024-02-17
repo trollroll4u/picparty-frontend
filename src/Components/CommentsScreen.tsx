@@ -1,12 +1,14 @@
 import React from "react";
 import { CommentDatanew } from "../DataStructure.ts";
-import CommentCard from "./commentCard.tsx";
+import CommentCard from "./CommentCard.tsx";
 
 interface CommentsProps {
   comments: CommentDatanew[];
+  deleteComment: (comment_id: string) => void;
 }
 
-function CommentsScreen({ comments }: CommentsProps) {
+function CommentsScreen({ comments, deleteComment}: CommentsProps) {
+  
   return (
     <>
       <div className="container-fluid " key="commentsContainer" >
@@ -16,7 +18,7 @@ function CommentsScreen({ comments }: CommentsProps) {
               if (comment.comment !== "") {
                 return (
                   <div className="col" key={"col-" + index}>
-                    <CommentCard comment={comment} />
+                    <CommentCard comment={comment} deleteComment={deleteComment} />
                   </div>
                 );
               }

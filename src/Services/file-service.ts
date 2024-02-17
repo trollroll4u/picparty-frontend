@@ -23,3 +23,5 @@ export const uploadPhoto = async (photo: File) => {
         }
     });
 }
+
+

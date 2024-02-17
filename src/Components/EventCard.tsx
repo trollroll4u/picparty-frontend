@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
 import { EventData, UserData } from "../DataStructure.ts";
-import { getUser, CanceledError } from "../Services/user-service.ts";
+import { getUser } from "../Services/user-service.ts";
 import { userExamples } from "../examples.ts";
+import image from "../../../picparty-backend/images/default.jpeg";
 
 interface EventProps {
   event: EventData;
@@ -10,10 +11,10 @@ interface EventProps {
 
 function EventCard({ event }: EventProps) {
   const [owner, setOwner] = useState<UserData>();
+  let image = "default.jpeg";
 
   // get the user of the event
   useEffect(() => {
-    console.log("ohaddd" + event?.user_id);
     const fetchUser = async (owner_id: string) => {
       try {
         await getUser(owner_id).then((res) => {
@@ -24,6 +25,14 @@ function EventCard({ event }: EventProps) {
       }
     };
     fetchUser(event.user_id);
+    console.log("event: ", event);
+    if (event.event_pic_file) {
+      console.log("event has a picture");
+      image = import.meta.env.VITE_IMAGES_PATH + "/images/" + event._id;
+      // image = `/ C:/Users/ohada/Documents/degree/partyPic web/picparty-backend/images/${event._id}`;
+      console.log("image: ", image);
+    }
+    console.log(event);
     return () => {
       // abort();
       console.log("clean up");
@@ -35,7 +44,9 @@ function EventCard({ event }: EventProps) {
       <img
         key={"card-img-" + event?._id}
         className="card-img-top"
-        src={event?.event_pic_path || img1}
+        src={
+          "C:/Users/ohada/Documents/degree/partyPic web/picparty-backend/images/65d0bb1bb48f07dc7a143213.jpeg"
+        }
         style={{ height: "200px", width: "100%" }}
       />
       <div className="card-body" key={"card-body-" + event?._id}>

@@ -7,9 +7,7 @@ import { useState } from "react";
 import { getEventByUser } from "../Services/event-service.ts";
 import { getAllpictures } from "../Services/picture-service.ts";
 import {
-  getAllComments,
   getMessageCommentsByUser,
-  getPictureComments,
   getPictureCommentsByUser,
 } from "../Services/comment-service.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";

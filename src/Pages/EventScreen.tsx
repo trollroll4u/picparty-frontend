@@ -1,13 +1,12 @@
 import * as React from "react";
 import { CommentDatanew, EventData, UserData } from "../DataStructure.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
-import { eventsExamples, picturesExamples, userExamples } from "../examples.ts";
 import { ChangeEvent, useState } from "react";
 import { getEvent, CanceledError } from "../Services/event-service.ts";
 import { useParams } from "react-router-dom";
 import { getUser } from "../Services/user-service.ts";
 import CommentsScreen from "../Components/CommentsScreen.tsx";
-import { createComment } from "../Services/comment-service.ts";
+import { createComment, deleteComment } from "../Services/comment-service.ts";
 import { useSelector } from "react-redux";
 
 export interface IAppProps {}
@@ -26,31 +25,54 @@ function EventScreen(props: IAppProps) {
     setCommentValue(e.target.value);
   };
 
-  const onLikeEventButton = (event: EventData, user: UserData) => {
-    if (event?.likes.find((like) => like.user_id === user?._id)) {
-      console.log("unlike");
-      const temp = {
-        ...event,
-        likes: event?.likes.filter((like) => like.user_id !== user?._id),
-      };
-      setEvent(temp);
+  const onLikeEventButton = async (event: EventData, user: UserData) => {
+    if (
+      event?.likes.find(async (like) => like.user_id == user._id) != undefined
+    ) {
+      try {
+        const found: CommentDatanew = event?.likes.find(
+          (like) => like.user_id == user._id
+        ) as CommentDatanew;
+        console.log("unlike event number: " + event._id);
+        await deleteComment(found._id as string).then((res) => {
+          getEvent(event._id as string).then((res) => {
+            setEvent(res);
+          });
+        });
+      } catch (error) {
+        if (error instanceof CanceledError) {
+          console.log("Request canceled");
+        } else {
+          console.log("Error deleting like: " + error);
+        }
+      }
     } else {
-      console.log("like");
+      console.log("like event number: " + event._id);
       const newLike: CommentDatanew = {
         like: true,
         user_id: user?._id,
-        event_id: event._id,
+        event_id: event?._id as string,
         comment: "",
-        picture_path: "",
+        pic_file: false,
       };
       // create like in db
-      createComment(newLike);
-      const temp = { ...event, likes: [...event?.likes, newLike] };
-      setEvent(temp);
+      try {
+        await createComment(newLike);
+        console.log("try to fetch event after like: " + event._id);
+        await getEvent(event._id as string).then((res) => {
+          setEvent(res);
+        });
+      } catch (error) {
+        if (error instanceof CanceledError) {
+          console.log("Request canceled");
+        } else {
+          console.log("Error creating like: " + error);
+        }
+      }
     }
   };
 
-  const onCommentEventButton = (
+  const onCommentEventButton = async (
     event: EventData,
     user: UserData,
     comment: string
@@ -62,30 +84,58 @@ function EventScreen(props: IAppProps) {
       const newComment: CommentDatanew = {
         comment: comment,
         user_id: user?._id,
-        event_id: event._id,
+        event_id: event?._id as string,
         like: false,
-        picture_path: "",
+        pic_file: false,
       };
-      const temp = { ...event, comments: [...event?.comments, newComment] };
-      console.log(temp);
-      setEvent(temp);
-      // create comment in db
-      createComment(newComment);
+      console.log("try to publish new comment: " + newComment);
+      try {
+        await createComment(newComment).then((res) => {
+          console.log("try to fetch event after like: " + event._id);
+          getEvent(event._id as string).then((res) => {
+            setEvent(res);
+          });
+        });
+      } catch (error) {
+        if (error instanceof CanceledError) {
+          console.log("Request canceled");
+        } else {
+          console.log("Error creating comment: " + error);
+        }
+      }
     }
   };
 
-  const fillLikeIcon = (event: EventData, user: UserData) => {
-    if (event?.likes.find((like) => like.user_id === user?._id)) {
+  const fillLikeIcon = (event: EventData, user_id: string) => {
+    const found = event?.likes.find((like) => like.user_id == user_id);
+    if (found !== undefined) {
       return <i className="bi bi-heart-fill" style={{ color: "red" }}></i>;
     } else {
       return <i className="bi bi-heart"></i>;
     }
   };
 
+  const onDeleteComment = async (commentIDToDelete: string) => {
+    console.log("comment: ");
+    console.log(commentIDToDelete);
+    try {
+      await deleteComment(commentIDToDelete as string).then((res) => {
+        getEvent(event?._id as string).then((res) => {
+          setEvent(res);
+        });
+      });
+    } catch (error) {
+      if (error instanceof CanceledError) {
+        console.log("Request canceled");
+      } else {
+        console.log("Error deleting comment: " + error);
+      }
+    }
+  };
+
   // UseEffects
   React.useEffect(() => {
-    // setEvent(eventsExamples[Number(eventId) - 1]);
-    // setUser(userExamples[0]);
+    // Get owner user by id
     const fetchOwnerUser = async (owner_id: string) => {
       try {
         await getUser(owner_id).then((res) => {
@@ -96,19 +146,22 @@ function EventScreen(props: IAppProps) {
       }
     };
 
+    // Get event by id
     const fetchEvent = async (event_id: string) => {
       try {
         await getEvent(event_id).then((res) => {
+          console.log("event fetched: ");
+          console.log(res);
           setEvent(res);
           fetchOwnerUser(res.user_id);
+          setLoading(false);
         });
-        // setEvent(event);
-        setLoading(false);
       } catch (error) {
         console.log("Error fetching event: " + error);
         setLoading(false);
       }
     };
+    console.log("fetching event: " + eventId.eventId);
     setLoading(true);
     fetchEvent(eventId.eventId as string);
 
@@ -121,24 +174,39 @@ function EventScreen(props: IAppProps) {
         style={{ backgroundColor: "black", maxWidth: "100%", height: "100vh" }}
       >
         <br></br>
-        {event && user && (
+        {loading && (
+          <div
+            className="spinner-border text-primary text-center"
+            key="home-loading"
+          >
+            {" "}
+          </div>
+        )}
+        {event && user && owner && (
           <div>
             <div className="row text-center">
               <div className="col">
                 <img
-                  src={event?.event_pic_path}
-                  style={{ width: "50rem", height: "24rem" }}
+                  src={event.event_pic_file ? "bring from db" : ""}
+                  style={{ width: "50rem", height: "30rem" }}
                 />
               </div>
 
               <div className="col">
-                <p className="fs-1 fw-bold" style={{ color: "white" }}>
+                <p className="fs-2 fw-bold" style={{ color: "white" }}>
                   {event?.title}
                 </p>
-                <p className="fs-3 fw-bold" style={{ color: "white" }}>
+
+                <p
+                  className="fs-5 fw-bold text-break"
+                  style={{ color: "white" }}
+                >
+                  {event?.description}
+                </p>
+                <p className="fs-5 fw-bold" style={{ color: "white" }}>
                   Date: {event?.date.toLocaleDateString()}
                 </p>
-                <p className="fs-3 fw-bold" style={{ color: "white" }}>
+                <p className="fs-5 fw-bold" style={{ color: "white" }}>
                   Owner: {owner?.name}
                 </p>
                 <p className="fs-3 fw-bold" style={{ color: "white" }}>
@@ -155,14 +223,15 @@ function EventScreen(props: IAppProps) {
                 <button
                   type="button"
                   className="btn btn-light btn-lg"
-                  style={{ margin: "2rem" }}
+                  style={{ margin: "1rem" }}
                   onClick={() => onLikeEventButton(event, user)} //TODO:  change to send current user
                 >
                   {
-                    fillLikeIcon(event, user) //TODO:  change to send current user
+                    fillLikeIcon(event, user._id) //TODO:  change to send current user
                   }
                   &nbsp;&nbsp; Like
                 </button>
+
                 {user._id === event.user_id && (
                   <div className="row">
                     <div className="col">
@@ -184,7 +253,10 @@ function EventScreen(props: IAppProps) {
               className="row "
               style={{ width: "50%", backgroundColor: "black" }}
             >
-              <CommentsScreen comments={event?.comments}></CommentsScreen>
+              <CommentsScreen
+                comments={event.comments}
+                deleteComment={onDeleteComment}
+              ></CommentsScreen>
             </div>
             <div className="row">
               <form className="row g-3">

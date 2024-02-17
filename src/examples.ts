@@ -4,7 +4,7 @@ import img1 from "./src/assets/img1.jpg";
 
 export const picturesExamples: CommentDatanew[] = [
     {
-      picture_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
+      picture_file: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
       _id: "1",
       event_id: "1",
       user_id: "1",
@@ -12,7 +12,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_path: "https://picsum.photos/300",
+      picture_file: "https://picsum.photos/300",
       _id: "2",
       event_id: "1",
       user_id: "1",
@@ -20,7 +20,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_path: "https://picsum.photos/900",
+      picture_file: "https://picsum.photos/900",
       _id: "3",
       event_id: "1",
       user_id: "1",
@@ -28,7 +28,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_path: "https://picsum.photos/900",
+      picture_file: "https://picsum.photos/900",
       _id: "4",
       event_id: "1",
       user_id: "1",
@@ -36,7 +36,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_path: "https://picsum.photos/900",
+      picture_file: "https://picsum.photos/900",
       _id: "5",
       event_id: "1",
       user_id: "1",
@@ -45,7 +45,7 @@ export const picturesExamples: CommentDatanew[] = [
   
     },
     {
-      picture_path: "https://picsum.photos/900",
+      picture_file: "https://picsum.photos/900",
       _id: "6",
       event_id: "1",
       user_id: "1",
@@ -53,7 +53,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_path: "https://picsum.photos/900",
+      picture_file: "https://picsum.photos/900",
       _id: "7",
       event_id: "1",
       user_id: "1",
@@ -61,7 +61,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_path: "https://picsum.photos/900",
+      picture_file: "https://picsum.photos/900",
       _id: "8",
       event_id: "1",
       user_id: "1",
@@ -107,7 +107,7 @@ export const picturesExamples: CommentDatanew[] = [
       comments: commentsExamples,
       likes: likesExamples,
       user_id: "1",
-      event_pic_path: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
+      event_pic_file: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
       title: "yosi party",
       date: new Date("2019-01-16"),
       location: "tel aviv",
@@ -120,7 +120,7 @@ export const picturesExamples: CommentDatanew[] = [
       likes: [],
       description: "this is a description",
       pictures: [],
-      event_pic_path: "https://picsum.photos/300",
+      event_pic_file: "https://picsum.photos/300",
       title: "yuval party",
       date: new Date(2019, 5, 22),
       owner_id: "2",
@@ -132,7 +132,7 @@ export const picturesExamples: CommentDatanew[] = [
       comments:[],
       likes: [],
       pictures: [],
-      event_pic_path: "https://picsum.photos/400",
+      event_pic_file: "https://picsum.photos/400",
       title: "dor party",
       date: new Date(),
       owner_id: "3",
@@ -144,7 +144,7 @@ export const picturesExamples: CommentDatanew[] = [
       comments:[],
       likes: [],
       pictures: [],
-      event_pic_path: "https://picsum.photos/500",
+      event_pic_file: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
       owner_id: "3",
@@ -156,7 +156,7 @@ export const picturesExamples: CommentDatanew[] = [
       comments:[],
       likes: [],
       pictures: [],
-      event_pic_path: "https://picsum.photos/500",
+      event_pic_file: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
       owner_id: "1",
@@ -168,7 +168,7 @@ export const picturesExamples: CommentDatanew[] = [
       pictures: [],
       comments:[],
       likes: [],
-      event_pic_path: "https://picsum.photos/500",
+      event_pic_file: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
       owner_id: "2",
@@ -182,7 +182,7 @@ export const picturesExamples: CommentDatanew[] = [
       name: "ohad",
       password: "1234",
       email: "ohad@gmail.com",
-      profile_pic_path: "https://picsum.photos/200",
+      profile_pic_file: "https://picsum.photos/200",
       events: eventsExamples, 
       pictures: picturesExamples,
       comments: commentsExamples,
@@ -193,7 +193,7 @@ export const picturesExamples: CommentDatanew[] = [
       name: "yuval",
       password: "1234",
       email: "aaaa@gmail.com",
-      profile_pic_path: "https://picsum.photos/200",
+      profile_pic_file: "https://picsum.photos/200",
       events:[],
       pictures: picturesExamples,
       comments: commentsExamples,
@@ -205,7 +205,7 @@ export const picturesExamples: CommentDatanew[] = [
       name: "dor",
       password: "1234",
       email: "bbbbb@gmail.com",
-      profile_pic_path: "https://picsum.photos/200",
+      profile_pic_file: "https://picsum.photos/200",
       events:[],
       pictures: picturesExamples,
       comments: commentsExamples,

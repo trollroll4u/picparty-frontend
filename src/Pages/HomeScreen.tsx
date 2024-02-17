@@ -2,11 +2,9 @@ import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import Carusale from "../Components/carouselImages.tsx";
 import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
-import { eventsExamples, picturesExamples } from "../examples.ts";
 import { useState } from "react";
-import { getAllEvents, CanceledError } from "../Services/event-service.ts";
+import { getAllEvents } from "../Services/event-service.ts";
 import { getPictureComments } from "../Services/comment-service.ts";
-import { RootState } from "@reduxjs/toolkit/query";
 import { useSelector } from "react-redux";
 
 export interface IAppProps {}
@@ -15,14 +13,8 @@ function HomeScreen(props: IAppProps) {
   const [events, setEvents] = useState<EventData[]>([]);
   const [pictures, setPictures] = useState<CommentDatanew[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const user = useSelector((state: UserData) => state.user);
-  const [error, setError] = useState<string>("");
 
   React.useEffect(() => {
-    // setEvents(eventsExamples);
-    // setPictures(picturesExamples);
-    //**
-
     const fetchEvents = async () => {
       try {
         const events = await getAllEvents();
@@ -59,14 +51,31 @@ function HomeScreen(props: IAppProps) {
         style={{ backgroundColor: "black", maxWidth: "100%" }}
         key="home-container"
       >
+        <br></br>
         {loading && (
-          <div className="spinner-border text-primary" key="home-loading">
+          <div
+            className="spinner-border text-primary text-center"
+            key="home-loading"
+          >
             {" "}
           </div>
         )}
-        <div className="row" key="carusele-row">
-          <Carusale images={pictures}></Carusale>
-        </div>
+        {pictures.length > 0 && (
+          <div className="row" key="carusele-row">
+            <Carusale images={pictures}></Carusale>
+          </div>
+        )}
+
+        {!loading && events.length === 0 && pictures.length === 0 && (
+          <div
+            className="alert alert-danger text-center"
+            role="alert"
+            key="home-error"
+          >
+            {" "}
+            <h1>There are no events or pictures</h1>{" "}
+          </div>
+        )}
         <br></br>
         <div className="row" key="events-row-home">
           <EventsScreen events={events}></EventsScreen>

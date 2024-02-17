@@ -22,10 +22,10 @@ function PhotoCard({ photo }: PhotoProps) {
         <img
           key={"card-img-" + photo._id}
           className="card-img-top"
-          src={photo.picture_path || img1}
+          src={photo.picture_file || img1}
           style={{ height: "10rem", width: "100%", cursor: "pointer" }}
           onClick={() => {
-            openModal(photo.picture_path);
+            openModal(photo.picture_file);
           }}
         />
       </div>

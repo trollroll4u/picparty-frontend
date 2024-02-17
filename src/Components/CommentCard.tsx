@@ -1,43 +1,68 @@
 import React, { useState } from "react";
 import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
 import { CommentDatanew, UserData } from "../DataStructure.ts";
-import { CanceledError, getUser } from "../Services/user-service.ts";
+import { getUser } from "../Services/user-service.ts";
 import { userExamples } from "../examples.ts";
+import { useSelector } from "react-redux";
+import { CanceledError, deleteComment } from "../Services/comment-service.ts";
 
-interface EventProps {
+interface CommentProps {
   comment: CommentDatanew;
+  deleteComment: (comment_id: string) => void;
 }
 
-function CommentCard({ comment }: EventProps) {
-  const [user, setUser] = useState<UserData | undefined>();
+function CommentCard( {comment, deleteComment} : CommentProps) {
+  const [owner, setOwner] = useState<UserData>();
+  const user = useSelector((state: UserData) => state.user);
+
+  // const onTrashButton = async (commentToDelete: CommentDatanew) => {
+  //   console.log("comment: ");
+  //   console.log(commentToDelete);
+  //   try {
+  //     await deleteComment(commentToDelete._id as string)
+
+  //   } catch (error) {
+  //     if (error instanceof CanceledError) {
+  //       console.log("Request canceled");
+  //     } else {
+  //       console.log("Error deleting comment: " + error);
+  //     }
+  //   }
+  // };
 
   React.useEffect(() => {
     console.log("comment", comment);
-    setUser(userExamples[0]);
-
-    // const { request, abort } = getUser(Number(comment?.user_id));
-    // request.then(
-    //   (res: { data: React.SetStateAction<UserData | undefined> }) => {
-    //     setUser(res.data);
-    //   }
-    // );
-    // request.catch((err: any) => {
-    //   if (err instanceof CanceledError) return;
-    //   console.log(err);
-    // });
-    // return () => {
-    //   abort();
-    // };
+    // Get owner user by id
+    const fetchOwnerUser = async (owner_id: string) => {
+      try {
+        await getUser(owner_id).then((res) => {
+          setOwner(res);
+        });
+      } catch (error) {
+        console.log("Error fetching owner: " + error);
+      }
+    };
+    fetchOwnerUser(comment.user_id as string);
   }, []);
   return (
-    <div className="card mx-1 my-2" key={"card-" + comment.id}>
+    <div className="card mx-1 my-2" key={"card-" + comment._id}>
       <div
         className="card-body"
-        key={"card-body-" + comment.id}
+        key={"card-body-" + comment._id}
         style={{ display: "inline" }}
       >
         <p className="d-md-inline fs-6">
-          <span className="fw-bold fs-6"> {user?.name}</span> {comment.comment}
+          <span className="fw-bold fs-6"> {owner?.name}</span> {comment.comment}
+          {user._id === comment.user_id && (
+            <div className="d-flex justify-content-end">
+              <button
+                className="btn btn-outline-dark"
+                onClick={() => deleteComment(comment._id as string)}
+              >
+                <i className="bi bi-trash"></i>
+              </button>
+            </div>
+          )}
         </p>
       </div>
     </div>

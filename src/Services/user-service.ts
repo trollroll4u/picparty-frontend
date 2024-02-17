@@ -18,9 +18,9 @@ export const getAllUsers = () => {
 
 export const getUser = (id: string) => {
     return new Promise<UserData>(async (resolve, reject) => {
-        console.log("id: ", id);
         await apiClient.get<UserData>(`users/get/${id}`).then((res) => {
-                resolve(res.data);
+            console.log("success to get user" +  res.data._id);
+            resolve(res.data);
         }).catch((err) => {
             console.log("error in getting user: ", err);
             reject(err);
@@ -28,10 +28,18 @@ export const getUser = (id: string) => {
     })
 }
 
-export const createUser = (user: UserData) => {
+export const createUser = (user: UserData, file: File) => {
     return new Promise<UserData>((resolve, reject) => {
-        apiClient.post<UserData>(`users/create`, user).then((res) => {
-                resolve(res.data);
+        const formData = new FormData();
+            formData.append("file", file);
+        apiClient.post<UserData>(`users/create`, user, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        
+        }).then((res) => {
+            console.log( "success to create user" +  res);
+            resolve(res.data);
         }).catch((err) => {
             console.log("error in create user: ", err);
             reject(err);
@@ -39,10 +47,18 @@ export const createUser = (user: UserData) => {
     })
 }
 
-export const updateUser = (user: UserData) => {
+export const updateUser = (user: UserData, file: File) => {
     return new Promise<UserData>((resolve, reject) => {
-        apiClient.put<UserData>(`users/update/${user._id}`, user).then((res) => {
-                resolve(res.data);
+        const formData = new FormData();
+            formData.append("file",file);
+        apiClient.put<UserData>(`users/update/${user._id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        
+        }).then((res) => {
+            console.log( "success to update user" +  res);
+            resolve(res.data);
         }).catch((err) => {
             console.log("error in update user: ", err);
             reject(err);

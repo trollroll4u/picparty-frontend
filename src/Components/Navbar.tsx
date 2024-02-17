@@ -7,7 +7,7 @@ function MyNavbar() {
   const user = useSelector((state: UserData) => state.user);
 
   const loginNavbar = () => {
-    if (user._id !== "" ) {
+    if (user._id !== "") {
       return (
         <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
           <li className="nav-item" style={{ marginRight: "10px" }}>
@@ -77,7 +77,7 @@ function MyNavbar() {
                 href="/"
                 style={{ fontWeight: "bold" }}
               >
-                events
+                Events
               </a>
             </li>
             <li className="nav-item">
@@ -87,13 +87,16 @@ function MyNavbar() {
                 href="/search"
                 style={{ fontWeight: "bold" }}
               >
-                search
+                Search
               </a>
             </li>
+
             <li className="nav-item">
-              <button type="button" className="btn btn-light fw-bold">
-                Create
-              </button>
+              <a href="/create">
+                <button type="button" className="btn btn-light fw-bold">
+                  Create
+                </button>
+              </a>
             </li>
           </ul>
           {loginNavbar()}

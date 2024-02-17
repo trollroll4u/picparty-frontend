@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MyNavbar from "./Components/Navbar";
 import { Outlet } from "react-router";
-
+import "./App.css"; // Import your CSS file here
 // import "./App.css"; // Import your CSS file here
 
 function App() {
@@ -9,8 +9,10 @@ function App() {
 
   return (
     <>
-      <MyNavbar></MyNavbar>
-      <Outlet></Outlet>
+      <div className="app-container">
+        <MyNavbar></MyNavbar>
+        <Outlet></Outlet>
+      </div>
     </>
   );
 }
