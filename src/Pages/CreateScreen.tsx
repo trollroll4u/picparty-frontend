@@ -11,6 +11,7 @@ import { createEvent } from "../Services/event-service";
 import { EventData, UserData } from "../DataStructure";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import avatar from "../assets/default_pic_for_party.jpg";
 
 const schema = z.object({
   EventName: z
@@ -37,9 +38,7 @@ function CreateScreen() {
   const [locationError, setLocationError] = useState<string>("");
   const [options, setOptions] = useState<any>([]);
   const user = useSelector((state: UserData) => state.user);
-  const avatar: File = new File([""], "default_pic_for_party.jpg", {
-    type: "image/jpeg",
-  });
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
