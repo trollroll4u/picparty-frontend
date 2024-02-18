@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
 import { CommentDatanew } from "../DataStructure.ts";
 
@@ -8,6 +8,7 @@ interface PhotoProps {
 
 function PhotoCard({ photo }: PhotoProps) {
   const [selectedPhoto, setSelectedPhoto] = React.useState("");
+  const [imageFileExtention, setImageFileExtention] = React.useState<string>("");
 
   const openModal = (photo: any) => {
     setSelectedPhoto(photo);
@@ -16,16 +17,19 @@ function PhotoCard({ photo }: PhotoProps) {
   const closeModal = () => {
     setSelectedPhoto("");
   };
+  React.useEffect(() => {
+    setImageFileExtention(photo?.pic_file?.split(".")[1] || "");
+  }, []);
   return (
     <>
       <div className="card mx-1 my-2" key={"card-" + photo._id}>
         <img
           key={"card-img-" + photo._id}
           className="card-img-top"
-          src={photo.picture_file || img1}
+          src={`data:image/${imageFileExtention};base64,` + photo.pic_file}
           style={{ height: "10rem", width: "100%", cursor: "pointer" }}
           onClick={() => {
-            openModal(photo.picture_file);
+            openModal(`data:image/${imageFileExtention};base64,` + photo.pic_file);
           }}
         />
       </div>

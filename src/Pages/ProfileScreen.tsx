@@ -21,6 +21,8 @@ function ProfileScreen(props: IAppProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: UserData) => state.user);
   const [error, setError] = useState<string>("");
+  const [imageFileExtention, setImageFileExtention] =
+    React.useState<string>("");
 
   React.useEffect(() => {
     // setEvents(eventsExamples);
@@ -68,6 +70,7 @@ function ProfileScreen(props: IAppProps) {
     // fetchEventsByUser("00000");
     // fetchPicturesByUser("00000");
     // fetchCommentsByUser("00000");
+    setImageFileExtention(user.profile_pic_file?.split(".")[1] || "");
 
     return () => {
       console.log("clean up");
@@ -82,7 +85,11 @@ function ProfileScreen(props: IAppProps) {
       >
         {loading && <div className="spinner-border text-primary"> </div>}
         <div className="row">
-          <img src=""></img>
+          <img
+            src={
+              `data:image/${imageFileExtention};base64,` + user.profile_pic_file
+            }
+          ></img>
           <h1 style={{ color: "white" }}> Hello {user.name}!</h1>
           <p style={{ color: "white" }}>
             add rounded image, and copy from the sign up page so it will display
@@ -103,9 +110,9 @@ function ProfileScreen(props: IAppProps) {
         <div className="row">
           <h1 style={{ color: "white" }}> sign up form</h1>
           <p style={{ color: "white" }}>
-            copy from the sign up page so it will display
-            the details and give the user the oppertunity ti change them, like
-            in getin</p>
+            copy from the sign up page so it will display the details and give
+            the user the oppertunity ti change them, like in getin
+          </p>
         </div>
 
         <div className="row" style={{ backgroundColor: "black" }}>

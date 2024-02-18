@@ -60,11 +60,11 @@ const initialState : UserData= {
   export const userSlice = createSlice({
     name: 'user',
     initialState: {
-      _id: "65d0a0edde1e768e36e07bbd",
+      _id: "65d28384aaa3dbebd06a5bf6",
       name: "ohad alb",
       password: "password123",
       email: "ohad.alb@example.com",
-      profile_pic_file: true,
+      profile_pic_file: "",
       events: [],
       pictures: [],
       comments: [],
@@ -87,7 +87,7 @@ const initialState : UserData= {
         state.name = "";
         state.password = "";
         state.email = "";
-        state.profile_pic_file = false;
+        state.profile_pic_file = "";
         state.events = [];
         state.pictures = [];
         state.comments = [];

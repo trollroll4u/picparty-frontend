@@ -19,6 +19,7 @@ function EventScreen(props: IAppProps) {
   const [event, setEvent] = useState<EventData>();
   const user = useSelector((state: UserData) => state.user);
   const [owner, setOwner] = useState<UserData>();
+  const [imageFileExtention, setImageFileExtention] = useState<string>("");
 
   // Functions
   const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,8 +53,6 @@ function EventScreen(props: IAppProps) {
         like: true,
         user_id: user?._id,
         event_id: event?._id as string,
-        comment: "",
-        pic_file: false,
       };
       // create like in db
       try {
@@ -85,8 +84,6 @@ function EventScreen(props: IAppProps) {
         comment: comment,
         user_id: user?._id,
         event_id: event?._id as string,
-        like: false,
-        pic_file: false,
       };
       console.log("try to publish new comment: " + newComment);
       try {
@@ -138,6 +135,7 @@ function EventScreen(props: IAppProps) {
     // Get owner user by id
     const fetchOwnerUser = async (owner_id: string) => {
       try {
+        console.log("fetching owner: " + owner_id);
         await getUser(owner_id).then((res) => {
           setOwner(res);
         });
@@ -164,6 +162,7 @@ function EventScreen(props: IAppProps) {
     console.log("fetching event: " + eventId.eventId);
     setLoading(true);
     fetchEvent(eventId.eventId as string);
+    setImageFileExtention(event?.event_pic_file?.split(".")[1] || "");
 
     return () => {};
   }, []);
@@ -187,7 +186,10 @@ function EventScreen(props: IAppProps) {
             <div className="row text-center">
               <div className="col">
                 <img
-                  src={event.event_pic_file ? "bring from db" : ""}
+                  src={
+                    `data:image/${imageFileExtention};base64,` +
+                    event.event_pic_file
+                  }
                   style={{ width: "50rem", height: "30rem" }}
                 />
               </div>

@@ -1,6 +1,6 @@
 export interface EventData {
     _id?: string;
-    event_pic_file: Boolean; //Maybe should be PictureData
+    event_pic_file: string; //Maybe should be PictureData
     title: string;
     date: Date;
     user_id: string;
@@ -15,7 +15,7 @@ export interface EventData {
     _id?: string;
     event_id: string; 
     user_id: string;
-    pic_file?: Boolean ;
+    pic_file?: string ;
     comment?: string;
     like?: boolean;
   }
@@ -26,7 +26,7 @@ export interface EventData {
     name: string;
     password: string;
     email: string;
-    profile_pic_file: Boolean; //Maybe should be PictureData 
+    profile_pic_file: string; //Maybe should be PictureData 
     events: EventData[];
     pictures: CommentDatanew[];
     comments: CommentDatanew[];

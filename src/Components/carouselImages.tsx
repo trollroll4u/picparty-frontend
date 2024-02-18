@@ -6,6 +6,7 @@ interface CaruselImagesProps {
 }
 
 function createSlides(images: CommentDatanew[]) {
+  const imageFileExtention = images[0]?.pic_file?.split(".")[1] || "jpg";
   let slides = images.map((image, index) => {
     return (
       <div
@@ -14,7 +15,7 @@ function createSlides(images: CommentDatanew[]) {
       >
         <img
           key={"carousel-image" + (index === 0 ? " active" : "")}
-          src={image.picture_file}
+          src={`data:image/${imageFileExtention};base64,` + image.pic_file}
           className="d-block w-100"
           alt="..."
           style={{ height: "60vh" }}

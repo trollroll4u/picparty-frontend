@@ -10,6 +10,7 @@ import { Form } from "react-bootstrap";
 import { createEvent } from "../Services/event-service";
 import { EventData, UserData } from "../DataStructure";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   EventName: z
@@ -36,6 +37,10 @@ function CreateScreen() {
   const [locationError, setLocationError] = useState<string>("");
   const [options, setOptions] = useState<any>([]);
   const user = useSelector((state: UserData) => state.user);
+  const avatar: File = new File([""], "default_pic_for_party.jpg", {
+    type: "image/jpeg",
+  });
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const fetchLocations = async () => {
@@ -107,30 +112,25 @@ function CreateScreen() {
       setLocationError("Location is required");
     } else {
       setLocationError("");
-      const avatar : File = new File([""], "default_pic_for_party.jpg", {type: "image/jpeg"});
-      const url = await uploadPhoto(imgSrc!);
-      console.log("upload returned:" + url);
+
+      // const url = await uploadPhoto(imgSrc!);
+      // console.log("upload returned:" + url);
       const newEvent: EventData = {
         user_id: user._id,
         title: eventName,
         description: description,
         date: date,
         location: location[0]?.name || "Tel Aviv, Israel",
-        event_pic_file: true,
+        event_pic_file: "",
         comments: [],
         pictures: [],
         likes: [],
-        
-        
       };
       console.log(newEvent);
       console.log(typeof newEvent.date);
-      const res = await createEvent(newEvent);
-      console.log(res);
-      // console.log(typeof location[0]?.name);
+      // const res = await createEvent(newEvent);
       console.log("on submit");
-
-      // console.log(data);
+      navigate("/");
     }
   };
 

@@ -17,6 +17,7 @@ export const getAllUsers = () => {
 
 
 export const getUser = (id: string) => {
+    console.log("try to get user: " + id);
     return new Promise<UserData>(async (resolve, reject) => {
         await apiClient.get<UserData>(`users/get/${id}`).then((res) => {
             console.log("success to get user" +  res.data._id);

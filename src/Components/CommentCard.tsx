@@ -15,21 +15,6 @@ function CommentCard( {comment, deleteComment} : CommentProps) {
   const [owner, setOwner] = useState<UserData>();
   const user = useSelector((state: UserData) => state.user);
 
-  // const onTrashButton = async (commentToDelete: CommentDatanew) => {
-  //   console.log("comment: ");
-  //   console.log(commentToDelete);
-  //   try {
-  //     await deleteComment(commentToDelete._id as string)
-
-  //   } catch (error) {
-  //     if (error instanceof CanceledError) {
-  //       console.log("Request canceled");
-  //     } else {
-  //       console.log("Error deleting comment: " + error);
-  //     }
-  //   }
-  // };
-
   React.useEffect(() => {
     console.log("comment", comment);
     // Get owner user by id

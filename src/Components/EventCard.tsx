@@ -11,7 +11,7 @@ interface EventProps {
 
 function EventCard({ event }: EventProps) {
   const [owner, setOwner] = useState<UserData>();
-  let image = "default.jpeg";
+  const [imageFileExtention, setImageFileExtention] = useState<string>("");
 
   // get the user of the event
   useEffect(() => {
@@ -25,17 +25,8 @@ function EventCard({ event }: EventProps) {
       }
     };
     fetchUser(event.user_id);
-    console.log("event: ", event);
-    if (event.event_pic_file) {
-      console.log("event has a picture");
-      image = import.meta.env.VITE_IMAGES_PATH + "/images/" + event._id;
-      // image = `/ C:/Users/ohada/Documents/degree/partyPic web/picparty-backend/images/${event._id}`;
-      console.log("image: ", image);
-    }
-    console.log(event);
+    setImageFileExtention(event.event_pic_file?.split(".")[1]);
     return () => {
-      // abort();
-      console.log("clean up");
     };
   }, []);
 
@@ -44,9 +35,7 @@ function EventCard({ event }: EventProps) {
       <img
         key={"card-img-" + event?._id}
         className="card-img-top"
-        src={
-          "C:/Users/ohada/Documents/degree/partyPic web/picparty-backend/images/65d0bb1bb48f07dc7a143213.jpeg"
-        }
+        src={`data:image/${imageFileExtention};base64,` + event.event_pic_file}
         style={{ height: "200px", width: "100%" }}
       />
       <div className="card-body" key={"card-body-" + event?._id}>

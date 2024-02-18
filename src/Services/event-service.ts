@@ -27,7 +27,6 @@ export const getAllEvents = () => {
 
 export const getEvent = (id: string) => {
     return new Promise<EventData>(async (resolve, reject) => {
-        
        await apiClient.get<EventData>(`events/get/${id}`).then((res) => {
                 const event : EventData = res.data;
                 event.date = convertStringDateToDate(event);
@@ -42,13 +41,8 @@ export const getEvent = (id: string) => {
 
 export const createEvent = (event: EventData) => {
     return new Promise<EventData>((resolve, reject) => {
-        const formData = new FormData();
-            formData.append("file", event.event_pic_file as Blob);
-            apiClient.post<EventData>(`events/create`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then((res) => {
+            apiClient.post<EventData>(`events/create`, event,
+            ).then((res) => {
                 console.log(res);
                 resolve(res.data);
             }).catch(err => {
