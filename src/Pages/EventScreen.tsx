@@ -53,9 +53,13 @@ function EventScreen(props: IAppProps) {
         like: true,
         user_id: user?._id,
         event_id: event?._id as string,
+        comment: "",
+        pic_file: "",
       };
       // create like in db
       try {
+        console.log("try to create like: ");
+        console.log(newLike);
         await createComment(newLike);
         console.log("try to fetch event after like: " + event._id);
         await getEvent(event._id as string).then((res) => {
@@ -84,6 +88,8 @@ function EventScreen(props: IAppProps) {
         comment: comment,
         user_id: user?._id,
         event_id: event?._id as string,
+        like: false,
+        pic_file: "",
       };
       console.log("try to publish new comment: " + newComment);
       try {
@@ -117,6 +123,7 @@ function EventScreen(props: IAppProps) {
     console.log(commentIDToDelete);
     try {
       await deleteComment(commentIDToDelete as string).then((res) => {
+        console.log(res);
         getEvent(event?._id as string).then((res) => {
           setEvent(res);
         });
@@ -186,10 +193,7 @@ function EventScreen(props: IAppProps) {
             <div className="row text-center">
               <div className="col">
                 <img
-                  src={
-                    `data:image/${imageFileExtention};base64,` +
-                    event.event_pic_file
-                  }
+                  src={event.event_pic_file}
                   style={{ width: "50rem", height: "30rem" }}
                 />
               </div>

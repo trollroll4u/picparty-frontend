@@ -15,7 +15,7 @@ function createSlides(images: CommentDatanew[]) {
       >
         <img
           key={"carousel-image" + (index === 0 ? " active" : "")}
-          src={`data:image/${imageFileExtention};base64,` + image.pic_file}
+          src={ image.pic_file}
           className="d-block w-100"
           alt="..."
           style={{ height: "60vh" }}

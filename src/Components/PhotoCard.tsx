@@ -26,10 +26,10 @@ function PhotoCard({ photo }: PhotoProps) {
         <img
           key={"card-img-" + photo._id}
           className="card-img-top"
-          src={`data:image/${imageFileExtention};base64,` + photo.pic_file}
+          src={ photo.pic_file}
           style={{ height: "10rem", width: "100%", cursor: "pointer" }}
           onClick={() => {
-            openModal(`data:image/${imageFileExtention};base64,` + photo.pic_file);
+            openModal( photo.pic_file);
           }}
         />
       </div>

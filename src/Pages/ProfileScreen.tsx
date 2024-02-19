@@ -85,11 +85,6 @@ function ProfileScreen(props: IAppProps) {
       >
         {loading && <div className="spinner-border text-primary"> </div>}
         <div className="row">
-          <img
-            src={
-              `data:image/${imageFileExtention};base64,` + user.profile_pic_file
-            }
-          ></img>
           <h1 style={{ color: "white" }}> Hello {user.name}!</h1>
           <p style={{ color: "white" }}>
             add rounded image, and copy from the sign up page so it will display
@@ -100,7 +95,9 @@ function ProfileScreen(props: IAppProps) {
         <div className="row justify-content-center">
           <div className="col-md-6 ">
             <img
-              src={user.profile_pic_path}
+              src={
+               user.profile_pic_file
+              }
               alt="Profile Avatar"
               className="rounded-circle mb-3"
               style={{ width: "15rem", height: "15rem" }}

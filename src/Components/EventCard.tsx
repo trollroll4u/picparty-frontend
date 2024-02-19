@@ -35,7 +35,7 @@ function EventCard({ event }: EventProps) {
       <img
         key={"card-img-" + event?._id}
         className="card-img-top"
-        src={`data:image/${imageFileExtention};base64,` + event.event_pic_file}
+        src={event.event_pic_file}
         style={{ height: "200px", width: "100%" }}
       />
       <div className="card-body" key={"card-body-" + event?._id}>
@@ -44,8 +44,9 @@ function EventCard({ event }: EventProps) {
           className="text-break card-title fs-5 fw-bold"
           style={{
             whiteSpace: "nowrap",
-            // overflow: "hidden",
-            // textOverflow: "ellipsis",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            
           }}
         >
           {event?.title}

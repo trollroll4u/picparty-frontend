@@ -40,7 +40,7 @@ export const getEvent = (id: string) => {
 }
 
 export const createEvent = (event: EventData) => {
-    return new Promise<EventData>((resolve, reject) => {
+    return new Promise<EventData>((resolve, reject) => {        
             apiClient.post<EventData>(`events/create`, event,
             ).then((res) => {
                 console.log(res);
@@ -52,18 +52,10 @@ export const createEvent = (event: EventData) => {
     })
 }
 
-export const updateEvent = (event: EventData,file : File) => {
+export const updateEvent = (event: EventData) => {
     return new Promise<EventData>((resolve, reject) => {
-        const formData = new FormData();
-        formData.append("file", file);
-        apiClient.put<EventData>(`events/update/${event._id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            params: {
-                file: file
-            }
-        }).then((res) => {
+        apiClient.put<EventData>(`events/update/${event._id}`, event)
+        .then((res) => {
             console.log(res);
             resolve(res.data);
         }).catch((err) => {
