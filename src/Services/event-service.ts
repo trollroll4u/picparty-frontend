@@ -31,7 +31,6 @@ export const getEvent = (id: string) => {
                 const event : EventData = res.data;
                 event.date = convertStringDateToDate(event);
                 resolve(event);
-                
         }).catch((err) => {
             console.log("error in getting event: ", err);
             reject(err);
@@ -56,7 +55,6 @@ export const updateEvent = (event: EventData) => {
     return new Promise<EventData>((resolve, reject) => {
         apiClient.put<EventData>(`events/update/${event._id}`, event)
         .then((res) => {
-            console.log(res);
             resolve(res.data);
         }).catch((err) => {
             console.log("error in update event: ", err);

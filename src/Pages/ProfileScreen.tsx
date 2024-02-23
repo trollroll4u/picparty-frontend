@@ -1,23 +1,14 @@
 import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
-import Carusale from "../Components/carouselImages.tsx";
 import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
-import { eventsExamples, picturesExamples, userExamples } from "../examples.ts";
 import { useState } from "react";
-import { getEventByUser } from "../Services/event-service.ts";
-import { getAllpictures } from "../Services/picture-service.ts";
-import {
-  getMessageCommentsByUser,
-  getPictureCommentsByUser,
-} from "../Services/comment-service.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { useSelector } from "react-redux";
 
 export interface IAppProps {}
 
 function ProfileScreen(props: IAppProps) {
-  const [events, setEvents] = useState<EventData[]>();
-  const [pictures, setPictures] = useState<CommentDatanew[]>();
+
   const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: UserData) => state.user);
   const [error, setError] = useState<string>("");
@@ -25,51 +16,7 @@ function ProfileScreen(props: IAppProps) {
     React.useState<string>("");
 
   React.useEffect(() => {
-    // setEvents(eventsExamples);
-    // setPictures(picturesExamples);
-    //**
 
-    // get the userfrom redux
-
-    const fetchEventsByUser = async (id: string) => {
-      try {
-        const events = await getEventByUser("65c28f044145861695700968");
-        setEvents(events);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching events: " + error);
-        setLoading(false);
-      }
-    };
-    const fetchPicturesByUser = async (id: string) => {
-      try {
-        const pictures = await getPictureCommentsByUser(
-          "65c28f044145861695700968"
-        );
-        setPictures(pictures);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching pictures: " + error);
-        setLoading(false);
-      }
-    };
-
-    const fetchCommentsByUser = async (id: string) => {
-      try {
-        const comments = await getMessageCommentsByUser(
-          "65c28f044145861695700968"
-        );
-        setPictures(comments);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching comments: " + error);
-        setLoading(false);
-      }
-    };
-    // setLoading(true);
-    // fetchEventsByUser("00000");
-    // fetchPicturesByUser("00000");
-    // fetchCommentsByUser("00000");
     setImageFileExtention(user.profile_pic_file?.split(".")[1] || "");
 
     return () => {

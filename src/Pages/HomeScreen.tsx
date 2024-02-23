@@ -28,6 +28,8 @@ function HomeScreen(props: IAppProps) {
     const fetchPictures = async () => {
       try {
         const pictures = await getPictureComments();
+        console.log("pictures: ");
+        console.log(pictures);
         setPictures(pictures);
         setLoading(false);
       } catch (error) {
