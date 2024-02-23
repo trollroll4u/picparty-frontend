@@ -2,12 +2,15 @@ import { useState } from "react";
 import Logo from "../assets/small logo.png";
 import { useSelector } from "react-redux";
 import { UserData } from "../DataStructure";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function MyNavbar() {
-  const user = useSelector((state: UserData) => state.user);
+  // const user = useSelector((state: UserData) => state.user);
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
   const loginNavbar = () => {
-    if (user._id !== "") {
+    if (isAuthenticated) {
+      // User is logged in
       return (
         <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
           <li className="nav-item" style={{ marginRight: "10px" }}>
@@ -19,24 +22,26 @@ function MyNavbar() {
             </a>
           </li>
           <li className="nav-item" style={{ marginRight: "10px" }}>
-            <a href="/search">
-              <button type="button" className="btn btn-light fw-bold">
-                Log out
-              </button>
-            </a>
+            <button
+              onClick={() => logout({logoutParams: { returnTo: window.location.origin }})}
+              type="button"
+              className="btn btn-light fw-bold"
+            >
+              Log out
+            </button>
           </li>
         </ul>
       );
     } else {
+      // User is not logged in
       return (
         <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
           <li className="nav-item" style={{ marginRight: "10px" }}>
-            <button type="button" className="btn btn-light fw-bold">
-              Sign up
-            </button>
-          </li>
-          <li className="nav-item" style={{ marginRight: "10px" }}>
-            <button type="button" className="btn btn-light fw-bold">
+            <button
+              onClick={() => loginWithRedirect()}
+              type="button"
+              className="btn btn-light fw-bold"
+            >
               Sign in
             </button>
           </li>
