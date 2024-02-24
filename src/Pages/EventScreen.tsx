@@ -3,19 +3,15 @@ import { CommentDatanew, EventData, UserData } from "../DataStructure.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { ChangeEvent, useRef, useState } from "react";
 import { getEvent, CanceledError } from "../Services/event-service.ts";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../Services/user-service.ts";
 import CommentsScreen from "../Components/CommentsScreen.tsx";
 import { createComment, deleteComment } from "../Services/comment-service.ts";
 import { useSelector } from "react-redux";
 import { convertImageToBase64 } from "./CreateScreen.tsx";
-import EditEventScreen from "../Pages/EditEventScreen";
-import { defaultImageBase64 } from "../assets/try";
-import PhotoModel from "../Components/PhotoModel.tsx";
+import { deleteEvent } from "../Services/event-service.ts";
 
-export interface IAppProps {}
-
-function EventScreen(props: IAppProps) {
+function EventScreen() {
   // States
   const navigate = useNavigate();
   const eventId = useParams();
@@ -184,6 +180,18 @@ function EventScreen(props: IAppProps) {
   const editEventPage = (event: EventData) => {
     navigate("/editEvent/" + event._id, { state: { event: event } });
   };
+  const deleteCurrentEvent = async (event: EventData) => {
+    try {
+      await deleteEvent(event._id as string);
+      navigate("/");
+    } catch (error) {
+      if (error instanceof CanceledError) {
+        console.log("Request canceled");
+      } else {
+        console.log("Error deleting event: " + error);
+      }
+    }
+  };
 
   // UseEffects
   React.useEffect(() => {
@@ -303,8 +311,17 @@ function EventScreen(props: IAppProps) {
                 </button>
 
                 {user._id === event.user_id && (
-                  <div className="row">
+                  <div className="row text-center">
                     <div className="col">
+                      <button
+                        type="button"
+                        className="btn btn-light btn-lg"
+                        onClick={() => deleteCurrentEvent(event)}
+                        style={{ margin: "1rem" }}
+                      >
+                        <i className="bi bi-trash"></i>
+                        &nbsp;&nbsp; Delete
+                      </button>
                       <button
                         type="button"
                         className="btn btn-light btn-lg"
