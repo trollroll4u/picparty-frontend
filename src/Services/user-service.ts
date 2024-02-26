@@ -1,4 +1,4 @@
-import apiClient, { CanceledError } from "./api-client";
+import apiClient from "./api-client";
 import { UserData } from "../DataStructure";   
 
 // export { CanceledError }
@@ -29,15 +29,9 @@ export const getUser = (id: string) => {
     })
 }
 
-export const createUser = (user: UserData, file: File) => {
+export const createUser = (user: UserData) => {
     return new Promise<UserData>((resolve, reject) => {
-        const formData = new FormData();
-            formData.append("file", file);
-        apiClient.post<UserData>(`users/create`, user, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        
+        apiClient.post<UserData>(`users/create`, user, {        
         }).then((res) => {
             console.log( "success to create user" +  res);
             resolve(res.data);

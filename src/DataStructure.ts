@@ -22,7 +22,7 @@ export interface EventData {
 
   export interface UserData {
     [x: string]: any;
-    _id: string;
+    _id?: string;
     name: string;
     password: string;
     email: string;
