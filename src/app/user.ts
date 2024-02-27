@@ -82,7 +82,7 @@ const initialState : UserData= {
         state.comments = action.payload.comments
         state.likes = action.payload.likes
       },
-      logout: (state) => {
+      logoutUser: (state) => {
         state._id = "";
         state.name = "";
         state.password = "";
@@ -99,6 +99,6 @@ const initialState : UserData= {
   })
   
   // Action creators are generated for each case reducer function
-  export const { login, logout } = userSlice.actions
+  export const { login, logoutUser } = userSlice.actions
   
   export default userSlice.reducer
