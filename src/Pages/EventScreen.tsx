@@ -1,29 +1,70 @@
 import * as React from "react";
 import { CommentDatanew, EventData, UserData } from "../DataStructure.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { getEvent, CanceledError } from "../Services/event-service.ts";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getUser } from "../Services/user-service.ts";
 import CommentsScreen from "../Components/CommentsScreen.tsx";
 import { createComment, deleteComment } from "../Services/comment-service.ts";
 import { useSelector } from "react-redux";
+import { convertImageToBase64 } from "./CreateScreen.tsx";
+import { deleteEvent } from "../Services/event-service.ts";
 
-export interface IAppProps {}
-
-function EventScreen(props: IAppProps) {
+function EventScreen() {
   // States
+  const navigate = useNavigate();
   const eventId = useParams();
   const [commentValue, setCommentValue] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [event, setEvent] = useState<EventData>();
   const user = useSelector((state: UserData) => state.user);
   const [owner, setOwner] = useState<UserData>();
+  const [imgSrc, setImgSrc] = useState<string>("");
   const [imageFileExtention, setImageFileExtention] = useState<string>("");
 
   // Functions
   const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCommentValue(e.target.value);
+  };
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log("im here imgSelected");
+    if (e.target.files && e.target.files.length > 0) {
+      console.log("Image selected");
+      convertImageToBase64(e.target.files[0] as File).then(
+        async (base64String) => {
+          setImgSrc(base64String);
+          console.log("imgSrc: " + imgSrc);
+          const newPic: CommentDatanew = {
+            like: false,
+            user_id: user?._id,
+            event_id: event?._id as string,
+            comment: "",
+            pic_file: base64String,
+          };
+          console.log("try to publish new pic: ", newPic);
+          try {
+            await createComment(newPic);
+            console.log("try to fetch event after add pic: " + event?._id);
+            setTimeout(() => {}, 500);
+            await getEvent(event?._id as string).then((res) => {
+              setEvent(res);
+            });
+          } catch (error) {
+            if (error instanceof CanceledError) {
+              console.log("Request canceled");
+            } else {
+              console.log("Error creating pic: " + error);
+            }
+          }
+        }
+      );
+    }
+  };
+  const selectImg = async () => {
+    console.log("Selecting image...");
+    fileInputRef.current?.click();
   };
 
   const onLikeEventButton = async (event: EventData, user: UserData) => {
@@ -35,11 +76,11 @@ function EventScreen(props: IAppProps) {
           (like) => like.user_id == user._id
         ) as CommentDatanew;
         console.log("unlike event number: " + event._id);
-        await deleteComment(found._id as string).then((res) => {
-          getEvent(event._id as string).then((res) => {
-            setEvent(res);
-          });
-        });
+        await deleteComment(found._id as string);
+        setTimeout(() => {}, 500);
+        console.log("try to fetch event after unlike: " + event._id);
+        setTimeout(() => {}, 500);
+        setEvent(await getEvent(event._id as string));
       } catch (error) {
         if (error instanceof CanceledError) {
           console.log("Request canceled");
@@ -58,10 +99,9 @@ function EventScreen(props: IAppProps) {
       };
       // create like in db
       try {
-        console.log("try to create like: ");
-        console.log(newLike);
         await createComment(newLike);
         console.log("try to fetch event after like: " + event._id);
+        setTimeout(() => {}, 500);
         await getEvent(event._id as string).then((res) => {
           setEvent(res);
         });
@@ -95,6 +135,7 @@ function EventScreen(props: IAppProps) {
       try {
         await createComment(newComment).then((res) => {
           console.log("try to fetch event after like: " + event._id);
+          setTimeout(() => {}, 500);
           getEvent(event._id as string).then((res) => {
             setEvent(res);
           });
@@ -122,17 +163,32 @@ function EventScreen(props: IAppProps) {
     console.log("comment: ");
     console.log(commentIDToDelete);
     try {
-      await deleteComment(commentIDToDelete as string).then((res) => {
-        console.log(res);
-        getEvent(event?._id as string).then((res) => {
-          setEvent(res);
-        });
+      await deleteComment(commentIDToDelete as string);
+      setTimeout(() => {}, 500);
+      await getEvent(event?._id as string).then((res) => {
+        setEvent(res);
       });
     } catch (error) {
       if (error instanceof CanceledError) {
         console.log("Request canceled");
       } else {
         console.log("Error deleting comment: " + error);
+      }
+    }
+  };
+
+  const editEventPage = (event: EventData) => {
+    navigate("/editEvent/" + event._id, { state: { event: event } });
+  };
+  const deleteCurrentEvent = async (event: EventData) => {
+    try {
+      await deleteEvent(event._id as string);
+      navigate("/");
+    } catch (error) {
+      if (error instanceof CanceledError) {
+        console.log("Request canceled");
+      } else {
+        console.log("Error deleting event: " + error);
       }
     }
   };
@@ -172,7 +228,7 @@ function EventScreen(props: IAppProps) {
     setImageFileExtention(event?.event_pic_file?.split(".")[1] || "");
 
     return () => {};
-  }, []);
+  }, [event?.comments.length, event?.likes.length, event?.pictures.length]);
   return (
     <>
       <div
@@ -188,6 +244,7 @@ function EventScreen(props: IAppProps) {
             {" "}
           </div>
         )}
+
         {event && user && owner && (
           <div>
             <div className="row text-center">
@@ -222,15 +279,30 @@ function EventScreen(props: IAppProps) {
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <i className="bi bi-image"></i> {event?.pictures?.length}
                 </p>
-                <button type="button" className="btn btn-light btn-lg">
+                <button
+                  type="button"
+                  className="btn btn-light btn-lg"
+                  onClick={() => {
+                    selectImg();
+                  }}
+                >
                   <i className="bi bi-image"></i>
                   &nbsp;&nbsp; Add Some Photos
                 </button>
+                <input
+                  style={{ display: "none" }}
+                  ref={fileInputRef}
+                  type="file"
+                  onChange={imgSelected}
+                ></input>
                 <button
                   type="button"
                   className="btn btn-light btn-lg"
                   style={{ margin: "1rem" }}
-                  onClick={() => onLikeEventButton(event, user)} //TODO:  change to send current user
+                  onClick={(clickEvent) => {
+                    clickEvent.preventDefault();
+                    onLikeEventButton(event, user);
+                  }} //TODO:  change to send current user
                 >
                   {
                     fillLikeIcon(event, user._id) //TODO:  change to send current user
@@ -239,9 +311,22 @@ function EventScreen(props: IAppProps) {
                 </button>
 
                 {user._id === event.user_id && (
-                  <div className="row">
+                  <div className="row text-center">
                     <div className="col">
-                      <button type="button" className="btn btn-light btn-lg">
+                      <button
+                        type="button"
+                        className="btn btn-light btn-lg"
+                        onClick={() => deleteCurrentEvent(event)}
+                        style={{ margin: "1rem" }}
+                      >
+                        <i className="bi bi-trash"></i>
+                        &nbsp;&nbsp; Delete
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-light btn-lg"
+                        onClick={() => editEventPage(event)}
+                      >
                         <i className="bi bi-pencil-fill"></i>
                         &nbsp;&nbsp; Edit event details
                       </button>
@@ -253,7 +338,10 @@ function EventScreen(props: IAppProps) {
             <br></br>
             <br></br>
             <div className="row">
-              <PhotosScreen photos={event?.pictures}></PhotosScreen>
+              <PhotosScreen
+                photos={event?.pictures}
+                deleteComment={onDeleteComment}
+              ></PhotosScreen>
             </div>
             <div
               className="row "

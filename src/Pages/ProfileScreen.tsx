@@ -2,11 +2,13 @@ import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
 import { useState } from "react";
+
 import { getEventByUser } from "../Services/event-service.ts";
 import {
   getMessageCommentsByUser,
   getPictureCommentsByUser,
 } from "../Services/comment-service.ts";
+
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,9 +20,11 @@ import { defaultPic } from "../assets/default_profile.ts";
 export interface IAppProps {}
 
 function ProfileScreen(props: IAppProps) {
+
   const { user, isAuthenticated } = useAuth0();
   const [events, setEvents] = useState<EventData[]>();
   const [pictures, setPictures] = useState<CommentDatanew[]>();
+
   const [loading, setLoading] = useState<boolean>(false);
   const dbUser = useSelector((state: UserData) => state.user);
   const [error, setError] = useState<string>("");
@@ -71,74 +75,7 @@ function ProfileScreen(props: IAppProps) {
   }
 
   React.useEffect(() => {
-    // setEvents(eventsExamples);
-    // setPictures(picturesExamples);
-    //**
-
-    // get the userfrom redux
-
-    const handleUser = async () => {
-      if (user && user.picture) {
-        convertImageToBase64(user.picture).then(async (base64String) => {
-          addUser(base64String);
-        }).catch(() => addUser(defaultPic)
-        );
-      } else {
-        addUser(defaultPic)
-      }
-    }
-    getAllUsers().then((resultArray) => {
-      if (isAuthenticated) {
-        const existingUser = resultArray.find((dbUser) => dbUser.email === user?.email);
-        console.log(existingUser)
-        if(!existingUser) {
-          handleUser()
-        } else {
-          dispatch(login(existingUser))
-        }
-      }
-    })
-
-    const fetchEventsByUser = async (id: string) => {
-      try {
-        const events = await getEventByUser("65c28f044145861695700968");
-        setEvents(events);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching events: " + error);
-        setLoading(false);
-      }
-    };
-    const fetchPicturesByUser = async (id: string) => {
-      try {
-        const pictures = await getPictureCommentsByUser(
-          "65c28f044145861695700968"
-        );
-        setPictures(pictures);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching pictures: " + error);
-        setLoading(false);
-      }
-    };
-
-    const fetchCommentsByUser = async (id: string) => {
-      try {
-        const comments = await getMessageCommentsByUser(
-          "65c28f044145861695700968"
-        );
-        setPictures(comments);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching comments: " + error);
-        setLoading(false);
-      }
-    };
-    // setLoading(true);
-    // fetchEventsByUser("00000");
-    // fetchPicturesByUser("00000");
-    // fetchCommentsByUser("00000");
-    setImageFileExtention(dbUser.profile_pic_file?.split(".")[1] || "");
+    setImageFileExtention(user.profile_pic_file?.split(".")[1] || "");
 
     return () => {
       console.log("clean up");

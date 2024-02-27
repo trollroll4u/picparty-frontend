@@ -7,10 +7,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
 import z, { set } from "zod";
 import { Form } from "react-bootstrap";
-import { createEvent } from "../Services/event-service";
+import { createEvent, updateEvent } from "../Services/event-service";
 import { EventData, UserData } from "../DataStructure";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import avatar from "../assets/default_pic_for_party.jpg";
 import { defaultImageBase64 } from "../assets/try";
 
@@ -21,7 +21,7 @@ const schema = z.object({
     .max(20, "Name must be less then 20 charecters"),
   description: z
     .string()
-    .max(20, "Description must be less then 100 charecters"),
+    .max(25, "Description must be less then 25 charecters"),
   Date: z.coerce.date().refine((date) => date > new Date(), {
     message: "Date must be in the future",
   }),
@@ -43,14 +43,19 @@ export const convertImageToBase64 = (file: File) => {
 };
 
 type FormData = z.infer<typeof schema>;
+
+export interface EditEventProps {}
 function CreateScreen() {
-  const [imgSrc, setImgSrc] = useState<string>(
-    `data:image/png;base64,` + defaultImageBase64
+  const { state } = useLocation();
+  const [imgSrc, setImgSrc] = useState<string>(state.event.event_pic_file);
+  const [eventName, setEventName] = useState<string>(state.event.title);
+  const [description, setDescription] = useState<string>(
+    state.event?.description || ""
   );
-  const [eventName, setEventName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [date, setDate] = useState<Date>(new Date());
-  const [location, setLocation] = useState<any>([{ name: "Tel Aviv, Israel" }]);
+  const [date, setDate] = useState<Date>(state.event.date);
+  const [location, setLocation] = useState<any>([
+    { name: state.event.location },
+  ]);
   const [locationError, setLocationError] = useState<string>("");
   const [options, setOptions] = useState<any>([]);
   const [showAlert, setShowAlert] = useState<boolean>(false);
@@ -132,20 +137,23 @@ function CreateScreen() {
     } else {
       setLocationError("");
       console.log("type of iamge is:" + typeof imgSrc);
-      const newEvent: EventData = {
+      const updatedEvent: EventData = {
+        _id: state.event._id,
         user_id: user._id,
         title: eventName,
         description: description,
         date: date,
         location: location[0]?.name || "Tel Aviv, Israel",
         event_pic_file: imgSrc,
-        comments: [],
-        pictures: [],
-        likes: [],
+        comments: state.event.comments,
+        pictures: state.event.pictures,
+        likes: state.event.likes,
       };
       try {
-        await createEvent(newEvent);
-        console.log("on submit");
+        console.log("on Update event:");
+        console.log(updatedEvent);
+        await updateEvent(updatedEvent);
+        console.log("on Update event:");
         navigate("/");
       } catch (error) {
         setShowAlert(true);
@@ -200,11 +208,6 @@ function CreateScreen() {
                 type="submit"
                 className="btn btn-light btn-lg"
                 onClick={() => {
-                  // Clean the input file, so the same image can be selected again
-                  fileInputRef.current.type = "text";
-                  fileInputRef.current.type = "file";
-
-                  // Set the default image
                   setImgSrc(`data:image/png;base64,` + defaultImageBase64);
                 }}
               >
@@ -240,6 +243,7 @@ function CreateScreen() {
           <br></br>
           <h3 style={{ color: "white" }}>Event name</h3>
           <input
+            value={eventName}
             {...register("EventName")}
             type="text"
             id="EventName"
@@ -253,6 +257,7 @@ function CreateScreen() {
           <div className="mb-3">
             <h3 style={{ color: "white" }}>Description</h3>
             <textarea
+              value={description}
               {...register("description")}
               id="description"
               rows={3}
@@ -266,6 +271,7 @@ function CreateScreen() {
 
             <h3 style={{ color: "white" }}>Date</h3>
             <input
+              value={date.toISOString().split("T")[0]}
               {...register("Date")}
               type="date"
               id="Date"
@@ -294,7 +300,7 @@ function CreateScreen() {
             className="btn btn-light btn-lg"
             onClick={onSubmit}
           >
-            Create
+            Update
           </button>
         </form>
       </div>

@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
 import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
-import { CommentDatanew } from "../DataStructure.ts";
+import { CommentDatanew, UserData } from "../DataStructure.ts";
+import { useSelector } from "react-redux";
+import PhotoModel from "./PhotoModel.tsx";
 
 interface PhotoProps {
   photo: CommentDatanew;
+  deleteComment: (comment_id: string) => void;
 }
 
-function PhotoCard({ photo }: PhotoProps) {
+function PhotoCard({ photo, deleteComment }: PhotoProps) {
   const [selectedPhoto, setSelectedPhoto] = React.useState("");
-  const [imageFileExtention, setImageFileExtention] = React.useState<string>("");
+  // const user = useSelector((state: UserData) => state.user);
+  // const [imageFileExtention, setImageFileExtention] =
+  //   React.useState<string>("");
 
   const openModal = (photo: any) => {
     setSelectedPhoto(photo);
@@ -17,59 +22,29 @@ function PhotoCard({ photo }: PhotoProps) {
   const closeModal = () => {
     setSelectedPhoto("");
   };
-  React.useEffect(() => {
-    setImageFileExtention(photo?.pic_file?.split(".")[1] || "");
-  }, []);
+  // React.useEffect(() => {
+  //   setImageFileExtention(photo?.pic_file?.split(".")[1] || "");
+  //   console.log("photo", photo);
+  // }, []);
   return (
     <>
       <div className="card mx-1 my-2" key={"card-" + photo._id}>
         <img
           key={"card-img-" + photo._id}
           className="card-img-top"
-          src={ photo.pic_file}
+          src={photo.pic_file}
           style={{ height: "10rem", width: "100%", cursor: "pointer" }}
           onClick={() => {
-            openModal( photo.pic_file);
+            openModal(photo.pic_file);
           }}
         />
       </div>
       {selectedPhoto !== "" && (
-        <div
-          className="modal fade show"
-          tabIndex={Number("-1")}
-          role="dialog"
-          style={{ display: "block" }}
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <img src={selectedPhoto} />
-              <div
-                className="modal-footer"
-                style={{ backgroundColor: "black" }}
-              >
-                <button
-                  type="button"
-                  className="btn btn-light"
-                  onClick={closeModal}
-                >
-                  {
-                    //TODO:  download the image from the server when available
-                  }
-                  Download
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-light"
-                  onClick={closeModal}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PhotoModel
+          photo={photo}
+          deleteComment={deleteComment}
+          closeModal={closeModal}
+        />
       )}
     </>
   );

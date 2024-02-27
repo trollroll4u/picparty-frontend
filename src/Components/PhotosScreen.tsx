@@ -5,9 +5,10 @@ import PhotoCard from "./PhotoCard.tsx";
 
 interface EventsScreenProps {
   photos: CommentDatanew[] | undefined;
+  deleteComment: (comment_id: string) => void;
 }
 
-function PhotosScreen({ photos }: EventsScreenProps) {
+function PhotosScreen({ photos,deleteComment }: EventsScreenProps) {
   return (
     <>
       <div className="container-fluid text-center" key="photosContainer">
@@ -15,7 +16,7 @@ function PhotosScreen({ photos }: EventsScreenProps) {
           {photos && photos.map((photo, index) => {
             return (
               <div className="col" key={"col-" + index}>
-                <PhotoCard photo={photo} />
+                <PhotoCard photo={photo} deleteComment={deleteComment}/>
               </div>
             );
           })}

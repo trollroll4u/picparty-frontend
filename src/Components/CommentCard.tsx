@@ -39,14 +39,14 @@ function CommentCard( {comment, deleteComment} : CommentProps) {
         <p className="d-md-inline fs-6">
           <span className="fw-bold fs-6"> {owner?.name}</span> {comment.comment}
           {user._id === comment.user_id && (
-            <div className="d-flex justify-content-end">
+            <span className="d-flex justify-content-end">
               <button
                 className="btn btn-outline-dark"
                 onClick={() => deleteComment(comment._id as string)}
               >
                 <i className="bi bi-trash"></i>
               </button>
-            </div>
+            </span>
           )}
         </p>
       </div>

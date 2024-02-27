@@ -81,6 +81,7 @@ export const deleteComment = (id: string) => {
 export const getPictureComments = () => {
     return new Promise<CommentDatanew[]>((resolve, reject) => {
         apiClient.get<CommentDatanew[]>("comments/get_pictures").then((res) => {
+            console.log("get picture comments: ", res.data);
                 resolve(res.data);
         }).catch((err) => {
             console.log("error in getting all comments: ", err);
