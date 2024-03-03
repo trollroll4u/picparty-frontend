@@ -5,7 +5,6 @@ import SearchScreen from "../Pages/SearchScreen";
 import EventScreen from "../Pages/EventScreen";
 import ProfileScreen from "../Pages/ProfileScreen";
 import CreateScreen from "../Pages/CreateScreen";
-
 import { useAuth0 } from '@auth0/auth0-react';
 import EditEventScreen from "../Pages/EditEventScreen";
 // import PhotoScreen from "../Pages/PhotoScreen";
@@ -27,12 +26,14 @@ const RouterConfig: React.FC = () => {
         <Route path="search" element={<ProtectedRoute element={<SearchScreen />} />} />
         <Route path="event/:eventId" element={<ProtectedRoute element={<EventScreen />} />} />
         <Route path="profile" element={<ProtectedRoute element={<ProfileScreen />} />} />
-        <Route path="/editEvent/:eventId" element={<ProtectedRoute element={<EditEventScreen />} />} />
         <Route path="create" element={<ProtectedRoute element={<CreateScreen />} />} />
+        <Route path="/editEvent/:eventId" element={<ProtectedRoute element={<EditEventScreen />} />} />
       </Route>
     </Routes>
   );
 };
 
 export default RouterConfig;
+
+
 

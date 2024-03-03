@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import Logo from "../assets/small logo.png";
 import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../Services/user-service";
-import { logoutUser } from "../app/user.ts";
+import { login, logoutUser } from "../app/user.ts";
 
 function MyNavbar() {
   // const user = useSelector((state: UserData) => state.user);
@@ -17,12 +17,14 @@ function MyNavbar() {
     if (isAuthenticated) {
       // Check your condition for the first login, for example, based on user metadata
       getAllUsers().then((resultArray) => {
-        console.log()
-        const isEmailInArray = resultArray.some((dbUser) => dbUser.email == user?.email);
+        console.log();
+        const isEmailInArray = resultArray.some(
+          (dbUser) => dbUser.email == user?.email
+        );
         if (!isEmailInArray) {
-          navigate('/profile');
+          navigate("/profile");
         }
-      })
+      });
     }
   }, [isAuthenticated, user, navigate]);
 
@@ -41,7 +43,10 @@ function MyNavbar() {
           </li>
           <li className="nav-item" style={{ marginRight: "10px" }}>
             <button
-              onClick={() => {logout({logoutParams: { returnTo: window.location.origin }}), dispatch(logoutUser())}}
+              onClick={() => {
+                logout({ logoutParams: { returnTo: window.location.origin } }),
+                  dispatch(logoutUser());
+              }}
               type="button"
               className="btn btn-light fw-bold"
             >
@@ -67,7 +72,6 @@ function MyNavbar() {
       );
     }
   };
-
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -113,7 +117,6 @@ function MyNavbar() {
                 Search
               </a>
             </li>
-
             <li className="nav-item">
               <a href="/create">
                 <button type="button" className="btn btn-light fw-bold">
@@ -128,5 +131,4 @@ function MyNavbar() {
     </nav>
   );
 }
-
 export default MyNavbar;
