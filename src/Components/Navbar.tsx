@@ -17,16 +17,14 @@ function MyNavbar() {
     if (isAuthenticated) {
       // Check your condition for the first login, for example, based on user metadata
       getAllUsers().then((resultArray) => {
-        console.log();
-        const isEmailInArray = resultArray.some(
-          (dbUser) => dbUser.email == user?.email
-        );
+        console.log()
+        const isEmailInArray = resultArray.some((dbUser) => dbUser.email == user?.email);
         if (!isEmailInArray) {
-          navigate("/profile");
+          navigate('/profile');
         }
       });
     }
-  }, [isAuthenticated, user, navigate]);
+  }, [isAuthenticated, user, navigate, dispatch]);
 
   const loginNavbar = () => {
     if (isAuthenticated) {

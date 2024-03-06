@@ -2,7 +2,7 @@ import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
 import { useState } from "react";
-import { getEventByUser } from "../Services/event-service.ts";
+import { convertStringDateToDate, getEventByUser } from "../Services/event-service.ts";
 import {
   getMessageCommentsByUser,
   getPictureCommentsByUser,
@@ -17,13 +17,10 @@ import { defaultPic } from "../assets/default_profile.ts";
 
 export interface IAppProps {}
 
-function ProfileScreen(props: IAppProps) {
+function ProfileScreen() {
   const { user, isAuthenticated } = useAuth0();
-  const [events, setEvents] = useState<EventData[]>();
-  const [pictures, setPictures] = useState<CommentDatanew[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const dbUser = useSelector((state: UserData) => state.user);
-  const [error, setError] = useState<string>("");
   const dispatch = useDispatch();
   const [imageFileExtention, setImageFileExtention] =
     React.useState<string>("");
@@ -64,18 +61,12 @@ function ProfileScreen(props: IAppProps) {
       dispatch(login(newUser))
       console.log(res);
     } catch (error) {
-      setShowAlert(true);
       console.log("here ohad");
       console.log("Error creating event: " + error);
     }
   }
 
   React.useEffect(() => {
-    // setEvents(eventsExamples);
-    // setPictures(picturesExamples);
-    //**
-
-    // get the userfrom redux
 
     const handleUser = async () => {
       if (user && user.picture) {
@@ -94,50 +85,12 @@ function ProfileScreen(props: IAppProps) {
         if(!existingUser) {
           handleUser()
         } else {
+          console.log(existingUser)
           dispatch(login(existingUser))
         }
       }
     })
 
-    const fetchEventsByUser = async (id: string) => {
-      try {
-        const events = await getEventByUser("65c28f044145861695700968");
-        setEvents(events);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching events: " + error);
-        setLoading(false);
-      }
-    };
-    const fetchPicturesByUser = async (id: string) => {
-      try {
-        const pictures = await getPictureCommentsByUser(
-          "65c28f044145861695700968"
-        );
-        setPictures(pictures);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching pictures: " + error);
-        setLoading(false);
-      }
-    };
-
-    const fetchCommentsByUser = async (id: string) => {
-      try {
-        const comments = await getMessageCommentsByUser(
-          "65c28f044145861695700968"
-        );
-        setPictures(comments);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching comments: " + error);
-        setLoading(false);
-      }
-    };
-    // setLoading(true);
-    // fetchEventsByUser("00000");
-    // fetchPicturesByUser("00000");
-    // fetchCommentsByUser("00000");
     setImageFileExtention(dbUser.profile_pic_file?.split(".")[1] || "");
 
     return () => {
@@ -180,6 +133,28 @@ function ProfileScreen(props: IAppProps) {
               the user the oppertunity ti change them, like in getin
             </p>
           </div>
+          {/* <p className="d-inline-flex gap-1">
+            <button className="btn btn-light fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <i className="bi bi-person-circle"></i>
+                &nbsp; Edit Profile
+            </button>
+          </p>
+          <div className="collapse" id="collapseExample">
+            <div className="card card-body">
+              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
+          </div>
+
+          <p className="d-inline-flex gap-1">
+            <button className="btn btn-primary collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Button with data-bs-target
+            </button>
+          </p>
+          <div className="collapse" id="collapseExample">
+            <div className="card card-body">
+              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
+          </div> */}
 
           <div className="row" style={{ backgroundColor: "black" }}>
             <h1 style={{ color: "white" }}> My Uploads</h1>
@@ -196,7 +171,3 @@ function ProfileScreen(props: IAppProps) {
 }
 
 export default ProfileScreen;
-function setShowAlert(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
-
