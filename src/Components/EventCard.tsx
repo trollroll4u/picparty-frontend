@@ -51,9 +51,9 @@ function EventCard({ event }: EventProps) {
         >
           {event?.title}
         </p>
-        <p key={"card-date-" + event?._id} className="card-text fw-bold fs-6">
+        {/* <p key={"card-date-" + event?._id} className="card-text fw-bold fs-6">
           {event?.date.toLocaleDateString()}
-        </p>
+        </p> */}
         <p key={"card-owner-" + event?._id} className="card-text fw-bold fs-6">
           {owner?.name || "ddd"}
         </p>

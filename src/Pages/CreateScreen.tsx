@@ -143,16 +143,35 @@ function CreateScreen() {
         pictures: [],
         likes: [],
       };
+      console.log(newEvent);
+      console.log(typeof newEvent.date);
       try {
-        await createEvent(newEvent);
+        const res = await createEvent(newEvent);
+        console.log("RESSSSS");
+        console.log(res);
         console.log("on submit");
         navigate("/");
       } catch (error) {
         setShowAlert(true);
+        console.log("here ohad");
         console.log("Error creating event: " + error);
       }
     }
   };
+
+  //   const register = async () => {
+  //   const url = await uploadPhoto(imgSrc!);
+  //   console.log("upload returned:" + url);
+  //   if (emailInputRef.current?.value && passwordInputRef.current?.value) {
+  //   const user: IUser = {
+  //   email: emailInputRef.current?.value,
+  //   password: passwordInputRef.current?.value,
+  //   imgUrl: url
+  //   }
+  //   const res = await registrUser(user)
+  //   console.log(res)
+  //   }
+  //   }
 
   return (
     <>
@@ -200,11 +219,6 @@ function CreateScreen() {
                 type="submit"
                 className="btn btn-light btn-lg"
                 onClick={() => {
-                  // Clean the input file, so the same image can be selected again
-                  fileInputRef.current.type = "text";
-                  fileInputRef.current.type = "file";
-
-                  // Set the default image
                   setImgSrc(`data:image/png;base64,` + defaultImageBase64);
                 }}
               >

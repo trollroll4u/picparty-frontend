@@ -92,7 +92,7 @@ function EventScreen() {
       console.log("like event number: " + event._id);
       const newLike: CommentDatanew = {
         like: true,
-        user_id: user?._id,
+        user_id: user?._id as string,
         event_id: event?._id as string,
         comment: "",
         pic_file: "",
@@ -126,7 +126,7 @@ function EventScreen() {
       setCommentValue("");
       const newComment: CommentDatanew = {
         comment: comment,
-        user_id: user?._id,
+        user_id: user?._id as string,
         event_id: event?._id as string,
         like: false,
         pic_file: "",
