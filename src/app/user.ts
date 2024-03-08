@@ -16,7 +16,7 @@ import { UserData } from '../DataStructure'
       likes: [],
     } as UserData,
     reducers: {
-      login: (state :any, action :UserData) => {
+      login: (state, action) => {
         state._id = action.payload._id
         state.name = action.payload.name
         state.password = action.payload.password
@@ -27,7 +27,7 @@ import { UserData } from '../DataStructure'
         state.comments = action.payload.comments
         state.likes = action.payload.likes
       },
-      logoutUser: (state : any) => {
+      logoutUser: (state) => {
         state._id = "";
         state.name = "";
         state.password = "";
