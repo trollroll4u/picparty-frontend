@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
- import { EventData, UserData } from "../DataStructure.ts";
+import { EventData } from "../DataStructure.ts";
 
 interface EventsScreenProps {
-  events: EventData[] ;
+  events: EventData[] | undefined ;
 }
 
 function EventsScreen({ events }: EventsScreenProps) {

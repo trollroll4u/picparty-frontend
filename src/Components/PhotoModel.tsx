@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
-import { CommentDatanew, UserData } from "../DataStructure.ts";
-import { useSelector } from "react-redux";
-import { saveAs } from 'file-saver';
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { CommentDatanew } from "../DataStructure.ts";
+import { saveAs } from "file-saver";
 
 interface PhotoModelProps {
   photo: CommentDatanew;
@@ -11,9 +10,9 @@ interface PhotoModelProps {
 }
 
 function PhotoModel({ photo, deleteComment, closeModal }: PhotoModelProps) {
-  const user = useSelector((state: UserData) => state.user);
-  const [imageFileExtention, setImageFileExtention] =
+  const [, setImageFileExtention] =
     React.useState<string>("");
+  const location = useLocation();
 
   const deletePhoto = (photoId: string) => {
     deleteComment(photoId);
@@ -26,11 +25,7 @@ function PhotoModel({ photo, deleteComment, closeModal }: PhotoModelProps) {
       return;
     }
 
-    // Remove data URL prefix if present
-    const base64String = photo.replace(
-      /^data:image\/(png|jpg|jpeg);base64,/,
-      ""
-    );
+    const base64String = photo.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
     const byteCharacters = atob(base64String);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
@@ -38,8 +33,6 @@ function PhotoModel({ photo, deleteComment, closeModal }: PhotoModelProps) {
     }
     const byteArray = new Uint8Array(byteNumbers);
     const blob = new Blob([byteArray], { type: "image/png" });
-    console.log("blob", blob);
-    
 
     saveAs(blob, "image.png");
   };
@@ -47,6 +40,7 @@ function PhotoModel({ photo, deleteComment, closeModal }: PhotoModelProps) {
   React.useEffect(() => {
     setImageFileExtention(photo?.pic_file?.split(".")[1] || "");
   }, []);
+
   return (
     <>
       <div
@@ -60,29 +54,24 @@ function PhotoModel({ photo, deleteComment, closeModal }: PhotoModelProps) {
         <div className="modal-dialog">
           <div className="modal-content">
             <img src={photo.pic_file} />
-            <div className="modal-footer" style={{ backgroundColor: "black" }}>
-              ({photo.user_id === user._id} &&
-              {
+            <div
+              className="modal-footer"
+              style={{ backgroundColor: "black" }}
+            >
+              {!location.pathname.includes("/profile") && (
                 <button
                   type="button"
                   className="btn btn-light"
                   onClick={() => deletePhoto(photo._id as string)}
                 >
-                  {
-                    //TODO:  download the image from the server when available
-                  }
                   Delete
                 </button>
-              }
-              )
+              )}
               <button
                 type="button"
                 className="btn btn-light"
                 onClick={() => downloadPhoto(photo.pic_file as string)}
               >
-                {
-                  //TODO:  download the image from the server when available
-                }
                 Download
               </button>
               <button

@@ -2,7 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
-import App from './App'; // Your main App component
 import store from './app/store.ts';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';

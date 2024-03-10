@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
-import { CommentDatanew, UserData } from "../DataStructure.ts";
-import { useSelector } from "react-redux";
+import React from "react";
+import { CommentDatanew } from "../DataStructure.ts";
 import PhotoModel from "./PhotoModel.tsx";
 
 interface PhotoProps {

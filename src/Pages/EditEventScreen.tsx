@@ -1,17 +1,15 @@
 import React, { ChangeEvent, useRef, useState } from "react";
 // import avatar from "../assets/default_pic_for_party.jpg";
-import { uploadPhoto } from "../Services/file-service";
 import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FieldValues, useForm } from "react-hook-form";
-import z, { set } from "zod";
+import { useForm } from "react-hook-form";
+import z from "zod";
 import { Form } from "react-bootstrap";
-import { createEvent, updateEvent } from "../Services/event-service";
+import { updateEvent } from "../Services/event-service";
 import { EventData, UserData } from "../DataStructure";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import avatar from "../assets/default_pic_for_party.jpg";
 import { defaultImageBase64 } from "../assets/try";
 
 const schema = z.object({

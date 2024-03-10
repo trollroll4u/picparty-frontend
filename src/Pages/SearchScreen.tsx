@@ -7,7 +7,7 @@ import { getAllEvents } from "../Services/event-service.ts";
 
 export interface IAppProps {}
 
-function SearchScreen(props: IAppProps) {
+function SearchScreen() {
   const [events, setEvents] = useState<EventData[]>();
   const [searchResult, setSearchResult] = useState<EventData[]>();
   const [searchValue, setSearchValue] = useState("");

@@ -1,4 +1,3 @@
-import React from "react";
 import { CommentDatanew } from "../DataStructure.ts";
 import CommentCard from "./CommentCard.tsx";
 

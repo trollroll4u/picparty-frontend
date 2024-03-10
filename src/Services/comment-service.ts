@@ -27,10 +27,10 @@ export const getComment = (id: string) => {
     })
 }
 
-export const createPictureComment = (comment: CommentDatanew,file: File) => {
+export const createPictureComment = (comment: CommentDatanew) => {
     return new Promise<CommentDatanew>((resolve, reject) => {
         const formData = new FormData();
-            formData.append("file", comment.pic_file as Blob);
+            formData.append("file", comment.pic_file as unknown as Blob);
         apiClient.post<CommentDatanew>(`comments/create`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -127,7 +127,7 @@ export const getPictureCommentsByUser = (id:string ) => {
     //         reject(err);
     //     })
     // })
-    return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.picture_file !== undefined && comment.picture_file !== ""))
+    return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.pic_file !== undefined && comment.pic_file !== ""))
 }
 
 export const getMessageCommentsByUser = (id:string) => {

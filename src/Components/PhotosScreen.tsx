@@ -1,5 +1,3 @@
-import React from "react";
-import EventCard from "./EventCard";
 import { CommentDatanew } from "../DataStructure.ts";
 import PhotoCard from "./PhotoCard.tsx";
 

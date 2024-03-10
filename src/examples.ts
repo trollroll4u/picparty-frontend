@@ -1,10 +1,9 @@
 import { CommentDatanew, EventData, UserData } from "./DataStructure.ts";
-import img1 from "./src/assets/img1.jpg";
 
 
 export const picturesExamples: CommentDatanew[] = [
     {
-      picture_file: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
+      pic_file: "https://wowslider.com/sliders/demo-93/data1/images/lake.jpg",
       _id: "1",
       event_id: "1",
       user_id: "1",
@@ -12,7 +11,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_file: "https://picsum.photos/300",
+      pic_file: "https://picsum.photos/300",
       _id: "2",
       event_id: "1",
       user_id: "1",
@@ -20,7 +19,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_file: "https://picsum.photos/900",
+      pic_file: "https://picsum.photos/900",
       _id: "3",
       event_id: "1",
       user_id: "1",
@@ -28,7 +27,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_file: "https://picsum.photos/900",
+      pic_file: "https://picsum.photos/900",
       _id: "4",
       event_id: "1",
       user_id: "1",
@@ -36,7 +35,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_file: "https://picsum.photos/900",
+      pic_file: "https://picsum.photos/900",
       _id: "5",
       event_id: "1",
       user_id: "1",
@@ -45,7 +44,7 @@ export const picturesExamples: CommentDatanew[] = [
   
     },
     {
-      picture_file: "https://picsum.photos/900",
+      pic_file: "https://picsum.photos/900",
       _id: "6",
       event_id: "1",
       user_id: "1",
@@ -53,7 +52,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_file: "https://picsum.photos/900",
+      pic_file: "https://picsum.photos/900",
       _id: "7",
       event_id: "1",
       user_id: "1",
@@ -61,7 +60,7 @@ export const picturesExamples: CommentDatanew[] = [
       like: false
     },
     {
-      picture_file: "https://picsum.photos/900",
+      pic_file: "https://picsum.photos/900",
       _id: "8",
       event_id: "1",
       user_id: "1",
@@ -123,7 +122,7 @@ export const picturesExamples: CommentDatanew[] = [
       event_pic_file: "https://picsum.photos/300",
       title: "yuval party",
       date: new Date(2019, 5, 22),
-      owner_id: "2",
+      user_id: "2",
       location: "tel aviv",
     },
     {
@@ -135,7 +134,7 @@ export const picturesExamples: CommentDatanew[] = [
       event_pic_file: "https://picsum.photos/400",
       title: "dor party",
       date: new Date(),
-      owner_id: "3",
+      user_id: "3",
       location: "tel aviv",
     },
     {
@@ -147,7 +146,7 @@ export const picturesExamples: CommentDatanew[] = [
       event_pic_file: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
-      owner_id: "3",
+      user_id: "3",
       location: "tel aviv",
     },
     {
@@ -159,7 +158,7 @@ export const picturesExamples: CommentDatanew[] = [
       event_pic_file: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
-      owner_id: "1",
+      user_id: "1",
       location: "tel aviv",
     },
     {
@@ -171,7 +170,7 @@ export const picturesExamples: CommentDatanew[] = [
       event_pic_file: "https://picsum.photos/500",
       title: "event4",
       date: new Date(),
-      owner_id: "2",
+      user_id: "2",
       location: "tel aviv",
     },
   ];

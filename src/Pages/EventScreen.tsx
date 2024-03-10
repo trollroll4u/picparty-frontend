@@ -21,7 +21,7 @@ function EventScreen() {
   const user = useSelector((state: UserData) => state.user);
   const [owner, setOwner] = useState<UserData>();
   const [imgSrc, setImgSrc] = useState<string>("");
-  const [imageFileExtention, setImageFileExtention] = useState<string>("");
+  const [, setImageFileExtention] = useState<string>("");
 
   // Functions
   const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +133,7 @@ function EventScreen() {
       };
       console.log("try to publish new comment: " + newComment);
       try {
-        await createComment(newComment).then((res) => {
+        await createComment(newComment).then(() => {
           console.log("try to fetch event after like: " + event._id);
           setTimeout(() => {}, 500);
           getEvent(event._id as string).then((res) => {

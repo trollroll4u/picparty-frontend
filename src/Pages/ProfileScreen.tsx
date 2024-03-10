@@ -1,12 +1,7 @@
 import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
-import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
+import { UserData } from "../DataStructure.ts";
 import { useState } from "react";
-import { convertStringDateToDate, getEventByUser } from "../Services/event-service.ts";
-import {
-  getMessageCommentsByUser,
-  getPictureCommentsByUser,
-} from "../Services/comment-service.ts";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -19,10 +14,10 @@ export interface IAppProps {}
 
 function ProfileScreen() {
   const { user, isAuthenticated } = useAuth0();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading] = useState<boolean>(false);
   const dbUser = useSelector((state: UserData) => state.user);
   const dispatch = useDispatch();
-  const [imageFileExtention, setImageFileExtention] =
+  const [,setImageFileExtention] =
     React.useState<string>("");
 
     
@@ -158,7 +153,9 @@ function ProfileScreen() {
 
           <div className="row" style={{ backgroundColor: "black" }}>
             <h1 style={{ color: "white" }}> My Uploads</h1>
-            <PhotosScreen photos={dbUser.pictures}></PhotosScreen>
+            <PhotosScreen photos={dbUser.pictures} deleteComment={function (): void {
+              throw new Error("Function not implemented.");
+            } }></PhotosScreen>
           </div>
           <div className="row" style={{ backgroundColor: "black" }}>
             <h1 style={{ color: "white" }}> My events</h1>

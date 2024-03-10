@@ -1,6 +1,5 @@
 import apiClient, { CanceledError } from "./api-client";
-import { EventData } from "../DataStructure";   
-import axios from "axios";
+import { EventData } from "../DataStructure";
 
 export { CanceledError }
 

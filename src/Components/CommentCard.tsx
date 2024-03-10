@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
 import { CommentDatanew, UserData } from "../DataStructure.ts";
 import { getUser } from "../Services/user-service.ts";
-import { userExamples } from "../examples.ts";
 import { useSelector } from "react-redux";
-import { CanceledError, deleteComment } from "../Services/comment-service.ts";
 
 interface CommentProps {
   comment: CommentDatanew;

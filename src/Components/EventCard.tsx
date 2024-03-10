@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from "react";
-import img1 from "../assets/party posters/Summer-Party-Poster-Template.jpg";
+import { useEffect, useState } from "react";
 import { EventData, UserData } from "../DataStructure.ts";
 import { getUser } from "../Services/user-service.ts";
-import { userExamples } from "../examples.ts";
-import image from "../../../picparty-backend/images/default.jpeg";
 
 interface EventProps {
   event: EventData;
@@ -11,7 +8,7 @@ interface EventProps {
 
 function EventCard({ event }: EventProps) {
   const [owner, setOwner] = useState<UserData>();
-  const [imageFileExtention, setImageFileExtention] = useState<string>("");
+  const [, setImageFileExtention] = useState<string>("");
 
   // get the user of the event
   useEffect(() => {

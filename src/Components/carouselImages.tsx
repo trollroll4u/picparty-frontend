@@ -1,4 +1,3 @@
-import React from "react";
 import { CommentDatanew } from "../DataStructure.ts";
 
 interface CaruselImagesProps {
@@ -6,7 +5,6 @@ interface CaruselImagesProps {
 }
 
 function createSlides(images: CommentDatanew[]) {
-  const imageFileExtention = images[0]?.pic_file?.split(".")[1] || "jpg";
   let slides = images.map((image, index) => {
     return (
       <div

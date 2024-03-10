@@ -1,15 +1,12 @@
 import * as React from "react";
 import EventsScreen from "../Components/EventsScreen.tsx";
 import Carusale from "../Components/carouselImages.tsx";
-import { EventData, CommentDatanew, UserData } from "../DataStructure.ts";
+import { EventData, CommentDatanew } from "../DataStructure.ts";
 import { useState } from "react";
 import { getAllEvents } from "../Services/event-service.ts";
 import { getPictureComments } from "../Services/comment-service.ts";
-import { useSelector } from "react-redux";
 
-export interface IAppProps {}
-
-function HomeScreen(props: IAppProps) {
+function HomeScreen() {
   const [events, setEvents] = useState<EventData[]>([]);
   const [pictures, setPictures] = useState<CommentDatanew[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
