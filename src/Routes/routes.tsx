@@ -7,6 +7,7 @@ import ProfileScreen from "../Pages/ProfileScreen";
 import CreateScreen from "../Pages/CreateScreen";
 import { useAuth0 } from '@auth0/auth0-react';
 import EditEventScreen from "../Pages/EditEventScreen";
+import EditUserScreen from '../Pages/EditUserScreen';
 // import PhotoScreen from "../Pages/PhotoScreen";
 
 const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
@@ -28,6 +29,7 @@ const RouterConfig: React.FC = () => {
         <Route path="profile" element={<ProtectedRoute element={<ProfileScreen />} />} />
         <Route path="create" element={<ProtectedRoute element={<CreateScreen />} />} />
         <Route path="/editEvent/:eventId" element={<ProtectedRoute element={<EditEventScreen />} />} />
+        <Route path="/editUser/:userId" element={<ProtectedRoute element={<EditUserScreen />} />} />
       </Route>
     </Routes>
   );

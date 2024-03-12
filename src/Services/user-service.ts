@@ -42,16 +42,10 @@ export const createUser = (user: UserData) => {
     })
 }
 
-export const updateUser = (user: UserData, file: File) => {
+export const updateUser = (user: UserData) => {
     return new Promise<UserData>((resolve, reject) => {
-        const formData = new FormData();
-            formData.append("file",file);
-        apiClient.put<UserData>(`users/update/${user._id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        
-        }).then((res) => {
+        apiClient.put<UserData>(`users/update/${user._id}`, user)
+        .then((res) => {
             console.log( "success to update user" +  res);
             resolve(res.data);
         }).catch((err) => {

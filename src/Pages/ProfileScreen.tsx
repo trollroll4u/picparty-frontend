@@ -4,7 +4,7 @@ import { UserData } from "../DataStructure.ts";
 import { useState } from "react";
 import PhotosScreen from "../Components/PhotosScreen.tsx";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createUser, getAllUsers } from "../Services/user-service.ts";
 import { login } from "../app/user.ts";
@@ -13,6 +13,7 @@ import { defaultPic } from "../assets/default_profile.ts";
 export interface IAppProps {}
 
 function ProfileScreen() {
+  const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth0();
   const [loading] = useState<boolean>(false);
   const dbUser = useSelector((state: UserData) => state.user);
@@ -60,6 +61,10 @@ function ProfileScreen() {
       console.log("Error creating event: " + error);
     }
   }
+
+  const editUserPage = (dbUser: UserData) => {
+    navigate("/editUser/" + dbUser._id, { state: { dbUser: dbUser } });
+  };
 
   React.useEffect(() => {
 
@@ -128,6 +133,14 @@ function ProfileScreen() {
               the user the oppertunity ti change them, like in getin
             </p>
           </div>
+          <button
+            type="button"
+            className="btn btn-light btn-lg"
+            onClick={() => editUserPage(dbUser)}
+          >
+            <i className="bi bi-pencil-fill"></i>
+            &nbsp;&nbsp; Edit user details
+          </button>
           {/* <p className="d-inline-flex gap-1">
             <button className="btn btn-light fw-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               <i className="bi bi-person-circle"></i>
