@@ -10,7 +10,7 @@
     "start": "pm2 start --name 'partypic-front' --watch -- 'npx vite'",
     "stop": "pm2 stop partypic-front",
     "restart": "set HTTPS=true && pm2 restart partypic-front",
-    "prod": "tsc && vite build && pm2 start ecosystem.config.cjs --env production"
+    "prod": "tsc && vite build && pm2 restart ecosystem.config.cjs --env production"
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
