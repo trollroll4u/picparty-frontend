@@ -20,7 +20,7 @@ function EventScreen() {
   const [event, setEvent] = useState<EventData>();
   const user = useSelector((state: UserData) => state.user);
   const [owner, setOwner] = useState<UserData>();
-  const [imgSrc, setImgSrc] = useState<string>("");
+  const [, setImgSrc] = useState<string>("");
   const [, setImageFileExtention] = useState<string>("");
 
   // Functions

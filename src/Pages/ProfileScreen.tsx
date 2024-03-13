@@ -53,7 +53,7 @@ function ProfileScreen() {
     }
     try {
 
-      const res = await createUser(newUser);
+      await createUser(newUser);
       dispatch(login(newUser))
 
     } catch (error) {

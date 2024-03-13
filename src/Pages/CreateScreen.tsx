@@ -142,7 +142,7 @@ function CreateScreen() {
       };
 
       try {
-        const res = await createEvent(newEvent);
+        await createEvent(newEvent);
         navigate("/");
       } catch (error) {
         setShowAlert(true);
