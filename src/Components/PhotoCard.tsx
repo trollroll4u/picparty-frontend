@@ -9,9 +9,6 @@ interface PhotoProps {
 
 function PhotoCard({ photo, deleteComment }: PhotoProps) {
   const [selectedPhoto, setSelectedPhoto] = React.useState("");
-  // const user = useSelector((state: UserData) => state.user);
-  // const [imageFileExtention, setImageFileExtention] =
-  //   React.useState<string>("");
 
   const openModal = (photo: any) => {
     setSelectedPhoto(photo);
@@ -20,10 +17,6 @@ function PhotoCard({ photo, deleteComment }: PhotoProps) {
   const closeModal = () => {
     setSelectedPhoto("");
   };
-  // React.useEffect(() => {
-  //   setImageFileExtention(photo?.pic_file?.split(".")[1] || "");
-  //   console.log("photo", photo);
-  // }, []);
   return (
     <>
       <div className="card mx-1 my-2" key={"card-" + photo._id}>

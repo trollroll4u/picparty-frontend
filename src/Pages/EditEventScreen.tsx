@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useRef, useState } from "react";
-// import avatar from "../assets/default_pic_for_party.jpg";
 import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +9,7 @@ import { updateEvent } from "../Services/event-service";
 import { EventData, UserData } from "../DataStructure";
 import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { defaultImageBase64 } from "../assets/try";
+import { defaultImageBase64 } from "../assets/defaultImage";
 
 const schema = z.object({
   EventName: z
@@ -67,7 +66,6 @@ function CreateScreen() {
         await axios
           .get("https://countriesnow.space/api/v0.1/countries")
           .then((res) => {
-            // console.log(res.data.data);
             const all: { name: string }[] = [];
             res.data.data.map((location: any) => {
               location.cities.map((city: any) => {
@@ -134,7 +132,6 @@ function CreateScreen() {
       setLocationError("Location is required");
     } else {
       setLocationError("");
-      console.log("type of iamge is:" + typeof imgSrc);
       const updatedEvent: EventData = {
         _id: state.event._id,
         user_id: user._id,
@@ -148,10 +145,7 @@ function CreateScreen() {
         likes: state.event.likes,
       };
       try {
-        console.log("on Update event:");
-        console.log(updatedEvent);
         await updateEvent(updatedEvent);
-        console.log("on Update event:");
         navigate("/");
       } catch (error) {
         setShowAlert(true);

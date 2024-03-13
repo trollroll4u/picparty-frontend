@@ -1,8 +1,6 @@
 import apiClient from "./api-client";
 import { UserData } from "../DataStructure";   
 
-// export { CanceledError }
-
 export const getAllUsers = () => {
     return new Promise<UserData[]>((resolve, reject) => {
         apiClient.get<UserData[]>("users/get").then((res) => {

@@ -1,38 +1,36 @@
+import { useState } from "react";
 import { CommentDatanew } from "../DataStructure.ts";
 
 interface CaruselImagesProps {
   images: CommentDatanew[];
 }
 
-function createSlides(images: CommentDatanew[]) {
-  let slides = images.map((image, index) => {
-    return (
+function CaruselImages({ images }: CaruselImagesProps) {
+  const slides = () => {
+    let slides = images.map((image, index) => (
       <div
-        className={"carousel-item" + (index === 0 ? " active" : "")}
+        className={`carousel-item ${index === activeIndex ? "active" : ""}`}
         key={"carousel-item" + index}
       >
         <img
           key={"carousel-image" + (index === 0 ? " active" : "")}
-          src={ image.pic_file}
+          src={image.pic_file}
           className="d-block w-100"
-          alt="..."
+          alt={`Slide ${index}`}
           style={{ height: "60vh" }}
         />
       </div>
-    );
-  });
+    ));
 
-  return slides;
-}
-
-function CaruselImages({ images }: CaruselImagesProps) {
-  const slides = createSlides(images);
+    return slides;
+  };
+  const [activeIndex, setActiveIndex] = useState(0);
 
   return (
     <>
       <div id="carouselExample" className="carousel slide" key="carousel">
         <div className="carousel-inner" key="carousel-inner">
-          {slides}
+          {slides()}
         </div>
         <button
           key={"carousel-control-prev"}
@@ -40,6 +38,9 @@ function CaruselImages({ images }: CaruselImagesProps) {
           type="button"
           data-bs-target="#carouselExample"
           data-bs-slide="prev"
+          onClick={() =>
+            setActiveIndex((activeIndex + images.length - 1) % images.length)
+          }
         >
           <span
             key={"carousel-control-prev-icon"}
@@ -59,6 +60,7 @@ function CaruselImages({ images }: CaruselImagesProps) {
           type="button"
           data-bs-target="#carouselExample"
           data-bs-slide="next"
+          onClick={() => setActiveIndex((activeIndex + 1) % images.length)}
         >
           <span
             key={"carousel-control-next-icon"}

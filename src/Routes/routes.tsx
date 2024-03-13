@@ -8,7 +8,6 @@ import CreateScreen from "../Pages/CreateScreen";
 import { useAuth0 } from '@auth0/auth0-react';
 import EditEventScreen from "../Pages/EditEventScreen";
 import EditUserScreen from '../Pages/EditUserScreen';
-// import PhotoScreen from "../Pages/PhotoScreen";
 
 const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
   const { isAuthenticated } = useAuth0();

@@ -7,7 +7,6 @@ import { getAllUsers } from "../Services/user-service";
 import { login, logoutUser } from "../app/user.ts";
 
 function MyNavbar() {
-  // const user = useSelector((state: UserData) => state.user);
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
   const dispatch = useDispatch();
@@ -17,7 +16,6 @@ function MyNavbar() {
     if (isAuthenticated) {
       // Check your condition for the first login, for example, based on user metadata
       getAllUsers().then((resultArray) => {
-        console.log(resultArray);
         const dbUser = resultArray.find((dbUser) => dbUser.email === user?.email);
   
         if (!dbUser) {
@@ -25,7 +23,7 @@ function MyNavbar() {
         } else {
           // Dispatch the login action with the user from the database
           dispatch(login(dbUser));
-          console.log(dbUser)
+
         }
       });
     }
