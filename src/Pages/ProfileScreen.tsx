@@ -118,10 +118,8 @@ function ProfileScreen() {
               ></img>
             </div>
           </div>
-          <div className="row">
-            <h1 style={{ color: "white" }}> sign up form</h1>
-          </div>
-          <button
+          <br/> 
+	  <button
             type="button"
             className="btn btn-light btn-lg"
             onClick={() => editUserPage(dbUser)}
