@@ -45,8 +45,8 @@ function CreateScreen() {
   const { state } = useLocation();
   const [imgSrc, setImgSrc] = useState<string>(state.dbUser.profile_pic_file);
   const [userName, setUserName] = useState<string>(state.dbUser.name);
-  const [password, setPassword] = useState<string>(state.dbUser.password);
-  const [email, setEmail] = useState<string>(state.dbUser.email);
+  const [password] = useState<string>(state.dbUser.password);
+  const [email] = useState<string>(state.dbUser.email);
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -67,14 +67,6 @@ function CreateScreen() {
 
   const handleUserChange = (e: any) => {
     setUserName(e.target.value);
-  };
-
-  const handlePasswordChange = (e: any) => {
-    setPassword(e.target.value);
-  };
-
-  const handleEmailChange = (e: any) => {
-    setEmail(e.target.value);
   };
 
   const {
@@ -202,35 +194,7 @@ function CreateScreen() {
           {errors.UserName && (
             <p className="text-danger">{errors.UserName.message}</p>
           )}
-          <div className="mb-3">
-            <h3 style={{ color: "white" }}>Password</h3>
-            <textarea
-              value={password}
-              {...register("Password")}
-              id="password"
-              rows={3}
-              className="form-control"
-              placeholder="Enter user name..."
-              onChange={handlePasswordChange}
-            ></textarea>
-            {errors.Password && (
-              <p className="text-danger">{errors.Password.message}</p>
-            )}
-
-            <h3 style={{ color: "white" }}>Email</h3>
-            <textarea
-              value={email}
-              {...register("Email")}
-              id="email"
-              rows={3}
-              className="form-control"
-              placeholder="Enter user name..."
-              onChange={handleEmailChange}
-            ></textarea>
-            {errors.Email && (
-              <p className="text-danger">{errors.Email.message}</p>
-            )}
-          </div>
+          <br/>
           <button
             type="submit"
             className="btn btn-light btn-lg"
