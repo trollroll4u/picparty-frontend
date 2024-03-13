@@ -25,8 +25,6 @@ function HomeScreen() {
     const fetchPictures = async () => {
       try {
         const pictures = await getPictureComments();
-        console.log("pictures: ");
-        console.log(pictures);
         setPictures(pictures);
         setLoading(false);
       } catch (error) {
@@ -39,7 +37,6 @@ function HomeScreen() {
     fetchPictures();
 
     return () => {
-      // console.log("clean up");
     };
   }, []);
 

@@ -14,7 +14,6 @@ export const uploadPhoto = async (photo: File) => {
                     'Content-Type': 'image/jpeg'
                 }
             }).then(res => {
-                console.log(res);
                 resolve(res.data.url);
             }).catch(err => {
                 console.log(err);

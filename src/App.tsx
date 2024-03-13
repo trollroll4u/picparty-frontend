@@ -2,7 +2,7 @@ import MyNavbar from "./Components/Navbar";
 import { Outlet } from "react-router";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./app.css"; // Import your CSS file here
-// import "./App.css"; // Import your CSS file here
+
 
 function App() {
   const { isLoading, error } = useAuth0();

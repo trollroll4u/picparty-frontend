@@ -41,7 +41,6 @@ export const createEvent = (event: EventData) => {
     return new Promise<EventData>((resolve, reject) => {        
             apiClient.post<EventData>(`events/create`, event,
             ).then((res) => {
-                console.log(res);
                 resolve(res.data);
             }).catch(err => {
                 console.log("error in create event: ", err);

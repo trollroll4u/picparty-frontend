@@ -29,13 +29,11 @@ function EventScreen() {
   };
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imgSelected = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("im here imgSelected");
     if (e.target.files && e.target.files.length > 0) {
       console.log("Image selected");
       convertImageToBase64(e.target.files[0] as File).then(
         async (base64String) => {
           setImgSrc(base64String);
-          console.log("imgSrc: " + imgSrc);
           const newPic: CommentDatanew = {
             like: false,
             user_id: user?._id,
@@ -43,7 +41,6 @@ function EventScreen() {
             comment: "",
             pic_file: base64String,
           };
-          console.log("try to publish new pic: ", newPic);
           try {
             await createComment(newPic);
             console.log("try to fetch event after add pic: " + event?._id);
@@ -75,10 +72,8 @@ function EventScreen() {
         const found: CommentDatanew = event?.likes.find(
           (like) => like.user_id == user._id
         ) as CommentDatanew;
-        console.log("unlike event number: " + event._id);
         await deleteComment(found._id as string);
         setTimeout(() => {}, 500);
-        console.log("try to fetch event after unlike: " + event._id);
         setTimeout(() => {}, 500);
         setEvent(await getEvent(event._id as string));
       } catch (error) {
@@ -89,7 +84,6 @@ function EventScreen() {
         }
       }
     } else {
-      console.log("like event number: " + event._id);
       const newLike: CommentDatanew = {
         like: true,
         user_id: user?._id as string,
@@ -100,7 +94,7 @@ function EventScreen() {
       // create like in db
       try {
         await createComment(newLike);
-        console.log("try to fetch event after like: " + event._id);
+
         setTimeout(() => {}, 500);
         await getEvent(event._id as string).then((res) => {
           setEvent(res);
@@ -131,10 +125,8 @@ function EventScreen() {
         like: false,
         pic_file: "",
       };
-      console.log("try to publish new comment: " + newComment);
       try {
         await createComment(newComment).then(() => {
-          console.log("try to fetch event after like: " + event._id);
           setTimeout(() => {}, 500);
           getEvent(event._id as string).then((res) => {
             setEvent(res);
@@ -160,8 +152,6 @@ function EventScreen() {
   };
 
   const onDeleteComment = async (commentIDToDelete: string) => {
-    console.log("comment: ");
-    console.log(commentIDToDelete);
     try {
       await deleteComment(commentIDToDelete as string);
       setTimeout(() => {}, 500);
@@ -198,7 +188,6 @@ function EventScreen() {
     // Get owner user by id
     const fetchOwnerUser = async (owner_id: string) => {
       try {
-        console.log("fetching owner: " + owner_id);
         await getUser(owner_id).then((res) => {
           setOwner(res);
         });
@@ -211,8 +200,6 @@ function EventScreen() {
     const fetchEvent = async (event_id: string) => {
       try {
         await getEvent(event_id).then((res) => {
-          console.log("event fetched: ");
-          console.log(res);
           setEvent(res);
           fetchOwnerUser(res.user_id);
           setLoading(false);
@@ -222,7 +209,6 @@ function EventScreen() {
         setLoading(false);
       }
     };
-    console.log("fetching event: " + eventId.eventId);
     setLoading(true);
     fetchEvent(eventId.eventId as string);
     setImageFileExtention(event?.event_pic_file?.split(".")[1] || "");

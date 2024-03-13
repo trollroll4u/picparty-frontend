@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useRef, useState } from "react";
-// import avatar from "../assets/default_pic_for_party.jpg";
 import { Typeahead } from "react-bootstrap-typeahead";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +9,7 @@ import { createEvent } from "../Services/event-service";
 import { EventData, UserData } from "../DataStructure";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { defaultImageBase64 } from "../assets/try";
+import { defaultImageBase64 } from "../assets/defaultImage";
 
 const schema = z.object({
   EventName: z
@@ -24,7 +23,7 @@ const schema = z.object({
     message: "Date must be in the future",
   }),
   location: z.any(),
-  //   location: z.array()
+
 });
 
 export const convertImageToBase64 = (file: File) => {
@@ -62,7 +61,7 @@ function CreateScreen() {
         await axios
           .get("https://countriesnow.space/api/v0.1/countries")
           .then((res) => {
-            // console.log(res.data.data);
+
             const all: { name: string }[] = [];
             res.data.data.map((location: any) => {
               location.cities.map((city: any) => {
@@ -129,7 +128,7 @@ function CreateScreen() {
       setLocationError("Location is required");
     } else {
       setLocationError("");
-      console.log("type of iamge is:" + typeof imgSrc);
+      console.log("type of image is:" + typeof imgSrc);
       const newEvent: EventData = {
         user_id: user._id,
         title: eventName,
@@ -141,35 +140,16 @@ function CreateScreen() {
         pictures: [],
         likes: [],
       };
-      console.log(newEvent);
-      console.log(typeof newEvent.date);
+
       try {
         const res = await createEvent(newEvent);
-        console.log("RESSSSS");
-        console.log(res);
-        console.log("on submit");
         navigate("/");
       } catch (error) {
         setShowAlert(true);
-        console.log("here ohad");
         console.log("Error creating event: " + error);
       }
     }
   };
-
-  //   const register = async () => {
-  //   const url = await uploadPhoto(imgSrc!);
-  //   console.log("upload returned:" + url);
-  //   if (emailInputRef.current?.value && passwordInputRef.current?.value) {
-  //   const user: IUser = {
-  //   email: emailInputRef.current?.value,
-  //   password: passwordInputRef.current?.value,
-  //   imgUrl: url
-  //   }
-  //   const res = await registrUser(user)
-  //   console.log(res)
-  //   }
-  //   }
 
   return (
     <>

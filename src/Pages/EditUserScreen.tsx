@@ -1,28 +1,25 @@
 import { ChangeEvent, useRef, useState } from "react";
-// import avatar from "../assets/default_pic_for_party.jpg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { updateUser } from "../Services/user-service";
 import { UserData } from "../DataStructure";
 import { useLocation, useNavigate } from "react-router-dom";
-import { defaultImageBase64 } from "../assets/try";
+import { defaultImageBase64 } from "../assets/defaultImage";
 
 const schema = z.object({
   UserName: z
     .string()
     .min(3, "Name must be longer then 3 charecters")
     .max(20, "Name must be less then 20 charecters"),
-  Email: z
-  .string()
-  .email("Invalid email address"),
+  Email: z.string().email("Invalid email address"),
   Password: z
-  .string()
-  .min(8, "Password must be at least 8 characters long")
-  .regex(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-    "Password must contain at least one lowercase letter, one uppercase letter, and one number"
-  )
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+      "Password must contain at least one lowercase letter, one uppercase letter, and one number"
+    ),
 });
 
 export const convertImageToBase64 = (file: File) => {
@@ -85,30 +82,25 @@ function CreateScreen() {
 
   const onSubmit = async (clickUser: any) => {
     clickUser.preventDefault();
-    
-    console.log("type of image is:" + typeof imgSrc);
     const updatedUser: UserData = {
-        _id: state.dbUser._id,
-        name: userName,
-        password: password,
-        email: email,
-        profile_pic_file: imgSrc,
-        events: state.dbUser.events,
-        comments: state.dbUser.comments,
-        pictures: state.dbUser.pictures,
-        likes: state.dbUser.likes,
+      _id: state.dbUser._id,
+      name: userName,
+      password: password,
+      email: email,
+      profile_pic_file: imgSrc,
+      events: state.dbUser.events,
+      comments: state.dbUser.comments,
+      pictures: state.dbUser.pictures,
+      likes: state.dbUser.likes,
     };
-      try {
-        console.log("on Update user:");
-        console.log(updatedUser);
-        await updateUser(updatedUser);
-        console.log("on Update user:");
-        navigate("/");
-      } catch (error) {
-        setShowAlert(true);
-        console.log("Error creating user: " + error);
-      }
+    try {
+      await updateUser(updatedUser);
+      navigate("/");
+    } catch (error) {
+      setShowAlert(true);
+      console.log("Error creating user: " + error);
     }
+  };
 
   return (
     <>

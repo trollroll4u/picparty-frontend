@@ -33,25 +33,3 @@ export interface EventData {
     likes: CommentDatanew[];
   }
   
-  // export interface LikeData {
-  //   id: number;
-  //   like: boolean;
-  //   event_id: string;
-  //   user_id: string;
-  // }
-
-  
-  // export interface PictureData {
-  //   id: number;
-  //   event_id: string; 
-  //   user_id: string;
-  //   path: string;
-  // }
-  
-  // export interface CommentData {
-  //   id?: number;
-  //   user_id?: number;
-  //   message?: string;
-  //   event_id?: number;
-  //   // picture?: PictureData;
-  // }

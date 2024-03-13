@@ -13,7 +13,6 @@ function CommentCard( {comment, deleteComment} : CommentProps) {
   const user = useSelector((state: UserData) => state.user);
 
   React.useEffect(() => {
-    console.log("comment", comment);
     // Get owner user by id
     const fetchOwnerUser = async (owner_id: string) => {
       try {

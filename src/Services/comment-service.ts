@@ -47,7 +47,6 @@ export const createPictureComment = (comment: CommentDatanew) => {
 export const createComment = (comment: CommentDatanew) => {
     return new Promise<CommentDatanew>((resolve, reject) => {
         apiClient.post<CommentDatanew>(`comments/create`, comment).then((res) => {
-            console.log("create comment: ", res.data);
             resolve(res.data);
         }).catch((err) => {
             console.log("error in create comment: ", err);
@@ -81,7 +80,6 @@ export const deleteComment = (id: string) => {
 export const getPictureComments = () => {
     return new Promise<CommentDatanew[]>((resolve, reject) => {
         apiClient.get<CommentDatanew[]>("comments/get_pictures").then((res) => {
-            console.log("get picture comments: ", res.data);
                 resolve(res.data);
         }).catch((err) => {
             console.log("error in getting all comments: ", err);
@@ -91,69 +89,25 @@ export const getPictureComments = () => {
 }
 
 export const getMessageComments = () => {
-    // return new Promise<CommentDatanew[]>((resolve, reject) => {
-    //     apiClient.get<CommentDatanew[]>("comments/get_messages").then((res) => {
-    //             const comments : CommentDatanew[] = res.data;
-    //             resolve(comments);
-    //     }).catch((err) => {
-    //         console.log("error in getting all comments: ", err);
-    //         reject(err);
-    //     })
-    // })
     return getAllComments().then((comments) => comments?.filter((comment) => comment.comment !== undefined && comment.comment !== ""))
 }
 
 
 export const getLikesComments = () => {
-    // return new Promise<CommentDatanew[]>((resolve, reject) => {
-    //     apiClient.get<CommentDatanew[]>("comments/get_likes").then((res) => {
-    //             const comments : CommentDatanew[] = res.data;
-    //             resolve(comments);
-    //     }).catch((err) => {
-    //         console.log("error in getting all comments: ", err);
-    //         reject(err);
-    //     })
-    // })
+
     return getAllComments().then((comments) => comments?.filter((comment) => comment.like !== undefined && comment.like !== false))
 }
 
 export const getPictureCommentsByUser = (id:string ) => {
-    // return new Promise<CommentDatanew[]>((resolve, reject) => {
-    //     apiClient.get<CommentDatanew[]>("comments/get_pictures").then((res) => {
-    //             const comments : CommentDatanew[] = res.data;
-    //             resolve(comments);
-    //     }).catch((err) => {
-    //         console.log("error in getting all comments: ", err);
-    //         reject(err);
-    //     })
-    // })
     return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.pic_file !== undefined && comment.pic_file !== ""))
 }
 
 export const getMessageCommentsByUser = (id:string) => {
-    // return new Promise<CommentDatanew[]>((resolve, reject) => {
-    //     apiClient.get<CommentDatanew[]>("comments/get_messages").then((res) => {
-    //             const comments : CommentDatanew[] = res.data;
-    //             resolve(comments);
-    //     }).catch((err) => {
-    //         console.log("error in getting all comments: ", err);
-    //         reject(err);
-    //     })
-    // })
     return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.comment !== undefined && comment.comment !== ""))
 }
 
 
 export const getLikesCommentsByUser = (id:string) => {
-    // return new Promise<CommentDatanew[]>((resolve, reject) => {
-    //     apiClient.get<CommentDatanew[]>("comments/get_likes").then((res) => {
-    //             const comments : CommentDatanew[] = res.data;
-    //             resolve(comments);
-    //     }).catch((err) => {
-    //         console.log("error in getting all comments: ", err);
-    //         reject(err);
-    //     })
-    // })
     return getAllComments().then((comments) => comments?.filter((comment) => comment.user_id == id && comment.like !== undefined && comment.like !== false))
 }
 
