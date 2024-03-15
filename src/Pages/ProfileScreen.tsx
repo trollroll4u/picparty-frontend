@@ -53,8 +53,8 @@ function ProfileScreen() {
     }
     try {
 
-      await createUser(newUser);
-      dispatch(login(newUser))
+      const res = await createUser(newUser);
+      dispatch(login(res))
 
     } catch (error) {
       console.log("Error creating event: " + error);
