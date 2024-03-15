@@ -1,26 +1,21 @@
-import { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import MyNavBar from "./Components/Navbar.tsx";
-import CardScreen from "./Components/CardsScreen.tsx";
-import Carusale from "./Components/carouselImages.tsx";
+import MyNavbar from "./Components/Navbar";
+import { Outlet } from "react-router";
+import { useAuth0 } from "@auth0/auth0-react";
+import "./app.css"; // Import your CSS file here
+
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { isLoading, error } = useAuth0();
 
   return (
     <>
-      <Container style={{ backgroundColor: "black", maxWidth: "100%" }}>
-        <Row >
-          <MyNavBar></MyNavBar>
-        </Row>
-        <Row className="justify-content-md-center" >
-          <Carusale></Carusale>
-        </Row>
-        <CardScreen></CardScreen>
-
-      </Container>
+      <div className="app-container">
+        {error && <p>Auth failed</p>}
+        {!error && isLoading && <p>Loading...</p>}
+        {!error && !isLoading && (
+          <><MyNavbar></MyNavbar><Outlet></Outlet></>
+        )}
+      </div>
     </>
   );
 }

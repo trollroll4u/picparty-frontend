@@ -1,13 +1,27 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+// src/index.tsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Auth0Provider } from '@auth0/auth0-react';
+import store from './app/store.ts';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import RouterConfig from './Routes/routes';
 
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import "../node_modules/bootstrap/dist/js/bootstrap.min.js"
-
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Auth0Provider
+      domain="https://dev-5vg1y1oem2av4knn.us.auth0.com"
+      clientId="bOLUDV9STAibFWZ8tWnwbjSQ4k17GfZM"
+      authorizationParams={{
+        redirect_uri: window.location.origin
+      }}
+    >
+      <Provider store={store}>
+        <Router>
+          <RouterConfig />
+        </Router>
+      </Provider>
+    </Auth0Provider>
   </React.StrictMode>,
-)
+  document.getElementById('root')
+);
