@@ -13,11 +13,12 @@ export interface EventData {
   
   export interface CommentDatanew {
     _id?: string;
-    event_id: string; 
-    user_id: string;
-    pic_file?: string ;
+    userName: string;
     comment?: string;
-    like?: boolean;
+    // event_id: string; 
+    // user_id: string;
+    // pic_file?: string ;
+    // like?: boolean;
   }
 
   export interface UserData {
