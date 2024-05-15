@@ -1,5 +1,4 @@
 // src/index.tsx
-import React from 'react';
 import ReactDOM from 'react-dom';
 import EventScreen from './Pages/EventScreen.tsx';
 

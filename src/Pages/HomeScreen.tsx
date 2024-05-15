@@ -4,11 +4,11 @@ import Carusale from "../Components/carouselImages.tsx";
 import { EventData, CommentDatanew } from "../DataStructure.ts";
 import { useState } from "react";
 import { getAllEvents } from "../Services/event-service.ts";
-import { getPictureComments } from "../Services/comment-service.ts";
+// import { getPictureComments } from "../Services/comment-service.ts";
 
 function HomeScreen() {
   const [events, setEvents] = useState<EventData[]>([]);
-  const [pictures, setPictures] = useState<CommentDatanew[]>([]);
+  const [pictures] = useState<CommentDatanew[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   React.useEffect(() => {
@@ -22,19 +22,19 @@ function HomeScreen() {
         setLoading(false);
       }
     };
-    const fetchPictures = async () => {
-      try {
-        const pictures = await getPictureComments();
-        setPictures(pictures);
-        setLoading(false);
-      } catch (error) {
-        console.log("Error fetching pictures: " + error);
-        setLoading(false);
-      }
-    };
+    // const fetchPictures = async () => {
+    //   try {
+    //     const pictures = await getPictureComments();
+    //     setPictures(pictures);
+    //     setLoading(false);
+    //   } catch (error) {
+    //     console.log("Error fetching pictures: " + error);
+    //     setLoading(false);
+    //   }
+    // };
     setLoading(true);
     fetchEvents();
-    fetchPictures();
+    // fetchPictures();
 
     return () => {
     };
@@ -82,3 +82,4 @@ function HomeScreen() {
 }
 
 export default HomeScreen;
+

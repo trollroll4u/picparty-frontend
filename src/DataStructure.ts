@@ -12,6 +12,7 @@ export interface EventData {
   }
   
   export interface CommentDatanew {
+    pic_file?: string | undefined;
     _id?: string;
     userName: string;
     comment?: string;
