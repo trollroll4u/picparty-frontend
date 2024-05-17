@@ -3,7 +3,7 @@ import CommentCard from "./CommentCard.tsx";
 
 interface CommentsProps {
   comments: CommentDatanew[];
-  deleteComment: (comment_id: string) => void;
+  deleteComment: (comment_id: number) => void;
 }
 
 function CommentsScreen({ comments, deleteComment}: CommentsProps) {

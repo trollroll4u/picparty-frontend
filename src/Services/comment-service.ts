@@ -56,7 +56,7 @@ export const createComment = (comment: CommentDatanew) => {
 }
 // export const updateComment = (comment: CommentDatanew) => {
 //     return new Promise<CommentDatanew>((resolve, reject) => {
-//         apiClient.put<CommentDatanew>(`comments/update/${comment._id}`, comment).then((res) => {
+//         apiClient.put<CommentDatanew>(`comments/update/${comment?.commentId}`, comment).then((res) => {
 //                 resolve(res.data);
 //         }).catch((err) => {
 //             console.log("error in update comment: ", err);
@@ -65,7 +65,7 @@ export const createComment = (comment: CommentDatanew) => {
 //     })
 // }
 
-export const deleteComment = (id: string) => {
+export const deleteComment = (id: number) => {
     return new Promise<CommentDatanew>((resolve, reject) => {
         apiClient.delete<CommentDatanew>(`comments/delete/${id}`).then((res) => {
             console.log("delete comment: ", res.data);
