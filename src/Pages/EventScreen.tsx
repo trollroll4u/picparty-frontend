@@ -9,19 +9,6 @@ import {
   getAllComments,
 } from "../Services/comment-service.ts";
 
-const exampleComments: CommentDatanew[] = [
-  {
-    commentId: "1",
-    userName: "ohad",
-    comment: "try",
-  },
-  {
-    commentId: "2",
-    userName: "yuval",
-    comment: "try",
-  },
-];
-
 function EventScreen() {
   // States
   const [nameValue, setNameValue] = useState("");

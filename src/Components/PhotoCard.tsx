@@ -4,7 +4,7 @@ import PhotoModel from "./PhotoModel.tsx";
 
 interface PhotoProps {
   photo: CommentDatanew;
-  deleteComment: (comment_id: string) => void;
+  deleteComment: (commentcommentId: string) => void;
 }
 
 function PhotoCard({ photo, deleteComment }: PhotoProps) {
@@ -19,9 +19,9 @@ function PhotoCard({ photo, deleteComment }: PhotoProps) {
   };
   return (
     <>
-      <div className="card mx-1 my-2" key={"card-" + photo._id}>
+      <div className="card mx-1 my-2" key={"card-" + photo.commentId}>
         <img
-          key={"card-img-" + photo._id}
+          key={"card-img-" + photo.commentId}
           className="card-img-top"
           src={photo.pic_file}
           style={{ height: "10rem", width: "100%", cursor: "pointer" }}

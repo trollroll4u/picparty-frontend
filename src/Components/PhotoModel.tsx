@@ -5,7 +5,7 @@ import { saveAs } from "file-saver";
 
 interface PhotoModelProps {
   photo: CommentDatanew;
-  deleteComment: (comment_id: string) => void;
+  deleteComment: (commentcommentId: string) => void;
   closeModal: () => void;
 }
 
@@ -62,7 +62,7 @@ function PhotoModel({ photo, deleteComment, closeModal }: PhotoModelProps) {
                 <button
                   type="button"
                   className="btn btn-light"
-                  onClick={() => deletePhoto(photo._id as string)}
+                  onClick={() => deletePhoto(photo.commentId as string)}
                 >
                   Delete
                 </button>
